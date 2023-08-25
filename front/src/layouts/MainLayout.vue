@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="toggle = !toggle"
         />
 
         <q-toolbar-title>
@@ -20,23 +20,43 @@
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="toggle"
       show-if-above
       bordered
+      class="bg-primary text-white"
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+      <q-layout>
+        <q-header>
+          <q-list separator bordered>
+            <q-item-label header class="text-bold text-subtitle2 text-uppercase color-menu">
+              Menu
+            </q-item-label>
+            <EssentialLink
+              v-for="link in menus"
+              :key="link.title"
+              v-bind="link"
+            />
+          </q-list>
+        </q-header>
+        <q-footer>
+          <div class="text-center text-bold">
+            <span class="text-blue">100</span>
+            <span class="text-yellow"> % </span>
+            <span class="text-red">Folletos</span>
+          </div>
+          <div class="text-center text-bold">
+            IMPRENTA DE VOLANTES
+          </div>
+          <q-list bordered padding class="rounded-borders text-red">
+            <q-item clickable v-ripple @click="logout()">
+              <q-item-section avatar>
+                <q-icon name="o_logout" />
+              </q-item-section>
+              <q-item-section> Cerrar sesión</q-item-section>
+            </q-item>
+          </q-list>
+        </q-footer>
+      </q-layout>
     </q-drawer>
 
     <q-page-container>
@@ -46,71 +66,81 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default defineComponent({
+export default {
   name: 'MainLayout',
-
   components: {
     EssentialLink
   },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
+  data () {
     return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      toggle: false,
+      menus: [
+        {
+          title: 'Usuarios',
+          icon: 'people',
+          to: '/usuarios',
+          color: 'orange'
+        },
+        {
+          title: 'Estadisticas',
+          icon: 'insert_chart_outlined',
+          to: '/estadisticas',
+          color: 'orange'
+        },
+        {
+          title: 'Central Files',
+          icon: 'o_folder',
+          to: '/central-files',
+          color: 'purple'
+        },
+        {
+          title: 'Precios',
+          icon: 'attach_money',
+          to: '/precios',
+          color: 'purple'
+        },
+        {
+          title: 'Tesoreria',
+          icon: 'o_account_balance_wallet',
+          to: '/tesoreria',
+          color: 'pink'
+        },
+        {
+          title: 'Facturas',
+          icon: 'o_receipt',
+          to: '/facturas',
+          color: 'pink'
+        },
+        {
+          title: 'Diseño',
+          icon: 'o_palette',
+          to: '/diseno',
+          color: 'green'
+        },
+        {
+          title: 'Impresion',
+          icon: 'o_print',
+          to: '/impresion',
+          color: 'green'
+        },
+        {
+          title: 'Entregas',
+          icon: 'o_local_shipping',
+          to: '/entregas',
+          color: 'grey'
+        },
+        {
+          title: 'Nuevo Cliente',
+          icon: 'person_add',
+          to: '/nuevo-cliente',
+          color: 'yellow'
+        }
+      ]
     }
+  },
+
+  methods: {
   }
-})
+}
 </script>

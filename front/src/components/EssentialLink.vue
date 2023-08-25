@@ -1,9 +1,8 @@
 <template>
   <q-item
     clickable
-    tag="a"
-    target="_blank"
-    :href="link"
+    :to="to"
+    :class="`color-menu left-${color}`"
   >
     <q-item-section
       v-if="icon"
@@ -13,8 +12,8 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label class="text-uppercase text-bold">{{ title }}</q-item-label>
+      <q-item-label caption class="color-menu">{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
@@ -43,6 +42,14 @@ export default defineComponent({
     icon: {
       type: String,
       default: ''
+    },
+    to: {
+      type: String,
+      default: ''
+    },
+    color: {
+      type: String,
+      default: 'primary'
     }
   }
 })

@@ -1,1 +1,36 @@
 // app global css in SCSS form
+@font-face {
+    font-family: 'LuckiestGuy';
+    src: url('./fonts/LuckiestGuy-Regular.ttf');
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/Poppins-Regular.ttf');
+}
+* {
+    font-family: 'Poppins', sans-serif;
+}
+.luckiest {
+    font-family: 'LuckiestGuy', cursive;
+}
+.color-menu{
+    color: #436f8a;
+}
+.left-orange{
+    border-left: 5px solid #f9a825;
+}
+.left-purple{
+    border-left: 5px solid #9c27b0;
+}
+.left-green{
+    border-left: 5px solid #4caf50;
+}
+.left-pink{
+    border-left: 5px solid #e91e63;
+}
+.left-grey{
+    border-left: 5px solid #9e9e9e;
+}
+.left-yellow{
+    border-left: 5px solid #ffeb3b;
+}
