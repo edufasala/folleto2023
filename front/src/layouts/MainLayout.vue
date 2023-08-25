@@ -132,7 +132,7 @@ export default {
         },
         {
           title: 'Nuevo Cliente',
-          icon: 'person_add',
+          icon: 'o_person_add',
           to: '/nuevo-cliente',
           color: 'yellow'
         }
@@ -141,6 +141,29 @@ export default {
   },
 
   methods: {
+    logout () {
+      this.$q.dialog({
+        message: '¿Quieres cerrar sesión?',
+        title: 'Salir',
+        ok: {
+          push: true
+        },
+        cancel: {
+          push: true,
+          color: 'negative'
+        }
+      }).onOk(() => {
+        this.$q.loading.show()
+        this.$axios.post('logout').then(() => {
+          this.$axios.defaults.headers.common.Authorization = ''
+          this.$store.user = {}
+          localStorage.removeItem('tokenFolleto')
+          this.$store.isLoggedIn = false
+          this.$q.loading.hide()
+          this.$router.push('/login')
+        })
+      })
+    }
   }
 }
 </script>

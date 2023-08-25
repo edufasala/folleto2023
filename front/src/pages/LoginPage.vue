@@ -99,7 +99,7 @@ export default {
           this.$store.isLoggedIn = true
           this.$axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
           localStorage.setItem('tokenFolleto', response.data.token)
-          this.$router.push('/menu')
+          this.$router.push('/')
         })
         .catch(error => {
           this.$alert.error(error.response.data.message)
