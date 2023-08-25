@@ -22,18 +22,23 @@ class UserSeeder extends Seeder
                 'role' => 'Administrador',
             ]
         ]);
-        Permission::create(['name' => 'usuarios']);
-        Permission::create(['name' => 'estadisticas']);
-        Permission::create(['name' => 'centralFiles']);
-        Permission::create(['name' => 'precios']);
-        Permission::create(['name' => 'tesoreria']);
-        Permission::create(['name' => 'facturas']);
-        Permission::create(['name' => 'diseño']);
-        Permission::create(['name' => 'impresion']);
-        Permission::create(['name' => 'entregas']);
-        Permission::create(['name' => 'nuevoCliente']);
+        Permission::create(['name' => 'Usuarios']);
+        Permission::create(['name' => 'Estadisticas']);
+        Permission::create(['name' => 'Central Files']);
+        Permission::create(['name' => 'Precios']);
+        Permission::create(['name' => 'Tesoreria']);
+        Permission::create(['name' => 'Facturas']);
+        Permission::create(['name' => 'Diseño']);
+        Permission::create(['name' => 'Impresion']);
+        Permission::create(['name' => 'Entregas']);
+        Permission::create(['name' => 'Nuevo Cliente']);
         $user = \App\Models\User::find(1);
         $permissions = Permission::all();
         $user->givePermissionTo($permissions);
+        $users = \App\Models\User::factory(20)->create();
+        foreach ($users as $user) {
+            $random = rand(1, 10);
+            $user->givePermissionTo($permissions[$random - 1]->name);
+        }
     }
 }

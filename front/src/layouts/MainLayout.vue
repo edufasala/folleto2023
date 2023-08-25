@@ -112,7 +112,7 @@ export default {
       menus: [
         {
           title: 'Usuarios',
-          icon: 'people',
+          icon: 'o_people',
           to: '/usuarios',
           color: 'orange'
         },
