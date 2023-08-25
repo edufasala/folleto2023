@@ -28,7 +28,7 @@ export default boot(({ app, router }) => {
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
   //       so you won't necessarily have to import axios in each vue file
 
-  const token = localStorage.getItem('tokenNeuro')
+  const token = localStorage.getItem('tokenFolleto')
   if (token) {
     useCounterStore().loading = true
     app.config.globalProperties.$axios.defaults.headers.common.Authorization = `Bearer ${token}`
@@ -40,7 +40,7 @@ export default boot(({ app, router }) => {
     }).catch(() => {
       app.config.globalProperties.$axios.defaults.headers.common.Authorization = ''
       useCounterStore().user = {}
-      localStorage.removeItem('tokenNeuro')
+      localStorage.removeItem('tokenFolleto')
       useCounterStore().isLoggedIn = false
       router.push('/login')
     }).finally(() => {
