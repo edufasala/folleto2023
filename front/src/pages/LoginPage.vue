@@ -8,11 +8,11 @@
             <q-card class="q-mt-md">
               <q-card-section class="text-center">
                 <div class="text-h5 text-bold">Iniciar sesión</div>
-                <q-img src="/logo.png" width="150px" />
-                <div class="text-h6 text-bold">4ta. Jornada Nacional de Neurología</div>
+                <q-img src="/logo1.png" width="150px" />
+                <div class="text-h6 text-bold">Arka ́s “Voiparkas” Comunicaciones</div>
                 <div class="text-subtitle2 text-bold">
-                  <q-icon name="o_location_on" /> 2do Simposio Internacional de
-                  Neurología
+                  <q-icon name="o_location_on" />
+                  <span>Nosotros Proveemos Soluciones para tu Negocio!</span>
                 </div>
               </q-card-section>
               <q-card-section>
@@ -49,12 +49,12 @@
                     type="submit"
                   />
                   <q-btn
-                    label="Atrás"
+                    label="Registrate"
                     color="primary"
                     no-caps
                     rounded
                     outline
-                    icon="o_arrow_back"
+                    icon="o_person_add"
                     class="full-width q-mt-xs"
                     @click="$router.push('/')"
                   />
@@ -83,7 +83,7 @@ export default {
   },
   mounted () {
     if (this.$store.isLoggedIn) {
-      this.$router.push('/menu')
+      this.$router.push('/')
     }
   },
   methods: {
@@ -98,7 +98,7 @@ export default {
           this.$store.user = response.data.user
           this.$store.isLoggedIn = true
           this.$axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-          localStorage.setItem('tokenNeuro', response.data.token)
+          localStorage.setItem('tokenFolleto', response.data.token)
           this.$router.push('/menu')
         })
         .catch(error => {
