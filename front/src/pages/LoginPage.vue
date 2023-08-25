@@ -96,6 +96,7 @@ export default {
         .then(response => {
           this.$alert.success(`Bienvenido ${response.data.user.name}!`)
           this.$store.user = response.data.user
+          this.$store.permisos = response.data.permisos
           this.$store.isLoggedIn = true
           this.$axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
           localStorage.setItem('tokenFolleto', response.data.token)

@@ -35,7 +35,7 @@ export default boot(({ app, router }) => {
     app.config.globalProperties.$axios.post('me').then((res) => {
       // console.log(res.data)
       useCounterStore().user = res.data.user
-      useCounterStore().porcentaje = res.data.porcentaje
+      useCounterStore().permisos = res.data.permisos
       useCounterStore().isLoggedIn = true
     }).catch(() => {
       app.config.globalProperties.$axios.defaults.headers.common.Authorization = ''

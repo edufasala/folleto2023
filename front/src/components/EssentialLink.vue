@@ -3,6 +3,7 @@
     clickable
     :to="to"
     :class="`color-menu left-${color}`"
+    active-class="text-white"
   >
     <q-item-section
       v-if="icon"

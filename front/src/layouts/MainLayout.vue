@@ -12,10 +12,44 @@
         />
 
         <q-toolbar-title>
-          Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <q-btn flat  color="white" :label="$store.user.name" no-caps icon-right="account_circle">
+            <q-menu>
+              <q-list>
+                <q-item clickable v-ripple>
+                  <q-item-section avatar>
+                    <q-avatar>
+                      <q-icon name="account_circle" />
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Bienvenido</q-item-label>
+                    <q-item-section side>
+                      <q-item-label caption>{{$store.user.name}}</q-item-label>
+                    </q-item-section>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-ripple @click="logout">
+                  <q-item-section avatar>
+                    <q-avatar>
+                      <q-icon name="logout" />
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Salir</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+          <q-btn icon="o_notifications" flat round color="white">
+            <q-badge color="red" floating>
+              5
+            </q-badge>
+          </q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -28,7 +62,7 @@
       <q-layout>
         <q-header>
           <q-list separator bordered>
-            <q-item-label header class="text-bold text-subtitle2 text-uppercase color-menu">
+            <q-item-label header class="text-bold text-subtitle2 text-uppercase color-menu cursor-pointer" @click="$router.push('/')">
               Menu
             </q-item-label>
             <EssentialLink
