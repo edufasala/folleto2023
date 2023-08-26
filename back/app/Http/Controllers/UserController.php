@@ -92,14 +92,25 @@ class UserController extends Controller
             'email' => 'required|unique:users,email,'.$user->id
         ]);
         $user->update($request->all());
+        $user->syncPermissions($request->permisos);
+        foreach ($request->permissions as $permission){
+            if ($permission['checked']){
+                $user->givePermissionTo($permission['name']);
+            }
+        }
+        return $user;
+    }
+    public function updateActive(User $user){
+        $user->active = $user->active=='Si'?'No':'Si';
+        $user->save();
         return $user;
     }
 
     public function updatePassword(Request $request,User $user){
-        $this->validate($request, [
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required|same:password',
-        ]);
+//        $this->validate($request, [
+//            'password' => 'required|confirmed',
+//            'password_confirmation' => 'required|same:password',
+//        ]);
         $user->update([
             'password'=>Hash::make($request->password)
         ]);

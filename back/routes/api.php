@@ -23,5 +23,7 @@ Route::group(['middleware'=>'auth:sanctum'],function () {
     Route::post('/me', [\App\Http\Controllers\UserController::class, 'me']);
     Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
     Route::resource('users', \App\Http\Controllers\UserController::class);
+    Route::get('updateActive/{user}',[ \App\Http\Controllers\UserController::class,'updateActive']);
+    Route::put('updatePassword/{user}',[ \App\Http\Controllers\UserController::class,'updatePassword']);
     Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
 });

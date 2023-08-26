@@ -11,7 +11,7 @@
       <q-card>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="activos">
-            <q-table dense :rows="users" :rows-per-page-options="[0]"
+            <q-table dense :rows="userActive" :rows-per-page-options="[0]"
                      :loading="loading" :wrap-cells="true" flat bordered
                      class="table-background"
                      :columns="usersColumn" :filter="userFilterActive">
@@ -60,8 +60,52 @@
             </q-table>
           </q-tab-panel>
           <q-tab-panel name="inactivos" class="">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <q-table dense :rows="userInactive" :rows-per-page-options="[0]"
+                     :loading="loading" :wrap-cells="true" flat bordered
+                     class="table-background"
+                     :columns="usersColumn" :filter="userFilterInactive">
+              <template v-slot:top-right>
+                <q-btn flat round icon="refresh" @click="usersGet" :loading="loading">
+                  <q-tooltip>Actualizar</q-tooltip>
+                </q-btn>
+                <q-input outlined dense v-model="userFilterInactive" debounce="500" placeholder="Buscar" class="bg-white">
+                  <template v-slot:append>
+                    <q-icon name="search" class="cursor-pointer">
+                      <q-tooltip>Buscar</q-tooltip>
+                    </q-icon>
+                  </template>
+                </q-input>
+              </template>
+              <template v-slot:body-cell-permissions="props">
+                <q-td :props="props">
+                  <template v-for="permission in props.row.permissions" :key="permission">
+                    {{permission.name}}
+                    <span v-if="props.row.permissions.length > 1 && props.row.permissions[props.row.permissions.length-1].id != permission.id">
+                        ,
+                      </span>
+                  </template>
+                </q-td>
+              </template>
+              <template v-slot:body-cell-actions="props">
+                <q-td :props="props">
+                  <q-btn-group flat>
+                    <q-btn flat round dense icon="edit" @click="userEdit(props.row)" color="grey" :loading="loading">
+                      <q-tooltip>Editar</q-tooltip>
+                    </q-btn>
+                    <q-btn flat round dense icon="lock_open" @click="userPassword(props.row)" color="grey" :loading="loading">
+                      <q-tooltip>Contraseña</q-tooltip>
+                    </q-btn>
+                  </q-btn-group>
+                </q-td>
+              </template>
+              <template v-slot:body-cell-active="props">
+                <q-td :props="props">
+                  <q-toggle v-model="props.row.active" @update:model-value="userUpdate(props.row)"
+                            keep-color dense
+                            false-value="No" true-value="Si" color="red" :label="props.row.active"/>
+                </q-td>
+              </template>
+            </q-table>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -77,14 +121,18 @@
           </q-btn>
         </q-card-section>
         <q-card-section>
-          <q-form @submit="userUpdate(user)">
+          <q-form @submit="userSubmit(user)">
             <q-input outlined v-model="user.name" label="Nombre" :loading="loading" required/>
             <q-input outlined v-model="user.email" label="Correo" :loading="loading" required/>
             <q-select outlined required v-model="user.role" label="Rol" :options="$roles"/>
-            <pre>{{user}}</pre>
+            <div v-for="permission in permissions" :key="permission.id" class="q-pl-lg">
+              <q-checkbox v-model="permission.checked" :label="permission.name" dense />
+            </div>
             <q-card-actions align="right">
-              <q-btn flat round label="Cancelar" color="grey" @click="userDialog = false"/>
-              <q-btn flat round label="Guardar" color="blue" type="submit" :loading="loading"/>
+              <q-btn label="Cerrar" color="grey" no-caps @click="userDialog = false"/>
+              <q-btn :label="`${userOption=='edit'?'Actualizar':'Crear'} usuario`"
+                     :color="userOption=='edit'?'orange':'blue'"
+                     type="submit" :loading="loading" no-caps/>
             </q-card-actions>
           </q-form>
         </q-card-section>
@@ -97,16 +145,13 @@ export default {
   name: 'UsuariosPage',
   data () {
     return {
-      modelMultiple: [],
-      options: [
-        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-      ],
       userDialog: false,
       user: {},
       userOption: '',
       tab: 'activos',
       users: [],
       userFilterActive: '',
+      userFilterInactive: '',
       usersColumn: [
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'left', sortable: false },
         { name: 'name', label: 'Nombre', field: 'name', align: 'left', sortable: true },
@@ -124,19 +169,66 @@ export default {
     this.permissionsGet()
   },
   methods: {
+    userSubmit () {
+      this.loading = true
+      if (this.userOption === 'add') {
+        this.$axios.post('users', this.user).then(() => {
+          this.userDialog = false
+          this.usersGet()
+        }).catch((err) => {
+          this.$alert.error(err.response.data.message)
+          this.loading = false
+        })
+      } else {
+        this.$axios.put(`users/${this.user.id}`,
+          { ...this.user, permissions: this.permissions.filter(permission => permission.checked) }
+        ).then(() => {
+          this.userDialog = false
+          this.usersGet()
+        }).catch((err) => {
+          this.$alert.error(err.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+      }
+    },
     permissionsGet () {
       this.$axios.get('permissions').then(res => {
         this.permissions = res.data
       })
     },
     userEdit (user) {
+      this.permissions.forEach(permission => {
+        permission.checked = false
+        user.permissions.forEach(userPermission => {
+          if (permission.id === userPermission.id) {
+            permission.checked = true
+          }
+        })
+      })
       this.user = user
       this.userDialog = true
       this.userOption = 'edit'
     },
+    userPassword (user) {
+      this.$q.dialog({
+        title: 'Cambiar contraseña',
+        message: 'Ingrese la nueva contraseña',
+        prompt: {
+          model: '',
+          type: 'password'
+        },
+        cancel: true
+      }).onOk(data => {
+        this.$axios.put(`updatePassword/${user.id}`, { password: data }).then(() => {
+          this.$alert.success('Contraseña actualizada')
+        }).catch((err) => {
+          this.$alert.error(err.response.data.message)
+        })
+      })
+    },
     userUpdate (user) {
-      // user.active = user.active === 'Si' ? 'No' : 'Si'
-      this.$axios.put(`users/${user.id}`, user).then(() => {
+      this.$axios.get(`updateActive/${user.id}`, user).then(() => {
       }).catch((err) => {
         this.$alert.error(err.response.data.message)
       })
@@ -151,6 +243,14 @@ export default {
       }).finally(() => {
         this.loading = false
       })
+    }
+  },
+  computed: {
+    userActive () {
+      return this.users.filter(user => user.active === 'Si')
+    },
+    userInactive () {
+      return this.users.filter(user => user.active === 'No')
     }
   }
 }
