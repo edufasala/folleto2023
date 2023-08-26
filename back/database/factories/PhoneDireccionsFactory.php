@@ -17,7 +17,7 @@ class PhoneDireccionsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'phone'=>$this->faker->phoneNumber(),
         ];
     }
 }

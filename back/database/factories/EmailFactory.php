@@ -17,7 +17,8 @@ class EmailFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'email'=>$this->faker->email(),
+            'status'=>$this->faker->randomElement(['Si','No']),
         ];
     }
 }

@@ -17,7 +17,9 @@ class PersonFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "nombre" => $this->faker->name(),
+            "cargo" => $this->faker->name(),
+            "dni" => $this->faker->numberBetween(10000000, 99999999),
         ];
     }
 }

@@ -18,4 +18,10 @@ class Person extends Model
     {
         return $this->belongsTo(Empresa::class);
     }
+    public function phone(){
+        return $this->hasMany(Phone::class);
+    }
+    public function email(){
+        return $this->hasMany(Email::class);
+    }
 }

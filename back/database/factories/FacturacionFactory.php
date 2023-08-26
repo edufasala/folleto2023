@@ -17,7 +17,10 @@ class FacturacionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "cuit"=>$this->faker->numberBetween(10000000000,99999999999),
+            "condicional"=>$this->faker->name(),
+            "razonSocial"=>$this->faker->name(),
+            "comentario"=>$this->faker->text(50),
         ];
     }
 }

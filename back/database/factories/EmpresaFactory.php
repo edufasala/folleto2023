@@ -17,7 +17,9 @@ class EmpresaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nombre'=>$this->faker->name(),
+            'contacto'=>$this->faker->randomElement(['Facebook','Whatsapp','Telefono', 'Email']),
+            'vendedor'=>$this->faker->name()
         ];
     }
 }
