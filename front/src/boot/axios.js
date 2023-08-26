@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useCounterStore } from 'stores/example-store'
 import { Alert } from 'src/addons/Alert'
 import moment from 'moment'
+import HighchartsVue from 'highcharts-vue'
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a
@@ -13,7 +14,7 @@ const api = axios.create({ baseURL: 'https://api.example.com' })
 
 export default boot(({ app, router }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
-
+  app.use(HighchartsVue)
   app.config.globalProperties.$axios = axios.create({ baseURL: import.meta.env.VITE_API_BACK })
   app.config.globalProperties.$url = import.meta.env.VITE_API_BACK
   app.config.globalProperties.$store = useCounterStore()

@@ -75,16 +75,20 @@ class UserController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required|same:password',
-            'tipo' => 'required',
-            'fechaLimite' => 'required',
+
         ]);
         $user=new User();
         $user->name=$request->name;
         $user->email=$request->email;
-        $user->tipo=$request->tipo;
-        $user->password= Hash::make($request->password) ;
-        $user->fechaLimite=$request->fechaLimite;
+        $user->role=$request->role;
+        $user->password= Hash::make($request->password);
         $user->save();
+        foreach ($request->permissions as $permission){
+            if ($permission['checked']){
+                $user->givePermissionTo($permission['name']);
+            }
+        }
+        return $user;
     }
     public function update(Request $request,User $user){
         $this->validate($request, [

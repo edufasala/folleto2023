@@ -47,6 +47,9 @@
                     <q-btn flat round dense icon="lock_open" @click="userPassword(props.row)" color="grey" :loading="loading">
                       <q-tooltip>Contraseña</q-tooltip>
                     </q-btn>
+                    <q-btn flat round dense icon="o_delete" @click="userDelete(props.row)" color="grey" :loading="loading">
+                      <q-tooltip>Eliminar</q-tooltip>
+                    </q-btn>
                   </q-btn-group>
                 </q-td>
               </template>
@@ -124,6 +127,12 @@
           <q-form @submit="userSubmit(user)">
             <q-input outlined v-model="user.name" label="Nombre" :loading="loading" required/>
             <q-input outlined v-model="user.email" label="Correo" :loading="loading" required/>
+            <q-input outlined v-model="user.password" label="Contraseña"
+                     :loading="loading" require v-if="userOption=='add'" type="password"/>
+            <q-input outlined v-model="user.password_confirmation" label="Confirmar contraseña"
+                     :loading="loading" require v-if="userOption=='add'" type="password"
+                     :rules="[val => val === user.password || 'Las contraseñas no coinciden']"
+            />
             <q-select outlined required v-model="user.role" label="Rol" :options="$roles"/>
             <div v-for="permission in permissions" :key="permission.id" class="q-pl-lg">
               <q-checkbox v-model="permission.checked" :label="permission.name" dense />
@@ -172,7 +181,9 @@ export default {
     userSubmit () {
       this.loading = true
       if (this.userOption === 'add') {
-        this.$axios.post('users', this.user).then(() => {
+        this.$axios.post('users',
+          { ...this.user, permissions: this.permissions.filter(permission => permission.checked) }
+        ).then(() => {
           this.userDialog = false
           this.usersGet()
         }).catch((err) => {
@@ -227,6 +238,21 @@ export default {
         })
       })
     },
+    userDelete (user) {
+      this.$q.dialog({
+        title: 'Eliminar usuario',
+        message: '¿Está seguro de eliminar este usuario?',
+        cancel: true
+      }).onOk(() => {
+        this.loading = true
+        this.$axios.delete(`users/${user.id}`).then(() => {
+          this.$alert.success('Usuario eliminado')
+          this.usersGet()
+        }).catch((err) => {
+          this.$alert.error(err.response.data.message)
+        })
+      })
+    },
     userUpdate (user) {
       this.$axios.get(`updateActive/${user.id}`, user).then(() => {
       }).catch((err) => {
@@ -234,7 +260,12 @@ export default {
       })
     },
     userAdd () {
-      this.$router.push('/users/add')
+      this.user = {}
+      this.userDialog = true
+      this.userOption = 'add'
+      this.permissions.forEach(permission => {
+        permission.checked = false
+      })
     },
     usersGet () {
       this.loading = true
