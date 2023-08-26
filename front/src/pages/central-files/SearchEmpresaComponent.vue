@@ -14,12 +14,12 @@
       </q-input>
     </template>
     <template v-slot:body-cell-nombre="props">
-      <q-td @click="$emit('empresaSearch', props.row)" :props="props">
+      <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">
         {{ props.row.nombre }}
       </q-td>
     </template>
     <template v-slot:body-cell-codigo="props">
-      <q-td @click="$emit('empresaSearch', props.row)" :props="props">
+      <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">
         <q-icon size="20px" name="account_circle" class="q-pa-none q-ma-none"/>
         <span class="text-caption text-bold">{{ props.row.codigo }}</span>
       </q-td>

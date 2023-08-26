@@ -22,9 +22,16 @@ export default boot(({ app, router }) => {
   app.config.globalProperties.$roles = ['Administrador', 'Diseñador', 'Entregador', 'Vendedor', 'Gerente de ventas']
   app.config.globalProperties.$filters = {
     dateDmY (fecha) {
+      fecha = fecha.substring(0, 10)
       const dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
       const mes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre']
       return ` ${dias[moment(String(fecha)).format('d')]} ${moment(String(fecha)).format('DD')} de ${mes[moment(String(fecha)).format('MM') - 1]} del ${moment(String(fecha)).format('YYYY')}`
+    },
+    shortDate (fecha) {
+      fecha = fecha.substring(0, 10)
+      const dias = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
+      const mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic']
+      return `${dias[moment(String(fecha)).format('d')]} ${moment(String(fecha)).format('DD')} ${mes[moment(String(fecha)).format('MM') - 1]} ${moment(String(fecha)).format('YYYY')}`
     }
   }
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
