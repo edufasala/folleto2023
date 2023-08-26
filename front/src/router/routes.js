@@ -3,6 +3,7 @@ import MainLayout from 'layouts/MainLayout.vue'
 import IndexPage from 'pages/IndexPage.vue'
 import UsuariosPage from 'pages/usuarios/UsuariosPage.vue'
 import EstadisticasPage from 'pages/EstadisticasPage.vue'
+import IndexCentralFilesPage from 'pages/central-files/IndexCentralFilesPage.vue'
 
 const routes = [
   {
@@ -11,7 +12,8 @@ const routes = [
     children: [
       { path: '', component: IndexPage, meta: { requiresAuth: true } },
       { path: 'usuarios', component: UsuariosPage, meta: { requiresAuth: true } },
-      { path: 'estadisticas', component: EstadisticasPage, meta: { requiresAuth: true } }
+      { path: 'estadisticas', component: EstadisticasPage, meta: { requiresAuth: true } },
+      { path: 'central-files', component: IndexCentralFilesPage, meta: { requiresAuth: true } }
     ]
   },
   {

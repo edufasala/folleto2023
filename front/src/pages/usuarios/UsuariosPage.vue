@@ -13,7 +13,6 @@
           <q-tab-panel name="activos">
             <q-table dense :rows="userActive" :rows-per-page-options="[0]"
                      :loading="loading" :wrap-cells="true" flat bordered
-                     class="table-background"
                      :columns="usersColumn" :filter="userFilterActive">
               <template v-slot:top-right>
                 <q-btn color="blue" @click="userAdd" label="Nuevo usuario" no-caps :loading="loading"/>
@@ -65,7 +64,6 @@
           <q-tab-panel name="inactivos" class="">
             <q-table dense :rows="userInactive" :rows-per-page-options="[0]"
                      :loading="loading" :wrap-cells="true" flat bordered
-                     class="table-background"
                      :columns="usersColumn" :filter="userFilterInactive">
               <template v-slot:top-right>
                 <q-btn flat round icon="refresh" @click="usersGet" :loading="loading">
