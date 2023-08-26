@@ -1,7 +1,7 @@
 import LoginPage from 'pages/LoginPage.vue'
 import MainLayout from 'layouts/MainLayout.vue'
 import IndexPage from 'pages/IndexPage.vue'
-import UsuariosPage from 'pages/UsuariosPage.vue'
+import UsuariosPage from 'pages/usuarios/UsuariosPage.vue'
 import EstadisticasPage from 'pages/EstadisticasPage.vue'
 
 const routes = [

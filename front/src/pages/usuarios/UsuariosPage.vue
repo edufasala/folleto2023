@@ -38,10 +38,22 @@
                     </template>
                 </q-td>
               </template>
+              <template v-slot:body-cell-actions="props">
+                <q-td :props="props">
+                  <q-btn-group flat>
+                    <q-btn flat round dense icon="edit" @click="userEdit(props.row)" color="grey" :loading="loading">
+                      <q-tooltip>Editar</q-tooltip>
+                    </q-btn>
+                    <q-btn flat round dense icon="lock_open" @click="userPassword(props.row)" color="grey" :loading="loading">
+                      <q-tooltip>Contraseña</q-tooltip>
+                    </q-btn>
+                  </q-btn-group>
+                </q-td>
+              </template>
               <template v-slot:body-cell-active="props">
                 <q-td :props="props">
                   <q-toggle v-model="props.row.active" @update:model-value="userUpdate(props.row)"
-                            keep-color
+                            keep-color dense
                             false-value="No" true-value="Si" color="green" :label="props.row.active"/>
                 </q-td>
               </template>
@@ -54,6 +66,30 @@
         </q-tab-panels>
       </q-card>
     </div>
+    <q-dialog v-model="userDialog" prevent-close>
+      <q-card style="width: 750px">
+        <q-card-section class="row items-center q-pb-none">
+          <q-icon name="account_circle" size="25px"/>
+          <div class="text-h6 text-bold q-pl-xs">{{userOption==='add'?'Nuevo':'Editar'}} usuario</div>
+          <q-space/>
+          <q-btn flat round icon="close" @click="userDialog = false" color="grey" :loading="loading">
+            <q-tooltip>Cerrar</q-tooltip>
+          </q-btn>
+        </q-card-section>
+        <q-card-section>
+          <q-form @submit="userUpdate(user)">
+            <q-input outlined v-model="user.name" label="Nombre" :loading="loading" required/>
+            <q-input outlined v-model="user.email" label="Correo" :loading="loading" required/>
+            <q-select outlined required v-model="user.role" label="Rol" :options="$roles"/>
+            <pre>{{user}}</pre>
+            <q-card-actions align="right">
+              <q-btn flat round label="Cancelar" color="grey" @click="userDialog = false"/>
+              <q-btn flat round label="Guardar" color="blue" type="submit" :loading="loading"/>
+            </q-card-actions>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script>
@@ -61,6 +97,13 @@ export default {
   name: 'UsuariosPage',
   data () {
     return {
+      modelMultiple: [],
+      options: [
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ],
+      userDialog: false,
+      user: {},
+      userOption: '',
       tab: 'activos',
       users: [],
       userFilterActive: '',
@@ -72,21 +115,30 @@ export default {
         { name: 'role', label: 'Rol', field: 'role', align: 'left', sortable: true },
         { name: 'active', label: 'Activo', field: 'active', align: 'left', sortable: true }
       ],
-      loading: false
+      loading: false,
+      permissions: []
     }
   },
   mounted () {
     this.usersGet()
+    this.permissionsGet()
   },
   methods: {
+    permissionsGet () {
+      this.$axios.get('permissions').then(res => {
+        this.permissions = res.data
+      })
+    },
+    userEdit (user) {
+      this.user = user
+      this.userDialog = true
+      this.userOption = 'edit'
+    },
     userUpdate (user) {
-      this.loading = true
-      this.$axios.put(`users/${user.id}`, user).then(res => {
-        this.$alert.success(res.data.message)
+      // user.active = user.active === 'Si' ? 'No' : 'Si'
+      this.$axios.put(`users/${user.id}`, user).then(() => {
       }).catch((err) => {
         this.$alert.error(err.response.data.message)
-      }).finally(() => {
-        this.loading = false
       })
     },
     userAdd () {

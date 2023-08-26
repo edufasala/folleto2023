@@ -25,7 +25,7 @@
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label>Bienvenido</q-item-label>
+                    <q-item-label>{{$store.user.role}}</q-item-label>
                     <q-item-section side>
                       <q-item-label caption>{{$store.user.name}}</q-item-label>
                     </q-item-section>

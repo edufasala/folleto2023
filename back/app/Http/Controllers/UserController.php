@@ -39,6 +39,11 @@ class UserController extends Controller
                 'message'=>'Las credenciales proporcionadas son incorrectas'
             ],401);
         }
+        if ($user->active=='No'){
+            return response()->json([
+                'message'=>'El usuario no esta activo'
+            ],401);
+        }
         return response()->json([
             'token'=>$user->createToken('web')->plainTextToken,
             'permisos'=>$user->getAllPermissions(),
@@ -84,9 +89,7 @@ class UserController extends Controller
     public function update(Request $request,User $user){
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|unique:users,email,'.$user->id,
-            'tipo' => 'required',
-            'fechaLimite' => 'required',
+            'email' => 'required|unique:users,email,'.$user->id
         ]);
         $user->update($request->all());
         return $user;
