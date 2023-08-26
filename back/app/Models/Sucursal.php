@@ -17,4 +17,5 @@ class Sucursal extends Model
     {
         return $this->belongsTo(Empresa::class);
     }
+    protected $hidden = ['created_at', 'updated_at'];
 }

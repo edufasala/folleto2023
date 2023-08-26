@@ -1,69 +1,54 @@
 <template>
 <q-page class="q-pa-xs bg-grey-3">
   <div class="row">
-    <div class="col-12 col-md-3 bg-blue-2 full-height">
+    <div class="col-12 col-md-3 bg-blue-1 full-height">
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
         </div>
         <div class="col-12">
-          <q-table dense :rows="empresas" :rows-per-page-options="[20]"
-                   :loading="loading" :wrap-cells="true" flat bordered
-                   :columns="empresaColumn" :filter="search">
-            <template v-slot:top-right>
-              <q-input clearable rounded dense outlined bg-color="white" class="q-ma-xs"
-                       v-model="search" placeholder="Search">
-                <template v-slot:prepend>
-                  <q-icon name="search" />
-                </template>
-                <template v-slot:after>
-                  <q-btn flat round dense icon="more_vert" />
-                </template>
-              </q-input>
-              <q-separator />
-            </template>
-          </q-table>
-        </div>
-        <div class="col-12">
-          asa
+          <SearchEmpresaComponent @empresaSearch="empresaSearch" />
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-9 full-height">
-          <div>Central Files</div>
+    <div class="col-12 col-md-9">
+      <div class="row">
+        <div class="col-12 col-md-9"></div>
+        <div class="col-12 col-md-3">
+          <q-btn color="primary" label="Nuevo" icon="add" @click="empresa = null" />
+        </div>
+      </div>
+      <pre>{{empresa}}</pre>
     </div>
   </div>
 </q-page>
 </template>
 <script>
+import SearchEmpresaComponent from 'pages/central-files/SearchEmpresaComponent.vue'
 export default {
   name: 'IndexCentralFilesPage',
+  components: {
+    SearchEmpresaComponent
+  },
   data () {
     return {
-      search: '',
       loading: false,
-      empresas: [],
-      empresaColumn: [
-        { name: 'name', label: 'Name', field: 'name', align: 'left', sortable: true },
-        { name: 'address', label: 'Address', field: 'address', align: 'left', sortable: true },
-        { name: 'phone', label: 'Phone', field: 'phone', align: 'left', sortable: true },
-        { name: 'email', label: 'Email', field: 'email', align: 'left', sortable: true },
-        { name: 'website', label: 'Website', field: 'website', align: 'left', sortable: true },
-        { name: 'action', label: 'Action', field: 'action', align: 'left', sortable: true }
-      ]
+      empresa: null
     }
   },
   mounted () {
-    this.getEmpresas()
+    this.empresaSearch({ id: 1 })
   },
   methods: {
-    getEmpresas () {
+    empresaSearch (empresa) {
+      this.empresa = empresa
       this.loading = true
-      this.$axios.get('empresas')
+      this.$axios.get('empresas/' + empresa.id)
         .then(response => {
-          this.empresas = response.data
-        }).catch(error => {
-          this.$alert(error.response.data.message)
+          this.empresa = response.data
+        })
+        .catch(error => {
+          console.log(error)
         }).finally(() => {
           this.loading = false
         })

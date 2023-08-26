@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
         ]);
         Empresa::factory()
-            ->count(20)
+            ->count(1000)
 //            ->hasDireccion(2)
             ->hasFacturacion(2)
             ->hasSucursals(2)

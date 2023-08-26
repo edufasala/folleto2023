@@ -24,4 +24,5 @@ class Person extends Model
     public function email(){
         return $this->hasMany(Email::class);
     }
+    protected $hidden = ['created_at', 'updated_at'];
 }

@@ -13,6 +13,11 @@ class Empresa extends Model
         'contacto',
         'vendedor',
     ];
+    protected $appends = ['codigo'];
+    public function getCodigoAttribute()
+    {
+        return '#'.str_pad($this->id, 4, '0', STR_PAD_LEFT);
+    }
     public function direccion()
     {
         return $this->hasMany(Direccion::class);
@@ -29,4 +34,5 @@ class Empresa extends Model
     {
         return $this->hasMany(Person::class);
     }
+    protected $hidden = ['created_at'];
 }

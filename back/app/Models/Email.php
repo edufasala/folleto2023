@@ -16,4 +16,5 @@ class Email extends Model
     {
         return $this->belongsTo(Person::class);
     }
+    protected $hidden = ['created_at', 'updated_at'];
 }

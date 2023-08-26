@@ -16,4 +16,5 @@ class PhoneDireccions extends Model
     {
         return $this->belongsTo(Direccion::class);
     }
+    protected $hidden = ['created_at', 'updated_at'];
 }
