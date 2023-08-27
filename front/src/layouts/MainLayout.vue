@@ -56,7 +56,7 @@
     <q-drawer
       v-model="toggle"
       show-if-above
-      bordered
+      :width="200"
       class="bg-primary text-white"
     >
       <q-layout>

@@ -1,13 +1,13 @@
 <template>
-  <q-page class="q-pa-xs">
+  <q-page class="q-pa-xs bg-grey-3">
     <div class="row">
       <div class="col-12 text-uppercase luckiest text-h2 text-center">
         Usuarios
       </div>
     </div>
     <div class="col-12">
-      <q-btn :loading="loading" label="ACTIVOS" no-caps :class="`text-bold ${tab=='activos'?'text-blue':'text-white bg-grey'} w-150`" size="15px" @click="tab = 'activos'"/>
-      <q-btn :loading="loading" label="INACTIVOS" no-caps :class="`text-bold ${tab=='inactivos'?'text-blue':'text-white bg-grey'} w-150`" size="15px" @click="tab = 'inactivos'"/>
+      <q-btn :loading="loading" :color="tab=='activos'?'white':'grey'" label="ACTIVOS" no-caps :class="`text-bold ${tab=='activos'?'text-blue':'text-white bg-grey'} w-150`" size="15px" @click="tab = 'activos'"/>
+      <q-btn :loading="loading" :color="tab=='inactivos'?'white':'grey'" label="INACTIVOS" no-caps :class="`text-bold ${tab=='inactivos'?'text-blue':'text-white bg-grey'} w-150`" size="15px" @click="tab = 'inactivos'"/>
       <q-card>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="activos">

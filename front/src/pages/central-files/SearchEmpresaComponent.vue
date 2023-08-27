@@ -1,5 +1,5 @@
 <template>
-  <q-table dense :rows="empresas" :rows-per-page-options="[20]"
+  <q-table dense :rows="empresas" :rows-per-page-options="[18]"
            :loading="loading" :separator="null" flat bordered class="bg-blue-1"
            :columns="empresaColumn" :filter="search" hide-header hide-bottom>
     <template v-slot:top>
