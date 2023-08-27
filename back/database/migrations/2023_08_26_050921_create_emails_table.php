@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status')->default('Si');
             $table->unsignedBigInteger('person_id');
             $table->foreign('person_id')->references('id')->on('people');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class PersonFactory extends Factory
     {
         return [
             "nombre" => $this->faker->name(),
-            "cargo" => $this->faker->name(),
+            "cargo" => $this->faker->randomElement(["Administrador", "Empleado","Dueño","Cliente","Marketing"]),
             "dni" => $this->faker->numberBetween(10000000, 99999999),
         ];
     }

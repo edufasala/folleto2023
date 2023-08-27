@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

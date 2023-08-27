@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('contacto');
             $table->string('vendedor');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
