@@ -1,7 +1,7 @@
 <template>
 <q-page class="q-pa-xs bg-grey-3">
   <div class="row">
-    <div class="col-12 col-md-2 bg-blue-1 full-height">
+    <div class="col-12 col-md-3 bg-blue-1 full-height">
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-10 q-pa-xs">
+    <div class="col-12 col-md-9 q-pa-xs">
       <div class="row" v-if="empresa.id">
         <div class="col-12 col-md-8">
           <q-item>
@@ -117,26 +117,30 @@
                                 DNI: <b>{{perosn.dni}}</b>
                               </div>
                               <div class="col-5">
-                                <div v-for="phone in perosn.phone" :key="phone.id">
-                                  Telefono: <b>{{phone.phone}}</b>
-                                  <q-btn size="10px" flat dense icon="cancel"
-                                         @click="deletePhone(phone.id)"
-                                         :loading="loading"
-                                         no-caps color="grey">
-                                    <q-tooltip>
-                                      Eliminar
-                                    </q-tooltip>
-                                  </q-btn>
-                                  <q-btn size="10px" flat dense icon="add_circle_outline"
-                                         @click="addPhone(perosn.id)"
-                                         :loading="loading"
-                                         v-if="phone.id == perosn.phone[perosn.phone.length - 1].id"
-                                         no-caps color="blue">
-                                    <q-tooltip>
-                                      Agregar
-                                    </q-tooltip>
-                                  </q-btn>
-                                </div>
+<!--                                <pre>{{persons.phone.length}}</pre>-->
+<!--                                <div v-if="persons.phone">-->
+                                  <div v-for="phone in perosn.phone" :key="phone.id">
+                                    Telefono: <b>{{phone.phone}}</b>
+                                    <q-btn size="10px" flat dense icon="cancel"
+                                           @click="deletePhone(phone.id)"
+                                           :loading="loading"
+                                           no-caps color="grey">
+                                      <q-tooltip>
+                                        Eliminar
+                                      </q-tooltip>
+                                    </q-btn>
+                                    <q-btn size="10px" flat dense icon="add_circle_outline"
+                                           @click="addPhone(perosn.id)"
+                                           :loading="loading"
+                                           v-if="phone.id == perosn.phone[perosn.phone.length - 1].id"
+                                           no-caps color="blue">
+                                      <q-tooltip>
+                                        Agregar
+                                      </q-tooltip>
+                                    </q-btn>
+                                  </div>
+<!--                                </div>-->
+<!--                                <div v-else>as</div>-->
                               </div>
                               <div class="col-7">
                                 <div v-for="email in perosn.email" :key="email.id" class="row items-center">
