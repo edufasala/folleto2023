@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sucursals', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('direccion');
+            $table->string('comentario')->nullable();
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->softDeletes();

@@ -8,7 +8,11 @@
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
-        @empresaSearch="empresaSearch"></PersonComponent>
+        @empresaSearch="empresaSearch"/>
+      <SucursalComponent
+        :empresa="empresa"
+        :sucursals="sucursals"
+        @empresaSearch="empresaSearch"/>
     </div>
     <div class="col-12 col-md-5">
     </div>
@@ -16,9 +20,11 @@
 </template>
 <script>
 import PersonComponent from './PersonComponent.vue'
+import SucursalComponent from './SucursalComponent.vue'
 export default {
   name: 'ContactoComponent',
   components: {
+    SucursalComponent,
     PersonComponent
   },
   props: {

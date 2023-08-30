@@ -18,7 +18,7 @@ class SucursalFactory extends Factory
     {
         return [
             "nombre" => $this->faker->name(),
-            "direccion" => $this->faker->address(),
+            "comentario" => $this->faker->text(),
         ];
     }
 }

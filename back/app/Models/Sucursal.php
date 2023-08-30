@@ -11,7 +11,7 @@ class Sucursal extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'nombre',
-        'direccion',
+        'comentario',
         'empresa_id'
     ];
     public function empresa()
