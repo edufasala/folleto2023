@@ -29,4 +29,5 @@ Route::group(['middleware'=>'auth:sanctum'],function () {
     Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
     Route::resource('phones', \App\Http\Controllers\PhoneController::class);
     Route::resource('emails', \App\Http\Controllers\EmailController::class);
+    Route::resource('persons', \App\Http\Controllers\PersonController::class);
 });

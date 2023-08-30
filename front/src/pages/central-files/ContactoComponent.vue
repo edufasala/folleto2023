@@ -5,7 +5,7 @@
         <div class="col-12 row items-center">
           <div class="text-bold">PERSONAS</div>
           <q-space />
-          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue">
+          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="personDialogClick">
             <q-tooltip>Crear</q-tooltip>
           </q-btn>
         </div>
@@ -19,8 +19,23 @@
                 <div class="col-4">
                   Cargo: <b>{{perosn.cargo}}</b>
                 </div>
-                <div class="col-3">
+                <div class="col-3 row items-center">
                   DNI: <b>{{perosn.dni}}</b>
+                  <q-space />
+                  <q-btn size="10px" flat dense icon="edit" no-caps
+                         color="orange" :loading="loading"
+                         @click="person = perosn; personDialog = true; personOption = 'edit'">
+                    <q-tooltip>
+                      Editar
+                    </q-tooltip>
+                  </q-btn>
+                  <q-btn size="10px" flat dense icon="cancel" no-caps
+                         color="grey" :loading="loading"
+                         @click="deletePerson(perosn.id)">
+                    <q-tooltip>
+                      Eliminar
+                    </q-tooltip>
+                  </q-btn>
                 </div>
                 <div class="col-5">
                   <template v-if="perosn.phone.length>0">
@@ -99,6 +114,39 @@
     </div>
     <div class="col-12 col-md-5">
     </div>
+    <q-dialog v-model="personDialog">
+      <q-card class="q-pa-xs" style="max-width: 400px">
+        <q-card-section class="q-py-none row items-center">
+          <div class="text-h6">{{personOption == 'create' ? 'Crear' : 'Editar'}} Persona</div>
+          <q-space />
+          <q-btn flat dense icon="cancel" v-close-popup />
+        </q-card-section>
+        <q-card-section class="q-py-none">
+          <q-form @submit="personSubmit">
+            <div class="row">
+              <div class="col-12">
+                <q-input dense outlined v-model="person.nombre" label="Nombre"
+                          :rules="[val => !!val || 'El nombre es requerido']"/>
+              </div>
+              <div class="col-12">
+                <q-select dense outlined v-model="person.cargo" label="Cargo" :options="$cargos"
+                          :rules="[val => !!val || 'El cargo es requerido']"/>
+              </div>
+              <div class="col-12">
+                <q-input dense outlined v-model="person.dni" label="DNI"
+                          :rules="[val => !!val || 'El DNI es requerido']"/>
+              </div>
+            </div>
+            <q-card-actions align="right">
+              <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
+              <q-btn dense no-caps :loading="loading" type="submit"
+                     :label="personOption == 'create' ? 'Crear' : 'Editar'"
+                     :color="personOption == 'create' ? 'blue' : 'orange'" />
+            </q-card-actions>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
@@ -132,10 +180,75 @@ export default {
   },
   data () {
     return {
-      loading: false
+      loading: false,
+      personDialog: false,
+      personOption: '',
+      person: {
+        nombre: '',
+        cargo: '',
+        dni: ''
+      }
     }
   },
   methods: {
+    deletePerson (id) {
+      this.$q.dialog({
+        title: 'Eliminar',
+        message: '¿Desea eliminar la persona?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.loading = true
+        this.$axios.delete('persons/' + id)
+          .then(response => {
+            this.$emit('empresaSearch', this.empresa)
+          }).catch(error => {
+            this.$alert.error(error)
+          }).finally(() => {
+            this.loading = false
+          })
+      })
+    },
+    personSubmit () {
+      this.loading = true
+      if (this.personOption === 'create') {
+        this.$axios.post('persons', {
+          nombre: this.person.nombre,
+          cargo: this.person.cargo,
+          dni: this.person.dni,
+          empresa_id: this.empresa.id
+        }).then(response => {
+          this.$emit('empresaSearch', this.empresa)
+          this.personDialog = false
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      } else {
+        this.$axios.put('persons/' + this.person.id, {
+          nombre: this.person.nombre,
+          cargo: this.person.cargo,
+          dni: this.person.dni
+        }).then(response => {
+          this.$emit('empresaSearch', this.empresa)
+          this.personDialog = false
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      }
+    },
+    personDialogClick () {
+      this.personDialog = true
+      this.personOption = 'create'
+      this.person = {
+        nombre: '',
+        cargo: '',
+        dni: ''
+      }
+    },
     deletePhone (id) {
       this.$q.dialog({
         title: 'Eliminar',

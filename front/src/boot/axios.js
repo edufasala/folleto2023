@@ -20,6 +20,7 @@ export default boot(({ app, router }) => {
   app.config.globalProperties.$store = useCounterStore()
   app.config.globalProperties.$alert = Alert
   app.config.globalProperties.$roles = ['Administrador', 'Diseñador', 'Entregador', 'Vendedor', 'Gerente de ventas']
+  app.config.globalProperties.$cargos = ['Administrador', 'Empleado', 'Dueño', 'Cliente', 'Marketing']
   app.config.globalProperties.$filters = {
     dateDmY (fecha) {
       fecha = fecha.substring(0, 10)
