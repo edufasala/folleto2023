@@ -163,13 +163,13 @@ export default {
           icon: 'o_local_shipping',
           to: '/entregas',
           color: 'grey'
-        },
-        {
-          title: 'Nuevo Cliente',
-          icon: 'o_person_add',
-          to: '/nuevo-cliente',
-          color: 'yellow'
         }
+        // {
+        //   title: 'Nuevo Cliente',
+        //   icon: 'o_person_add',
+        //   to: '/nuevo-cliente',
+        //   color: 'yellow'
+        // }
       ]
     }
   },

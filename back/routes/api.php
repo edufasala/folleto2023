@@ -31,4 +31,5 @@ Route::group(['middleware'=>'auth:sanctum'],function () {
     Route::resource('emails', \App\Http\Controllers\EmailController::class);
     Route::resource('persons', \App\Http\Controllers\PersonController::class);
     Route::resource('sucursal', \App\Http\Controllers\SucursalController::class);
+    Route::resource('direccion', \App\Http\Controllers\DireccionController::class);
 });

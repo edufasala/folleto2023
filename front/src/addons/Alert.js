@@ -5,7 +5,8 @@ export class Alert {
       message,
       color: 'positive',
       icon: 'check_circle',
-      position: 'top'
+      position: 'top',
+      actions: [{ icon: 'close', color: 'white' }]
     })
   }
 
@@ -14,7 +15,8 @@ export class Alert {
       message,
       color: 'negative',
       icon: 'error',
-      position: 'top'
+      position: 'top',
+      actions: [{ icon: 'close', color: 'white' }]
     })
   }
 }

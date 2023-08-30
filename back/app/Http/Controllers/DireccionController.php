@@ -6,61 +6,18 @@ use App\Models\Direccion;
 use App\Http\Requests\StoreDireccionRequest;
 use App\Http\Requests\UpdateDireccionRequest;
 
-class DireccionController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class DireccionController extends Controller{
+    public function index(){}
+    public function show(Direccion $direccion){}
+    public function store(StoreDireccionRequest $request){
+        return  Direccion::create($request->all());
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function update(UpdateDireccionRequest $request, Direccion $direccion){
+        $direccion->update($request->all());
+        return $direccion;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreDireccionRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Direccion $direccion)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Direccion $direccion)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateDireccionRequest $request, Direccion $direccion)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Direccion $direccion)
-    {
-        //
+    public function destroy(Direccion $direccion){
+        $direccion->delete();
+        return $direccion;
     }
 }

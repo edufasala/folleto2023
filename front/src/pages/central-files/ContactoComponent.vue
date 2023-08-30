@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12 col-md-7">
+    <div class="col-12 col-md-8">
       <PersonComponent
         :persons="persons"
         :empresa="empresa"
@@ -14,18 +14,27 @@
         :sucursals="sucursals"
         @empresaSearch="empresaSearch"/>
     </div>
-    <div class="col-12 col-md-5">
+    <div class="col-12 col-md-4">
+      <DireccionComponent
+        :empresa="empresa"
+        :direccion="direccion"
+        :phoneDireccions="phoneDireccions"
+        :facturacion="facturacion"
+        :sucursals="sucursals"
+        @empresaSearch="empresaSearch"/>
     </div>
   </div>
 </template>
 <script>
 import PersonComponent from './PersonComponent.vue'
 import SucursalComponent from './SucursalComponent.vue'
+import DireccionComponent from './DireccionComponent.vue'
 export default {
   name: 'ContactoComponent',
   components: {
     SucursalComponent,
-    PersonComponent
+    PersonComponent,
+    DireccionComponent
   },
   props: {
     empresa: {

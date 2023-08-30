@@ -20,7 +20,7 @@
                 <div class="col-3 row items-center">
                   DNI: <b>{{perosn.dni}}</b>
                   <q-space />
-                  <q-btn size="10px" flat dense icon="edit" no-caps
+                  <q-btn size="10px" flat dense icon="o_edit" no-caps
                          color="orange" :loading="loading"
                          @click="person = perosn; personDialog = true; personOption = 'edit'">
                     <q-tooltip>
