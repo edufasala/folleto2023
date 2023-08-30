@@ -4,7 +4,7 @@
            :columns="empresaColumn" :filter="search" hide-header hide-bottom>
     <template v-slot:top>
       <q-input clearable rounded dense outlined bg-color="white" class="q-ma-xs"
-               v-model="search" placeholder="Search">
+               v-model="search" placeholder="Search" :loading="loading">
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>

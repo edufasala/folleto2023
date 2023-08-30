@@ -1,7 +1,7 @@
 <template>
 <q-page class="q-pa-xs bg-grey-3">
   <div class="row">
-    <div class="col-12 col-md-3 bg-blue-1 full-height">
+    <div class="col-12 col-md-3 bg-blue-1 full-height" v-if="ocultar">
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
@@ -11,13 +11,19 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-9 q-pa-xs">
+    <div :class="`col-12 q-pa-xs ${ocultar?'col-md-9':'col-md-12'}`">
       <div class="row" v-if="empresa.id">
         <div class="col-12 col-md-8">
           <q-item>
             <q-item-section top avatar>
+              <q-btn dense flat icon="menu" color="grey" no-caps
+                     :loading="loading" @click="ocultar = !ocultar" style="position: absolute; left: 0;">
+                <q-tooltip>
+                  Ver mas
+                </q-tooltip>
+              </q-btn>
                 <q-avatar size="100px" color="grey-3">
-                  <q-icon name="account_circle" size="100px" />
+                  <q-icon name="account_circle" size="90px" />
                 </q-avatar>
             </q-item-section>
             <q-item-section>
@@ -117,8 +123,7 @@
                                 DNI: <b>{{perosn.dni}}</b>
                               </div>
                               <div class="col-5">
-<!--                                <pre>{{persons.phone.length}}</pre>-->
-<!--                                <div v-if="persons.phone">-->
+                                <template v-if="perosn.phone.length>0">
                                   <div v-for="phone in perosn.phone" :key="phone.id">
                                     Telefono: <b>{{phone.phone}}</b>
                                     <q-btn size="10px" flat dense icon="cancel"
@@ -139,8 +144,17 @@
                                       </q-tooltip>
                                     </q-btn>
                                   </div>
-<!--                                </div>-->
-<!--                                <div v-else>as</div>-->
+                                </template>
+                                <template v-else>
+                                  <q-btn size="10px" flat dense icon="add_circle_outline"
+                                         @click="addPhone(perosn.id)"
+                                         :loading="loading"
+                                         no-caps color="blue">
+                                    <q-tooltip>
+                                      Agregar
+                                    </q-tooltip>
+                                  </q-btn>
+                                </template>
                               </div>
                               <div class="col-7">
                                 <div v-for="email in perosn.email" :key="email.id" class="row items-center">
@@ -187,6 +201,7 @@ export default {
       tab: 'contacto',
       loading: false,
       empresa: {},
+      ocultar: true,
       direccion: [],
       phoneDireccions: [],
       facturacion: [],
@@ -195,7 +210,7 @@ export default {
     }
   },
   mounted () {
-    this.empresaSearch({ id: 1 })
+    // this.empresaSearch({ id: 1 })
   },
   methods: {
     deletePhone (id) {
@@ -252,6 +267,7 @@ export default {
           console.log(error)
         }).finally(() => {
           this.loading = false
+          this.ocultar = false
         })
     }
   }
