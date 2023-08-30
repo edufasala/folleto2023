@@ -24,14 +24,15 @@
                 </div>
                 <div class="col-5">
                   <template v-if="perosn.phone.length>0">
-                    <div v-for="phone in perosn.phone" :key="phone.id">
+                    <div v-for="phone in perosn.phone" :key="phone.id" class="row items-center q-mr-md">
                       Telefono: <b>{{phone.phone}}</b>
+                      <q-space />
                       <q-btn size="10px" flat dense icon="cancel"
                              @click="deletePhone(phone.id)"
                              :loading="loading"
                              no-caps color="grey">
                         <q-tooltip>
-                          Eliminar
+                          Eliminar Telefono
                         </q-tooltip>
                       </q-btn>
                       <q-btn size="10px" flat dense icon="add_circle_outline"
@@ -40,9 +41,10 @@
                              v-if="phone.id == perosn.phone[perosn.phone.length - 1].id"
                              no-caps color="blue">
                         <q-tooltip>
-                          Agregar
+                          Agregar Telefono
                         </q-tooltip>
                       </q-btn>
+                      <q-btn v-else size="10px" flat dense icon=""/>
                     </div>
                   </template>
                   <template v-else>
@@ -51,24 +53,42 @@
                            :loading="loading"
                            no-caps color="blue">
                       <q-tooltip>
-                        Agregar
+                        Agregar Telefono
                       </q-tooltip>
                     </q-btn>
                   </template>
                 </div>
                 <div class="col-7">
-                  <div v-for="email in perosn.email" :key="email.id" class="row items-center">
-                    Email: <b>{{email.email}}</b>
-                    <q-space />
-                    <q-checkbox dense v-model="email.status" left-label :label="email.status"
-                                false-value="No" true-value="Si" :disable="loading" />
-                    <q-btn size="10px" flat dense icon="cancel" no-caps
-                           color="grey" :loading="loading">
+                  <template v-if="perosn.email.length>0">
+                    <div v-for="email in perosn.email" :key="email.id" class="row items-center">
+                      Email: <b>{{email.email}}</b>
+                      <q-space />
+                      <q-checkbox dense v-model="email.status" left-label :label="email.status"
+                                  false-value="No" true-value="Si" :disable="loading" @update:model-value="updateEmailStatus(email)"/>
+                      <q-btn size="10px" flat dense icon="cancel" no-caps
+                             color="grey" :loading="loading" @click="deleteEmail(email.id)">
+                        <q-tooltip>
+                          Eliminar Email
+                        </q-tooltip>
+                      </q-btn>
+                      <q-btn size="10px" flat dense icon="add_circle_outline" no-caps
+                             color="blue" :loading="loading" v-if="email.id == perosn.email[perosn.email.length - 1].id"
+                             @click="addEmail(perosn.id)">
+                        <q-tooltip>
+                          Agregar Email
+                        </q-tooltip>
+                      </q-btn>
+                      <q-btn v-else size="10px" flat dense icon=""/>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <q-btn size="10px" flat dense icon="add_circle_outline" no-caps
+                           color="blue" :loading="loading" @click="addEmail(perosn.id)">
                       <q-tooltip>
-                        Eliminar
+                        Agregar Email
                       </q-tooltip>
                     </q-btn>
-                  </div>
+                  </template>
                 </div>
               </div>
             </q-card-section>
@@ -156,6 +176,53 @@ export default {
         }).finally(() => {
           this.loading = false
         })
+      })
+    },
+    addEmail (personId) {
+      this.$q.dialog({
+        title: 'Agregar Email',
+        message: 'Ingrese el email',
+        prompt: {
+          model: '',
+          type: 'text'
+        },
+        cancel: true,
+        persistent: true
+      }).onOk(data => {
+        this.loading = true
+        this.$axios.post('emails', {
+          email: data,
+          person_id: personId
+        }).then(response => {
+          this.$emit('empresaSearch', this.empresa)
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      })
+    },
+    deleteEmail (id) {
+      this.$q.dialog({
+        title: 'Eliminar',
+        message: '¿Desea eliminar el email?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.loading = true
+        this.$axios.delete('emails/' + id)
+          .then(response => {
+            this.$emit('empresaSearch', this.empresa)
+          }).catch(error => {
+            this.$alert.error(error)
+          }).finally(() => {
+            this.loading = false
+          })
+      })
+    },
+    updateEmailStatus (email) {
+      this.$axios.put('emails/' + email.id, {
+        status: email.status
       })
     }
   }

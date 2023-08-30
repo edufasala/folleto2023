@@ -5,62 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Email;
 use App\Http\Requests\StoreEmailRequest;
 use App\Http\Requests\UpdateEmailRequest;
+use Illuminate\Http\Request;
 
-class EmailController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class EmailController extends Controller{
+    public function index(){}
+    public function store(StoreEmailRequest $request){
+        $email = Email::create($request->all());
+        return $email;
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function show(Email $email){}
+    public function update(UpdateEmailRequest $request, Email $email){
+        $email->update($request->all());
+        return $email;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEmailRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Email $email)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Email $email)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEmailRequest $request, Email $email)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Email $email)
-    {
-        //
+    public function destroy(Email $email){
+        $email->delete();
+        return $email;
     }
 }
