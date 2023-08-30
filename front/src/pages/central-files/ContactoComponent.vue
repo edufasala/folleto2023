@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     empresaSearch (empresa) {
+      console.log(empresa)
       this.$emit('empresaSearch', empresa)
     }
   }
