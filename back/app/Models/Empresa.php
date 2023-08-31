@@ -35,5 +35,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Person::class);
     }
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
     protected $hidden = ['updated_at'];
 }

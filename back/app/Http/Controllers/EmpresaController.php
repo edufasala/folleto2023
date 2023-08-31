@@ -10,11 +10,14 @@ class EmpresaController extends Controller{
     public function index(){ return Empresa::get(); }
     public function show(Empresa $empresa){
         $empresa= Empresa::where('id', $empresa->id)
-            ->with(['direccion.phoneDireccions',
+            ->with([
+                'direccion.phoneDireccions',
                 'facturacion',
                 'sucursals',
                 'person.phone',
-                'person.email'])
+                'person.email',
+                'notes',
+            ])
             ->first();
         return $empresa;
     }

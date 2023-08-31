@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Direccion;
 use App\Models\Empresa;
+use App\Models\Note;
 use App\Models\Person;
 use Illuminate\Database\Seeder;
 
@@ -42,6 +43,11 @@ class DatabaseSeeder extends Seeder
                 Direccion::factory()
                     ->count(2)
                     ->hasPhoneDireccions(2)
+                    ->create([
+                        'empresa_id' => $empresa->id,
+                    ]);
+                Note::factory()
+                    ->count(10)
                     ->create([
                         'empresa_id' => $empresa->id,
                     ]);
