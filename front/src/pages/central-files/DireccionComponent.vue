@@ -34,56 +34,42 @@
             </div>
             <div class="col-12 row items-center">
               Localidad: <b>{{d.localidad}}</b>
-              <q-space />
-<!--              <q-btn size="10px" flat dense icon="edit" no-caps-->
-<!--                     color="orange" :loading="loading"-->
-<!--                     @click="direccionDato = d; direccionDialog = true; direccionOption = 'edit'">-->
-<!--                <q-tooltip>-->
-<!--                  Editar-->
-<!--                </q-tooltip>-->
-<!--              </q-btn>-->
-<!--              <q-btn size="10px" flat dense icon="cancel" no-caps-->
-<!--                     color="grey" :loading="loading"-->
-<!--                     @click="deleteDirecion(d.id)">-->
-<!--                <q-tooltip>-->
-<!--                  Eliminar-->
-<!--                </q-tooltip>-->
-<!--              </q-btn>-->
             </div>
-<!--            <div class="col-5">-->
-<!--              <template v-if="direccion.phone.length>0">-->
-<!--                <div v-for="phone in direccion.phone" :key="phone.id" class="row items-center q-mr-md">-->
-<!--                  Telefono: <b>{{phone.phone}}</b>-->
-<!--                  <q-space />-->
-<!--                  <q-btn size="10px" flat dense icon="cancel"-->
-<!--                         @click="deletePhone(phone.id)"-->
-<!--                         :loading="loading"-->
-<!--                         no-caps color="grey">-->
-<!--                    <q-tooltip>-->
-<!--                      Eliminar Telefono-->
-<!--                    </q-tooltip>-->
-<!--                  </q-btn>-->
-<!--                  <q-btn size="10px" flat dense icon="add_circle_outline"-->
-<!--                         @click="addPhone(direccion.id)"-->
-<!--                         :loading="loading"-->
-<!--                         v-if="phone.id == direccion.phone[direccion.phone.length - 1].id"-->
-<!--                         no-caps color="blue">-->
-<!--                    <q-tooltip>-->
-<!--                      Agregar Telefono-->
-<!--                    </q-tooltip>-->
-<!--                  </q-btn>-->
-<!--                  <q-btn v-else size="10px" flat dense icon=""/>-->
-<!--                </div>-->
-<!--              </template>-->
-<!--              <template v-else>-->
-<!--                <q-btn size="10px" flat dense icon="add_circle_outline"-->
-<!--                       @click="addPhone(direccion.id)"-->
-<!--                       :loading="loading"-->
-<!--                       no-caps color="blue">-->
-<!--                  <q-tooltip>-->
-<!--                    Agregar Telefono-->
-<!--                  </q-tooltip>-->
-<!--                </q-btn>-->
+            <div class="col-12">
+              <template v-if="d.phone_direccions.length>0">
+                <div v-for="phone in d.phone_direccions" :key="phone.id" class="row">
+                  Telefono: <b>{{phone.phone}}</b>
+                  <q-space />
+                  <q-btn size="10px" flat dense icon="cancel"
+                         @click="deletePhone(phone.id)"
+                         :loading="loading"
+                         no-caps color="grey">
+                    <q-tooltip>
+                      Eliminar Telefono
+                    </q-tooltip>
+                  </q-btn>
+                  <q-btn size="10px" flat dense icon="add_circle_outline"
+                         @click="addPhone(d.id)"
+                         :loading="loading"
+                         v-if="phone.id == d.phone_direccions[d.phone_direccions.length - 1].id"
+                         no-caps color="blue">
+                    <q-tooltip>
+                      Agregar Telefono
+                    </q-tooltip>
+                  </q-btn>
+                  <q-btn v-else size="10px" flat dense icon=""/>
+                </div>
+              </template>
+              <template v-else>
+<!--                <span class="text-overline">Agregar Telefono</span>-->
+                <q-btn size="10px" flat dense icon="add_circle_outline"
+                       @click="addPhone(d.id)"
+                       :loading="loading"
+                       no-caps color="blue">
+                  <q-tooltip>
+                    Agregar Telefono
+                  </q-tooltip>
+                </q-btn>
 <!--              </template>-->
 <!--            </div>-->
 <!--            <div class="col-7">-->
@@ -116,8 +102,8 @@
 <!--                    Agregar Email-->
 <!--                  </q-tooltip>-->
 <!--                </q-btn>-->
-<!--              </template>-->
-<!--            </div>-->
+              </template>
+            </div>
           </div>
         </q-card-section>
       </q-card>
@@ -242,7 +228,7 @@ export default {
         persistent: true
       }).onOk(() => {
         this.loading = true
-        this.$axios.delete('phones/' + id)
+        this.$axios.delete('phoneDireccions/' + id)
           .then(response => {
             this.$emit('empresaSearch', this.empresa)
           }).catch(error => {
@@ -264,7 +250,7 @@ export default {
         persistent: true
       }).onOk(data => {
         this.loading = true
-        this.$axios.post('phones', {
+        this.$axios.post('phoneDireccions', {
           phone: data,
           direccion_id: direccionId
         }).then(response => {

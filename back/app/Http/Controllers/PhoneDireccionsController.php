@@ -6,61 +6,17 @@ use App\Models\PhoneDireccions;
 use App\Http\Requests\StorePhoneDireccionsRequest;
 use App\Http\Requests\UpdatePhoneDireccionsRequest;
 
-class PhoneDireccionsController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class PhoneDireccionsController extends Controller{
+    public function index(){}
+    public function show(PhoneDireccions $phoneDireccions){}
+    public function store(StorePhoneDireccionsRequest $request){
+        $phoneDireccions = PhoneDireccions::create($request->all());
+        return redirect()->route('phoneDireccions.show', $phoneDireccions->id);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePhoneDireccionsRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(PhoneDireccions $phoneDireccions)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PhoneDireccions $phoneDireccions)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePhoneDireccionsRequest $request, PhoneDireccions $phoneDireccions)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PhoneDireccions $phoneDireccions)
-    {
-        //
+    public function update(UpdatePhoneDireccionsRequest $request, PhoneDireccions $phoneDireccions){}
+    public function destroy($id){
+        $phoneDireccions = PhoneDireccions::find($id);
+        $phoneDireccions->delete();
+        return $phoneDireccions;
     }
 }
