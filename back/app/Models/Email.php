@@ -10,8 +10,8 @@ class Email extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'email',
         'status',
+        'email',
         'person_id'
     ];
     public function person()

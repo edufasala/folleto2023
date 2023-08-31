@@ -33,4 +33,5 @@ Route::group(['middleware'=>'auth:sanctum'],function () {
     Route::resource('sucursal', \App\Http\Controllers\SucursalController::class);
     Route::resource('direccion', \App\Http\Controllers\DireccionController::class);
     Route::resource('phoneDireccions', \App\Http\Controllers\PhoneDireccionsController::class);
+    Route::resource('facturacion', \App\Http\Controllers\FacturacionController::class);
 });

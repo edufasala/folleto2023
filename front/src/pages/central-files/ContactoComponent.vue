@@ -22,6 +22,13 @@
         :facturacion="facturacion"
         :sucursals="sucursals"
         @empresaSearch="empresaSearch"/>
+      <FacturacionComponent
+        :empresa="empresa"
+        :direccion="direccion"
+        :phoneDireccions="phoneDireccions"
+        :facturacion="facturacion"
+        :sucursals="sucursals"
+        @empresaSearch="empresaSearch"/>
     </div>
   </div>
 </template>
@@ -29,12 +36,14 @@
 import PersonComponent from './PersonComponent.vue'
 import SucursalComponent from './SucursalComponent.vue'
 import DireccionComponent from './DireccionComponent.vue'
+import FacturacionComponent from './FacturacionComponent.vue'
 export default {
   name: 'ContactoComponent',
   components: {
     SucursalComponent,
     PersonComponent,
-    DireccionComponent
+    DireccionComponent,
+    FacturacionComponent
   },
   props: {
     empresa: {
