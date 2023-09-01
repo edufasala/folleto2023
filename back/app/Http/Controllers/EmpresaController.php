@@ -16,7 +16,7 @@ class EmpresaController extends Controller{
                 'sucursals',
                 'person.phone',
                 'person.email',
-                'notes',
+                'notes.user',
             ])
             ->first();
         return $empresa;

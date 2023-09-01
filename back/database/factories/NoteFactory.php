@@ -17,7 +17,7 @@ class NoteFactory extends Factory
     public function definition(): array
     {
         return [
-            'body' => $this->faker->text(),
+            'body' => $this->faker->text(300),
             'date' => $this->faker->date(),
             'color' => $this->faker->randomElement(["red","white"]),
             'user_id' => $this->faker->randomElement(["1","2","3","4","5","6","7","8","9","10"]),

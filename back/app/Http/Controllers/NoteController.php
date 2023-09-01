@@ -5,62 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
+use Illuminate\Http\Request;
 
-class NoteController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class NoteController extends Controller{
+    public function index(Request $request){
+        return  Note::where('empresa_id', $request->empresa_id)->with('user')->get();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function store(StoreNoteRequest $request){
+        $request->merge(['user_id' => $request->user()->id]);
+        $note = Note::create($request->all());
+        return response()->json($note, 201);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreNoteRequest $request)
-    {
-        //
+    public function show(Note $note){
+        return $note;
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Note $note)
-    {
-        //
+    public function update(UpdateNoteRequest $request, Note $note){
+        $note->update($request->all());
+        return response()->json($note, 200);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Note $note)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateNoteRequest $request, Note $note)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Note $note)
-    {
-        //
+    public function destroy(Note $note){
+        $note->delete();
+        return response()->json(null, 204);
     }
 }

@@ -37,7 +37,7 @@ class Empresa extends Model
     }
     public function notes()
     {
-        return $this->hasMany(Note::class);
+        return $this->hasMany(Note::class)->orderBy('created_at','desc');
     }
     protected $hidden = ['updated_at'];
 }

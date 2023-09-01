@@ -84,15 +84,15 @@
           </q-card>
         </div>
         <div class="col-12">
-          <q-btn :loading="loading" :color="tab=='contacto'?'white':'grey'"
+          <q-btn :loading="loading" :color="tab==='contacto'?'white':'grey'"
                  label="CONTACTO" no-caps text-color="black"
                  :class="`text-bold w-150`"
                  size="15px" @click="tab = 'contacto'"/>
-          <q-btn :loading="loading" :color="tab=='pedido'?'white':'grey'"
+          <q-btn :loading="loading" :color="tab==='pedido'?'white':'grey'"
                  label="PEDIDOS" no-caps text-color="black"
                  :class="`text-bold w-150`"
                  size="15px" @click="tab = 'pedido'"/>
-          <q-btn :loading="loading" :color="tab=='notas'?'white':'grey'"
+          <q-btn :loading="loading" :color="tab==='notas'?'white':'grey'"
                  label="NOTAS" no-caps text-color="black"
                  :class="`text-bold w-150`"
                  size="15px" @click="tab = 'notas'"/>
@@ -105,7 +105,10 @@
                                    :facturacion="facturacion"
                                    :sucursals="sucursals"
                                    :persons="persons"
-                                   @empresaSearch="empresaSearch"></ContactoComponent>
+                                   @empresaSearch="empresaSearch"/>
+              </q-tab-panel>
+              <q-tab-panel name="notas">
+                <NotasComponent :empresa="empresa" :notes="notes" @empresaSearch="empresaSearch"/>
               </q-tab-panel>
             </q-tab-panels>
           </q-card>
@@ -118,15 +121,17 @@
 <script>
 import SearchEmpresaComponent from 'pages/central-files/SearchEmpresaComponent.vue'
 import ContactoComponent from 'pages/central-files/ContactoComponent.vue'
+import NotasComponent from 'pages/central-files/NotasComponent.vue'
 export default {
   name: 'IndexCentralFilesPage',
   components: {
     SearchEmpresaComponent,
-    ContactoComponent
+    ContactoComponent,
+    NotasComponent
   },
   data () {
     return {
-      tab: 'contacto',
+      tab: 'notas',
       loading: false,
       empresa: {},
       ocultar: true,
@@ -134,7 +139,8 @@ export default {
       phoneDireccions: [],
       facturacion: [],
       sucursals: [],
-      persons: []
+      persons: [],
+      notes: []
     }
   },
   mounted () {
@@ -152,6 +158,7 @@ export default {
           this.facturacion = response.data.facturacion
           this.sucursals = response.data.sucursals
           this.persons = response.data.person
+          this.notes = response.data.notes
         })
         .catch(error => {
           console.log(error)
