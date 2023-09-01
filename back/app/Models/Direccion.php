@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\AuditingServiceProvider;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Direccion extends Model
+class Direccion extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, \OwenIt\Auditing\Auditable;
     protected $table = 'direccions';
     protected $fillable = [
         'direccion',
@@ -25,4 +27,11 @@ class Direccion extends Model
         return $this->hasMany(PhoneDireccions::class);
     }
     protected $hidden = ['created_at', 'updated_at'];
+    public static function resolveId()
+    {
+//        $userArr = Session::get('user');
+        $userId = 1;
+        return $userId;
+    }
+
 }
