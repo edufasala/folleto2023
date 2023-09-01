@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('direccions', function (Blueprint $table) {
             $table->id();
-            $table->string('direccion');
-            $table->string('codigoPostal');
-            $table->string('localidad');
+            $table->string('direccion')->nullable();
+            $table->string('codigoPostal')->nullable();
+            $table->string('localidad')->nullable();
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->softDeletes();

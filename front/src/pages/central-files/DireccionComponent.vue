@@ -70,38 +70,6 @@
                     Agregar Telefono
                   </q-tooltip>
                 </q-btn>
-<!--              </template>-->
-<!--            </div>-->
-<!--            <div class="col-7">-->
-<!--              <template v-if="direccion.email.length>0">-->
-<!--                <div v-for="email in direccion.email" :key="email.id" class="row items-center">-->
-<!--                  Email: <b>{{email.email}}</b>-->
-<!--                  <q-space />-->
-<!--                  <q-checkbox dense v-model="email.status" left-label :label="email.status"-->
-<!--                              false-value="No" true-value="Si" :disable="loading" @update:model-value="updateEmailStatus(email)"/>-->
-<!--                  <q-btn size="10px" flat dense icon="cancel" no-caps-->
-<!--                         color="grey" :loading="loading" @click="deleteEmail(email.id)">-->
-<!--                    <q-tooltip>-->
-<!--                      Eliminar Email-->
-<!--                    </q-tooltip>-->
-<!--                  </q-btn>-->
-<!--                  <q-btn size="10px" flat dense icon="add_circle_outline" no-caps-->
-<!--                         color="blue" :loading="loading" v-if="email.id == direccion.email[direccion.email.length - 1].id"-->
-<!--                         @click="addEmail(direccion.id)">-->
-<!--                    <q-tooltip>-->
-<!--                      Agregar Email-->
-<!--                    </q-tooltip>-->
-<!--                  </q-btn>-->
-<!--                  <q-btn v-else size="10px" flat dense icon=""/>-->
-<!--                </div>-->
-<!--              </template>-->
-<!--              <template v-else>-->
-<!--                <q-btn size="10px" flat dense icon="add_circle_outline" no-caps-->
-<!--                       color="blue" :loading="loading" @click="addEmail(direccion.id)">-->
-<!--                  <q-tooltip>-->
-<!--                    Agregar Email-->
-<!--                  </q-tooltip>-->
-<!--                </q-btn>-->
               </template>
             </div>
           </div>
@@ -123,12 +91,10 @@
                          :rules="[val => !!val || 'La direccion es requerida']"/>
               </div>
               <div class="col-12">
-                <q-input dense outlined v-model="direccionDato.codigoPostal" label="Codigo Postal"
-                          :rules="[val => !!val || 'El codigo postal es requerido']"/>
+                <q-input dense outlined v-model="direccionDato.codigoPostal" label="Codigo Postal"/>
               </div>
               <div class="col-12">
-                <q-input dense outlined v-model="direccionDato.localidad" label="Localidad"
-                         :rules="[val => !!val || 'La localidad es requerida']"/>
+                <q-input dense outlined v-model="direccionDato.localidad" label="Localidad"/>
               </div>
             </div>
             <q-card-actions align="right">

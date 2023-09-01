@@ -126,8 +126,7 @@
                               :rules="[val => !!val || 'El cargo es requerido']"/>
                   </div>
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.dni" label="DNI"
-                             :rules="[val => !!val || 'El DNI es requerido']"/>
+                    <q-input dense outlined v-model="person.dni" label="DNI"/>
                   </div>
                 </div>
                 <q-card-actions align="right">

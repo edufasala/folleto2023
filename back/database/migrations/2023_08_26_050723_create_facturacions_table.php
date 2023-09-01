@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('facturacions', function (Blueprint $table) {
             $table->id();
-            $table->string('cuit');
-            $table->string('condicional');
-            $table->string('razonSocial');
-            $table->string('comentario');
+            $table->string('cuit')->nullable();
+            $table->string('condicional')->nullable();
+            $table->string('razonSocial')->nullable();
+            $table->string('comentario')->nullable();
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->softDeletes();

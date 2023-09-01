@@ -25,6 +25,9 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Usuarios']);
         Permission::create(['name' => 'Estadisticas']);
         Permission::create(['name' => 'Central Files']);
+        Permission::create(['name' => 'Persona crear']);
+        Permission::create(['name' => 'Persona editar']);
+        Permission::create(['name' => 'Persona eliminar']);
         Permission::create(['name' => 'Precios']);
         Permission::create(['name' => 'Tesoreria']);
         Permission::create(['name' => 'Facturas']);
