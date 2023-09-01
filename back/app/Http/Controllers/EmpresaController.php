@@ -21,7 +21,15 @@ class EmpresaController extends Controller{
             ->first();
         return $empresa;
     }
-    public function store(StoreEmpresaRequest $request){ return Empresa::create($request->all()); }
-    public function update(UpdateEmpresaRequest $request, Empresa $empresa){ return $empresa->update($request->all()); }
-    public function destroy(Empresa $empresa){ return $empresa->delete(); }
+    public function store(StoreEmpresaRequest $request){
+        return Empresa::create($request->all());
+    }
+    public function update(UpdateEmpresaRequest $request, $id){
+        $empresa = Empresa::findOrFail($id);
+        $empresa->update($request->all());
+        return $empresa;
+    }
+    public function destroy(Empresa $empresa){
+//        return $empresa->delete();
+    }
 }

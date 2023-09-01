@@ -4,7 +4,7 @@
       <div class="text-bold">DIRECCIONES</div>
       <q-space />
       <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="direccionDialogClick">
-        <q-tooltip>Crear</q-tooltip>
+        <q-tooltip>Crear Direccion</q-tooltip>
       </q-btn>
     </div>
     <div class="col-12">

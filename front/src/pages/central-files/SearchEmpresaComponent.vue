@@ -30,11 +30,17 @@
 <script>
 export default {
   name: 'SearchEmpresaComponent',
+  props: {
+    empresas: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   data () {
     return {
       search: '',
       loading: false,
-      empresas: [],
+      // empresas: [],
       empresaColumn: [
         { name: 'codigo', label: 'Código', field: 'codigo', align: 'left', sortable: true, hide: true },
         { name: 'nombre', label: 'Nombre', field: 'nombre', align: 'left', sortable: true }
@@ -42,20 +48,20 @@ export default {
     }
   },
   mounted () {
-    this.getEmpresas()
+    // this.getEmpresas()
   },
   methods: {
-    getEmpresas () {
-      this.loading = true
-      this.$axios.get('empresas')
-        .then(response => {
-          this.empresas = response.data
-        }).catch(error => {
-          this.$alert(error.response.data.message)
-        }).finally(() => {
-          this.loading = false
-        })
-    }
+    // getEmpresas () {
+    //   this.loading = true
+    //   this.$axios.get('empresas')
+    //     .then(response => {
+    //       this.empresas = response.data
+    //     }).catch(error => {
+    //       this.$alert(error.response.data.message)
+    //     }).finally(() => {
+    //       this.loading = false
+    //     })
+    // }
   }
 }
 </script>

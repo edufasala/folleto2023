@@ -33,9 +33,6 @@
             <div class="col-12">
               {{note.body}}
             </div>
-<!--            <div class="col-12">-->
-<!--              <pre>{{note}}</pre>-->
-<!--            </div>-->
           </div>
         </q-card-section>
       </q-card>

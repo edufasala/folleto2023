@@ -5,9 +5,12 @@
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
+          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick">
+            <q-tooltip>Crear</q-tooltip>
+          </q-btn>
         </div>
         <div class="col-12">
-          <SearchEmpresaComponent @empresaSearch="empresaSearch" />
+          <SearchEmpresaComponent @empresaSearch="empresaSearch" :empresas="empresas" />
         </div>
       </div>
     </div>
@@ -27,7 +30,16 @@
                 </q-avatar>
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-bold text-h5">{{empresa.nombre}}</q-item-label>
+              <q-item-label class="text-bold text-h5 row items-center">
+                {{empresa.nombre}}
+                <q-space />
+                <q-btn dense flat icon="o_edit" color="grey" no-caps
+                       :loading="loading" @click="clickEditEmpresa(empresa)">
+                  <q-tooltip>
+                    Editar
+                  </q-tooltip>
+                </q-btn>
+              </q-item-label>
               <q-item-label >
                 <q-item>
                   <q-item-section top avatar>
@@ -100,7 +112,6 @@
             <q-tab-panels v-model="tab" animated>
               <q-tab-panel name="contacto">
                 <ContactoComponent :empresa="empresa" :direccion="direccion"
-                                   v-if="persons.length>0"
                                    :phoneDireccions="phoneDireccions"
                                    :facturacion="facturacion"
                                    :sucursals="sucursals"
@@ -116,6 +127,39 @@
       </div>
     </div>
   </div>
+  <q-dialog v-model="empresaDialog">
+    <q-card class="q-pa-xs" style="max-width: 400px">
+      <q-card-section class="q-py-none row items-center">
+        <div class="text-h6">{{empresaOption === 'create' ? 'Crear' : 'Editar'}} Empresa</div>
+        <q-space />
+        <q-btn flat dense icon="cancel" v-close-popup />
+      </q-card-section>
+      <q-card-section class="q-py-none">
+        <q-form @submit="empresaSubmit">
+          <div class="row">
+            <div class="col-12">
+              <q-input dense outlined v-model="empresa.nombre" label="Nombre" type="text"
+                       :rules="[val => !!val || 'El nombre es requerido']"/>
+            </div>
+            <div class="col-12">
+              <q-select dense outlined v-model="empresa.contacto" label="Contacto" :options="['Facebook','Whatsapp','Telefono', 'Email']"
+                        :rules="[val => !!val || 'El contacto es requerido']"/>
+            </div>
+            <div class="col-12">
+              <q-input dense outlined v-model="empresa.vendedor" label="Vendedor" type="text"
+                       :rules="[val => !!val || 'El vendedor es requerido']"/>
+            </div>
+          </div>
+          <q-card-actions align="right">
+            <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
+            <q-btn dense no-caps :loading="loading" type="submit"
+                   :label="empresaOption === 'create' ? 'Crear' : 'Editar'"
+                   :color="empresaOption === 'create' ? 'blue' : 'orange'" />
+          </q-card-actions>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </q-page>
 </template>
 <script>
@@ -131,22 +175,69 @@ export default {
   },
   data () {
     return {
-      tab: 'notas',
+      tab: 'contacto',
       loading: false,
       empresa: {},
+      empresas: [],
       ocultar: true,
       direccion: [],
       phoneDireccions: [],
       facturacion: [],
       sucursals: [],
       persons: [],
-      notes: []
+      notes: [],
+      empresaDialog: false,
+      empresaOption: ''
     }
   },
   mounted () {
-    this.empresaSearch({ id: 1 })
+    this.getEmpresas()
+    // this.empresaSearch({ id: 1 })
   },
   methods: {
+    clickEditEmpresa (empresa) {
+      this.empresaDialog = true
+      this.empresa = { ...empresa }
+      this.empresaOption = 'edit'
+    },
+    getEmpresas () {
+      this.loading = true
+      this.$axios.get('empresas')
+        .then(response => {
+          this.empresas = response.data
+        }).catch(error => {
+          this.$alert(error.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+    },
+    empresaDialogClick () {
+      this.empresaDialog = true
+      this.empresaOption = 'create'
+      this.empresa = {}
+    },
+    empresaSubmit () {
+      this.loading = true
+      if (this.empresaOption === 'create') {
+        this.$axios.post('empresas', this.empresa).then(response => {
+          this.getEmpresas()
+          this.empresaDialog = false
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      } else {
+        this.$axios.put('empresas/' + this.empresa.id, this.empresa).then(response => {
+          this.getEmpresas()
+          this.empresaDialog = false
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      }
+    },
     empresaSearch (empresa) {
       this.empresa = empresa
       this.loading = true
