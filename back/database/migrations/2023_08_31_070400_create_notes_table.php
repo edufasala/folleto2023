@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('color');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('empresa_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

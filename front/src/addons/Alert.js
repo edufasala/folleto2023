@@ -11,6 +11,10 @@ export class Alert {
   }
 
   static error (message) {
+    // console.log(message)
+    if (message.message) {
+      message = message.message
+    }
     Notify.create({
       message,
       color: 'negative',

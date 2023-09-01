@@ -113,7 +113,7 @@
     </div>
     <q-dialog v-model="userDialog" prevent-close>
       <q-card style="width: 750px">
-        <q-card-section class="row items-center q-pb-none">
+        <q-card-section class="row items-center q-py-none">
           <q-icon name="account_circle" size="25px"/>
           <div class="text-h6 text-bold q-pl-xs">{{userOption==='add'?'Nuevo':'Editar'}} usuario</div>
           <q-space/>
@@ -121,17 +121,17 @@
             <q-tooltip>Cerrar</q-tooltip>
           </q-btn>
         </q-card-section>
-        <q-card-section>
+        <q-card-section class="q-py-none">
           <q-form @submit="userSubmit(user)">
-            <q-input outlined v-model="user.name" label="Nombre" :loading="loading" required/>
-            <q-input outlined v-model="user.email" label="Correo" :loading="loading" required/>
-            <q-input outlined v-model="user.password" label="Contraseña"
+            <q-input dense outlined v-model="user.name" label="Nombre" :loading="loading" required/>
+            <q-input dense outlined v-model="user.email" label="Correo" :loading="loading" required/>
+            <q-input dense outlined v-model="user.password" label="Contraseña"
                      :loading="loading" require v-if="userOption=='add'" type="password"/>
-            <q-input outlined v-model="user.password_confirmation" label="Confirmar contraseña"
+            <q-input dense outlined v-model="user.password_confirmation" label="Confirmar contraseña"
                      :loading="loading" require v-if="userOption=='add'" type="password"
                      :rules="[val => val === user.password || 'Las contraseñas no coinciden']"
             />
-            <q-select outlined required v-model="user.role" label="Rol" :options="$roles"/>
+            <q-select dense outlined required v-model="user.role" label="Rol" :options="$roles"/>
             <div v-for="permission in permissions" :key="permission.id" class="q-pl-lg">
               <q-checkbox v-model="permission.checked" :label="permission.name" dense />
             </div>
