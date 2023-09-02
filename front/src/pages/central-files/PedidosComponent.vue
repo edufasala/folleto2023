@@ -54,44 +54,14 @@
         </tbody>
       </q-markup-table>
     </div>
-    <q-dialog v-model="pedidoDialog">
-      <q-card class="q-pa-xs" style="max-width: 400px">
-        <q-card-section class="q-py-none row items-center">
-          <div class="text-h6">{{pedidoOption === 'create' ? 'Crear' : 'Editar'}} Nota</div>
-          <q-space />
-          <q-btn flat dense icon="cancel" v-close-popup />
-        </q-card-section>
-        <q-card-section class="q-py-none">
-          <q-form @submit="pedidoSubmit">
-            <div class="row">
-              <div class="col-12">
-                <q-input dense outlined v-model="pedidoDato.date" label="Fecha" type="date"
-                         :rules="[val => !!val || 'La fecha es requerida']"/>
-              </div>
-              <div class="col-12">
-                <q-select dense outlined v-model="pedidoDato.color" label="Color" :options="['white', 'red']"
-                          :rules="[val => !!val || 'El color es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="pedidoDato.body" label="Nota" type="textarea"
-                         :rules="[val => !!val || 'La nota es requerida']"/>
-              </div>
-            </div>
-            <q-card-actions align="right">
-              <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-              <q-btn dense no-caps :loading="loading" type="submit"
-                     :label="pedidoOption === 'create' ? 'Crear' : 'Editar'"
-                     :color="pedidoOption === 'create' ? 'blue' : 'orange'" />
-            </q-card-actions>
-          </q-form>
-        </q-card-section>
-      </q-card>
+    <q-dialog v-model="pedidoDialogVer">
+      <PedidoShowComponent :empresa="empresa" :pedido="pedidoDato" @empresaSearch="$emit('empresaSearch', $event)"/>
     </q-dialog>
   </div>
 </template>
 <script>
 import { date } from 'quasar'
-// import moment from 'moment'
+import PedidoShowComponent from './PedidoShowComponent.vue'
 
 export default {
   name: 'PedidosComponent',
@@ -105,18 +75,27 @@ export default {
       required: true
     }
   },
+  components: {
+    PedidoShowComponent
+  },
   data () {
     return {
       loading: false,
       pedidoDialog: false,
+      pedidoDialogVer: false,
       pedidoOption: '',
       pedidoDato: {},
       pedidosDatos: this.pedidos
     }
   },
+  mounted () {
+    setTimeout(() => {
+      this.pedidoClickUpdate(this.pedidos[0])
+    }, 2500)
+  },
   methods: {
     pedidoClickUpdate (pedido) {
-      this.pedidoDialog = true
+      this.pedidoDialogVer = true
       this.pedidoOption = 'update'
       this.pedidoDato = {
         ...pedido
@@ -179,3 +158,9 @@ export default {
   }
 }
 </script>
+<style>
+.formatFecha {
+  font-size: 0.8em;
+  line-height: 1;
+}
+</style>

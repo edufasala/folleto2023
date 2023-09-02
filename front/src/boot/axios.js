@@ -30,11 +30,17 @@ export default boot(({ app, router }) => {
       return ` ${dias[moment(String(fecha)).format('d')]} ${moment(String(fecha)).format('DD')} de ${mes[moment(String(fecha)).format('MM') - 1]} del ${moment(String(fecha)).format('YYYY')}`
     },
     shortDate (fecha) {
-      // Sab 30 Set 1972
+      // Sab 30 Sep 1972
       fecha = fecha.substring(0, 10)
       const dias = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
-      const mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic']
+      const mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
       return `${dias[moment(String(fecha)).format('d')]} ${moment(String(fecha)).format('DD')} ${mes[moment(String(fecha)).format('MM') - 1]} ${moment(String(fecha)).format('YYYY')}`
+    },
+    datedMy (fecha) {
+      // 30 Sep 72
+      fecha = fecha.substring(0, 10)
+      const mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+      return `${moment(String(fecha)).format('DD')} ${mes[moment(String(fecha)).format('MM') - 1]} ${moment(String(fecha)).format('YY')}`
     }
   }
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)

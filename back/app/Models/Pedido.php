@@ -49,6 +49,7 @@ class Pedido extends Model implements Auditable
         'direccion_id',
         'persona_id',
         'phone_id',
+        'email_id',
     ];
     protected $hidden = ['created_at', 'updated_at'];
     public function empresa(){
@@ -67,6 +68,12 @@ class Pedido extends Model implements Auditable
         return $this->belongsTo(Direccion::class);
     }
     public function person(){
-        return $this->belongsTo(Person::class);
+        return $this->belongsTo(Person::class, 'persona_id');
+    }
+    public function phone(){
+        return $this->belongsTo(Phone::class);
+    }
+    public function email(){
+        return $this->belongsTo(Email::class);
     }
 }

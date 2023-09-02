@@ -68,6 +68,9 @@ return new class extends Migration
             $table->unsignedBigInteger('phone_id')->nullable();
             $table->foreign('phone_id')->references('id')->on('phones');
 
+            $table->unsignedBigInteger('email_id')->nullable();
+            $table->foreign('email_id')->references('id')->on('emails');
+
             $table->softDeletes();
             $table->timestamps();
         });
