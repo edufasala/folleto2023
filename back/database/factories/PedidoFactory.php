@@ -52,13 +52,12 @@ class PedidoFactory extends Factory
             'seFacturo' => $this->faker->randomElement(['Si', 'No']),
 
             'precioTotal' => $precioTotal,
-            'empresa_id',
-            'user_id',
-            'sucursal_id',
-            'facturacion_id',
-            'direccion_id',
-            'persona_id',
-            'phone_id',
+            'user_id' => $this->faker->numberBetween(1, 10),
+//            'sucursal_id' => $this->faker->numberBetween(1, 10),
+//            'facturacion_id' => $this->faker->numberBetween(1, 10),
+//            'direccion_id' => $this->faker->numberBetween(1, 10),
+//            'persona_id' => $this->faker->numberBetween(1, 10),
+//            'phone_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

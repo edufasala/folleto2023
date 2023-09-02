@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Direccion;
 use App\Models\Empresa;
 use App\Models\Note;
+use App\Models\Pedido;
 use App\Models\Person;
 use Illuminate\Database\Seeder;
 
@@ -50,6 +51,16 @@ class DatabaseSeeder extends Seeder
                     ->count(10)
                     ->create([
                         'empresa_id' => $empresa->id,
+                    ]);
+                Pedido::factory()
+                    ->count(10)
+                    ->create([
+                        'empresa_id' => $empresa->id,
+                        'sucursal_id' => $empresa->sucursals->random()->id,
+                        'facturacion_id' => $empresa->facturacion->random()->id,
+                        'direccion_id' => $empresa->direccion->random()->id,
+                        'persona_id' => $empresa->person->random()->id,
+                        'phone_id' => $empresa->person->random()->phone->random()->id,
                     ]);
             });
     }
