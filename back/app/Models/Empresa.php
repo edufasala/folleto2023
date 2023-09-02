@@ -16,6 +16,20 @@ class Empresa extends Model implements Auditable
         'vendedor',
     ];
     protected $appends = ['codigo'];
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class)->with('user')->orderByRaw("
+    CASE
+        WHEN estadoPedido = 'Activo' THEN 1
+        WHEN estadoPedido = 'Atrasado' THEN 2
+        WHEN estadoPedido = 'StandBy' THEN 3
+        WHEN estadoPedido = 'Deudor' THEN 4
+        WHEN estadoPedido = 'Cancelado' THEN 5
+        WHEN estadoPedido = 'Terminado' THEN 6
+        ELSE 7
+    END
+");
+    }
     public function getCodigoAttribute()
     {
         return '#'.str_pad($this->id, 4, '0', STR_PAD_LEFT);

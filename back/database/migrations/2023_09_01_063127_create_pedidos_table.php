@@ -22,8 +22,12 @@ return new class extends Migration
             $table->string('lados')->nullable();
             $table->string('diseno')->nullable();
             $table->string('descripcion')->nullable();
-            $table->string('estado')->nullable();
+            $table->string('estado')->nullable()
+                ->comment('En donde se ecuentra el pedido (Diseño, Impresion, Taller, Terminacion, Entregas)');
+            $table->string('estadoPedido')->nullable()
+                ->comment("Estado del pedido ('Activo', 'Atrasado', 'StandBy', 'Deudor', 'Cancelado','Terminados')");
             $table->date('fecha')->nullable();
+            $table->integer('diasCompra')->nullable();
             $table->date('fechaEntrega')->nullable();
             $table->date('fechaEspecial')->nullable();
             $table->double('precioProducto',11,2)->nullable();

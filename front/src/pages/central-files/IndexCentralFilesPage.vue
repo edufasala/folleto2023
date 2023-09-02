@@ -121,6 +121,9 @@
               <q-tab-panel name="notas">
                 <NotasComponent :empresa="empresa" :notes="notes" @empresaSearch="empresaSearch"/>
               </q-tab-panel>
+              <q-tab-panel name="pedido">
+                <PedidosComponent :empresa="empresa" :pedidos="pedidos" @empresaSearch="empresaSearch"/>
+              </q-tab-panel>
             </q-tab-panels>
           </q-card>
         </div>
@@ -166,19 +169,22 @@
 import SearchEmpresaComponent from 'pages/central-files/SearchEmpresaComponent.vue'
 import ContactoComponent from 'pages/central-files/ContactoComponent.vue'
 import NotasComponent from 'pages/central-files/NotasComponent.vue'
+import PedidosComponent from 'pages/central-files/PedidosComponent.vue'
 export default {
   name: 'IndexCentralFilesPage',
   components: {
     SearchEmpresaComponent,
     ContactoComponent,
-    NotasComponent
+    NotasComponent,
+    PedidosComponent
   },
   data () {
     return {
-      tab: 'contacto',
+      tab: 'pedido',
       loading: false,
       empresa: {},
       empresas: [],
+      pedidos: [],
       ocultar: true,
       direccion: [],
       phoneDireccions: [],
@@ -192,7 +198,7 @@ export default {
   },
   mounted () {
     this.getEmpresas()
-    // this.empresaSearch({ id: 1 })
+    this.empresaSearch({ id: 1 })
   },
   methods: {
     clickEditEmpresa (empresa) {
@@ -250,6 +256,7 @@ export default {
           this.sucursals = response.data.sucursals
           this.persons = response.data.person
           this.notes = response.data.notes
+          this.pedidos = response.data.pedidos
         })
         .catch(error => {
           console.log(error)
