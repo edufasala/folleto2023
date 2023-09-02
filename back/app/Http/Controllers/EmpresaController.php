@@ -19,7 +19,8 @@ class EmpresaController extends Controller{
                 'person.phone',
                 'person.email',
                 'notes.user',
-                'pedidos'
+                'pedidos.user',
+                'pedidos.sucursal',
             ])
             ->first();
         $promedioDiasCompra = Pedido::where('empresa_id', $empresa->id)
@@ -33,6 +34,8 @@ class EmpresaController extends Controller{
         if ($ultimoPedido){
             $fechaUltimoPedido = Carbon::parse($ultimoPedido->fecha);
             $proximoPedido = $fechaUltimoPedido->addDays($diasCompraEntero);
+            $meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+            $proximoPedido = $proximoPedido->format('d ').$meses[$proximoPedido->format('n')-1].$proximoPedido->format(' Y');
         }else{
             $proximoPedido = null;
         }

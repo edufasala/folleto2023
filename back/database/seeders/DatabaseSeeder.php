@@ -95,7 +95,8 @@ class DatabaseSeeder extends Seeder
                             'direccion_id' => $empresa->direccion->random()->id,
                             'persona_id' => $empresa->person->random()->id,
                             'phone_id' => $empresa->person->random()->phone->random()->id,
-                            'fecha' => $fechas[$i]
+                            'fecha' => $fechas[$i],
+                            'fechaEntrega' => $fechas[$i]
                             ]);
                 }
             });

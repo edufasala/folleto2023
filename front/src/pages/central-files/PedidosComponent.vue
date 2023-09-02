@@ -21,37 +21,38 @@
       </q-btn>
     </div>
     <div class="col-12">
-      <q-card v-for="pedido in pedidos" :key="pedido.id" :class="`bg-${pedido.color}-2 q-mb-md`">
-        <q-card-section class="q-pa-xs">
-          <div class="row text-caption">
-            <div class="col-12 row items-center">
-              <b class="q-pr-md">{{$filters.dateDmY(pedido.fecha)}} </b>
-              <span class="text-grey">{{pedido.user.name}}</span>
-              <q-space />
-              <q-btn size="10px" flat dense icon="o_edit" no-caps
-                     color="orange" :loading="loading"
-                     @click="pedidoClickUpdate(pedido)">
-                <q-tooltip>
-                  Editar
-                </q-tooltip>
-              </q-btn>
-              <q-btn size="10px" flat dense icon="cancel" no-caps
-                     color="grey" :loading="loading"
-                     @click="deleteNota(pedido.id)">
-                <q-tooltip>
-                  Eliminar
-                </q-tooltip>
-              </q-btn>
-            </div>
-            <div class="col-12">
-              {{pedido.body}}
-            </div>
-            <div class="col-12">
-              <pre>{{pedido}}</pre>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
+<!--      <pre>{{pedidos[0]}}</pre>-->
+      <q-markup-table>
+        <thead>
+        <tr class="bg-black text-white">
+          <th class="text-center">Estado</th>
+          <th class="text-center">N° Pedido</th>
+          <th class="text-center">Sucursal</th>
+          <th class="text-center">Producto</th>
+          <th class="text-center">Tamaño</th>
+          <th class="text-center">Cantidad</th>
+          <th class="text-center">Gr</th>
+          <th class="text-center">Entrega</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="pedido in pedidos" :key="pedido.id" class="cursor-pointer"
+            @click="pedidoClickUpdate(pedido)"
+            :class="`${pedido.estadoPedido=='Cancelado'? 'text-red' : ''}`"
+        >
+          <td class="text-center">
+              {{pedido.estadoPedido}}
+          </td>
+          <td class="text-center">#{{pedido.codigo}}</td>
+          <td class="text-center">{{pedido.sucursal.nombre}}</td>
+          <td class="text-center">{{pedido.producto}}</td>
+          <td class="text-center">{{pedido.medida}}</td>
+          <td class="text-center">{{pedido.cantidad}}</td>
+          <td class="text-center">{{pedido.gr}}</td>
+          <td class="text-center">{{$filters.shortDate(pedido.fechaEntrega, 'DD/MM/YYYY')}}</td>
+        </tr>
+        </tbody>
+      </q-markup-table>
     </div>
     <q-dialog v-model="pedidoDialog">
       <q-card class="q-pa-xs" style="max-width: 400px">
