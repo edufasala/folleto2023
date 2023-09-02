@@ -6,14 +6,11 @@ use App\Models\Empresa;
 use App\Http\Requests\StoreEmpresaRequest;
 use App\Http\Requests\UpdateEmpresaRequest;
 use App\Models\Pedido;
+use Carbon\Carbon;
 
 class EmpresaController extends Controller{
     public function index(){ return Empresa::get(); }
     public function show(Empresa $empresa){
-//
-//        $promedioDiasCompra = Pedido::where('empresa_id', $empresa->id)
-//            ->where('estadoPedido', 'Terminado')
-//            ->avg('diasCompra');
         $empresa= Empresa::where('id', $empresa->id)
             ->with([
                 'direccion.phoneDireccions',
@@ -25,7 +22,22 @@ class EmpresaController extends Controller{
                 'pedidos'
             ])
             ->first();
-//        $empresa->promedioDiasCompra = $promedioDiasCompra->round(2);
+        $promedioDiasCompra = Pedido::where('empresa_id', $empresa->id)
+//            ->where('estadoPedido', 'Terminado')
+            ->avg('diasCompra');
+
+        $diasCompraEntero = intval($promedioDiasCompra);
+        $ultimoPedido = Pedido::where('empresa_id', $empresa->id)
+            ->orderBy('fecha', 'desc')
+            ->first();
+        if ($ultimoPedido){
+            $fechaUltimoPedido = Carbon::parse($ultimoPedido->fecha);
+            $proximoPedido = $fechaUltimoPedido->addDays($diasCompraEntero);
+        }else{
+            $proximoPedido = null;
+        }
+        $empresa->proximoPedido = $proximoPedido;
+        $empresa->promedioDiasCompra = round($promedioDiasCompra, 2);
         return $empresa;
     }
     public function store(StoreEmpresaRequest $request){

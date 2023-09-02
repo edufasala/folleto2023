@@ -2,14 +2,14 @@
   <div class="row q-pl-xs">
     <div class="col-12 row items-center q-mb-md">
       <div>
-        <div>Proxima Compra estimada: <span class="text-bold">{{proximaCompra}}</span></div>
+        <div>Proxima Compra estimada: <span class="text-bold">{{empresa.proximoPedido}}</span></div>
         <div>Cantidad de pedidos: <span class="text-bold">{{pedidos.length}}</span></div>
       </div>
       <q-space />
       <div>
         <div class="flex flex-center">
           <q-icon name="calendar_today" size="25px" color="grey-8" />
-          <span class="text-bold text-bold text-blue">{{promedioDiasPedidos}}</span>
+          <span class="text-bold text-bold text-blue">{{empresa.promedioDiasCompra}}</span>
         </div>
         <div class="text-caption">
           Regularidad en dias
@@ -90,7 +90,7 @@
 </template>
 <script>
 import { date } from 'quasar'
-import moment from 'moment'
+// import moment from 'moment'
 
 export default {
   name: 'PedidosComponent',
@@ -174,26 +174,6 @@ export default {
         date: date.formatDate(new Date(), 'YYYY-MM-DD'),
         color: 'white'
       }
-    }
-  },
-  computed: {
-    promedioDiasPedidos () {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      const avg = this.pedidosDatos.reduce((a, b) => {
-        return a + b.diasCompra
-      }, 0) / this.pedidosDatos.length
-      return avg.toFixed(2)
-    },
-    proximaCompra () {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      const ordenarPedidos = this.pedidosDatos.sort((a, b) => {
-        return new Date(a.fecha) - new Date(b.fecha)
-      })
-      if (ordenarPedidos.length === 0) {
-        return 'No hay pedidos'
-      }
-      const compraFinal = ordenarPedidos[ordenarPedidos.length - 1]
-      return moment(compraFinal.fecha).format('DD/MM/YYYY')
     }
   }
 }

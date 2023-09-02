@@ -33,6 +33,12 @@
               <q-item-label class="text-bold text-h5 row items-center">
                 {{empresa.nombre}}
                 <q-space />
+                <q-btn dense flat icon="o_refresh" color="grey" no-caps
+                       :loading="loading" @click="empresaSearch(empresa)">
+                  <q-tooltip>
+                    Actualizar
+                  </q-tooltip>
+                </q-btn>
                 <q-btn dense flat icon="o_edit" color="grey" no-caps
                        :loading="loading" @click="clickEditEmpresa(empresa)">
                   <q-tooltip>
