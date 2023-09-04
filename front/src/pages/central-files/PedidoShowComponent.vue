@@ -48,14 +48,112 @@
             </q-card>
           </div>
         </div>
+        <div class="q-mt-md">
+          <q-card>
+            <q-tabs
+              v-model="tab"
+              dense
+              class="text-grey"
+              active-color="primary"
+              indicator-color="primary"
+              align="justify"
+              narrow-indicator
+            >
+              <q-tab name="pedido" no-caps>
+                  <span class="text-bold">Pedido</span>
+              </q-tab>
+              <q-tab name="taller" no-caps>
+                  <span class="text-bold">Taller y Entrega</span>
+              </q-tab>
+              <q-tab name="$" no-caps>
+                  <span class="text-bold">$</span>
+              </q-tab>
+              <q-tab name="status" no-caps>
+                  <span class="text-bold">Status</span>
+              </q-tab>
+            </q-tabs>
+            <q-separator />
+            <q-tab-panels v-model="tab" animated class="bg-grey-3">
+              <q-tab-panel name="pedido">
+                <div class="row">
+                  <div class="col-4 col-md-2">Producto</div>
+                  <div class="col-8 col-md-6 text-bold">{{ pedido.producto }}</div>
+                  <div class="col-4 col-md-2">Medida</div>
+                  <div class="col-8 col-md-2 text-bold">{{ pedido.medida }}</div>
+                  <div class="col-4 col-md-2">Cantidad</div>
+                  <div class="col-8 col-md-4 text-bold">{{ pedido.cantidad }}</div>
+                  <div class="col-4 col-md-1">Esp.</div>
+                  <div class="col-8 col-md-1 text-bold q-pr-md">{{ pedido.esp }}</div>
+                  <div class="col-4 col-md-2">Gr.</div>
+                  <div class="col-8 col-md-2 text-bold">{{ pedido.gr }}</div>
+                  <div class="col-4 col-md-2">Lados</div>
+                  <div class="col-8 col-md-4 text-bold">{{ pedido.lados }}</div>
+                  <div class="col-4 col-md-2">Diseño</div>
+                  <div class="col-6 col-md-4 text-bold">{{ pedido.diseno }}</div>
+                  <div class="col-4 col-md-2">Descripcion</div>
+                  <div class="col-8 col-md-10 border-round">{{ pedido.descripcion }}</div>
+                </div>
+              </q-tab-panel>
+              <q-tab-panel name="taller">
+                <div class="row">
+                  <div class="col-4 col-md-2">Terminacion</div>
+                  <div class="col-8 col-md-6 text-bold">{{ pedido.terminacion }}</div>
+                  <div class="col-4 col-md-2">Envio</div>
+                  <div class="col-8 col-md-2 text-bold">{{ pedido.envio }}</div>
+                  <div class="col-12 col-md-6">
+                    <div class="row">
+                      <div class="col-4">Descripcion</div>
+                      <div class="col-8 text-bold border-round">{{ pedido.especificaciones }}</div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div :class="`row ${$q.screen.lt.md ? '' : 'q-ml-md'}`">
+                      <div class="col-4">Direccion</div>
+                      <div class="col-8 text-bold">{{ pedido.direccion.direccion }}</div>
+                      <div class="col-4">Localidad</div>
+                      <div class="col-8 text-bold">{{ pedido.direccion.localidad }}</div>
+                      <div class="col-4">CP:</div>
+                      <div class="col-8 text-bold">{{ pedido.direccion.codigoPostal }}</div>
+                      <div class="col-4">Descripcion:</div>
+                      <div class="col-8 text-bold">{{ pedido.descripcion }}</div>
+                    </div>
+                  </div>
+                </div>
+              </q-tab-panel>
+              <q-tab-panel name="$">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <q-card flat bordered>
+                      <div class="text-bold text-center">RESUMEN</div>
+                      <q-separator/>
+                    </q-card>
+                  </div>
+                </div>
+              </q-tab-panel>
+            </q-tab-panels>
+          </q-card>
+        </div>
+        <div class="row q-mt-md">
+          <div class="col-12 col-md-1"/>
+          <div class="col-4 col-md-2 text-center q-pa-xs">
+            <q-btn no-caps label="Stand by" color="dark" class="w-100" />
+          </div>
+          <div class="col-4 col-md-2 text-center q-pa-xs">
+            <q-btn no-caps label="Cancelar" color="red" class="w-100" />
+          </div>
+          <div class="col-4 col-md-2 text-center q-pa-xs">
+            <q-btn no-caps label="Corregir" color="orange" class="w-100" />
+          </div>
+          <div class="col-4 col-md-2 text-center q-pa-xs">
+            <q-btn no-caps label="Repetir" color="blue" class="w-100" />
+          </div>
+          <div class="col-4 col-md-2 text-center q-pa-xs">
+            <q-btn no-caps label="Cerrar" color="grey" class="w-100" />
+          </div>
+          <div class="col-12 col-md-1"/>
+        </div>
         <pre>{{pedido}}</pre>
-        <pre>{{empresa}}</pre>
-        <q-card-actions align="right">
-          <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-<!--          <q-btn dense no-caps :loading="loading" type="submit"-->
-<!--                 :label="pedidoOption === 'create' ? 'Crear' : 'Editar'"-->
-<!--                 :color="pedidoOption === 'create' ? 'blue' : 'orange'" />-->
-        </q-card-actions>
+<!--        <pre>{{empresa}}</pre>-->
       </q-form>
     </q-card-section>
   </q-card>
@@ -76,6 +174,7 @@ export default {
   },
   data () {
     return {
+      tab: 'taller',
       pedidoDato: {},
       loading: false
     }
