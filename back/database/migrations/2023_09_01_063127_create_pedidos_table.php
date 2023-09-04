@@ -42,10 +42,10 @@ return new class extends Migration
             $table->integer('pago')->nullable();
             $table->string('metodoPago')->nullable();
             $table->string('comentarioPago')->nullable();
-            $table->string('iva')->nullable();
+            $table->integer('iva')->nullable();
             $table->string('seFacturo')->nullable();
 
-            $table->double('precioTotal',11,2)->nullable();
+//            $table->double('precioTotal',11,2)->nullable();
 
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')->references('id')->on('empresas');

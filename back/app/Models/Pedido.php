@@ -41,7 +41,7 @@ class Pedido extends Model implements Auditable
         'iva',
         'seFacturo',
 
-        'precioTotal',
+//        'precioTotal',
         'user_id',
         'empresa_id',
         'sucursal_id',
@@ -75,5 +75,12 @@ class Pedido extends Model implements Auditable
     }
     public function email(){
         return $this->belongsTo(Email::class);
+    }
+    protected $appends = ['precioTotal','deuda'];
+    public function getPrecioTotalAttribute(){
+        return $this->precioProducto + $this->precioDiseno + $this->precioEspecificaciones + $this->precioEnvio;
+    }
+    public function getDeudaAttribute(){
+        return $this->precioTotal - $this->pago;
     }
 }

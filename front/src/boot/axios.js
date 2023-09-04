@@ -41,6 +41,24 @@ export default boot(({ app, router }) => {
       fecha = fecha.substring(0, 10)
       const mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
       return `${moment(String(fecha)).format('DD')} ${mes[moment(String(fecha)).format('MM') - 1]} ${moment(String(fecha)).format('YY')}`
+    },
+    round (value, decimals) {
+      if (!value) {
+        value = 0
+      }
+      if (!decimals) {
+        decimals = 2
+      }
+      return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
+    },
+    iva (value, iva) {
+      if (!value) {
+        value = 0
+      }
+      if (!iva) {
+        iva = 0
+      }
+      return Number(Math.round(value * iva / 100 + 'e2') + 'e-2')
     }
   }
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)

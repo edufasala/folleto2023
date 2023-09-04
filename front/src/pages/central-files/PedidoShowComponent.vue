@@ -73,7 +73,7 @@
               </q-tab>
             </q-tabs>
             <q-separator />
-            <q-tab-panels v-model="tab" animated class="bg-grey-3">
+            <q-tab-panels v-model="tab" animated class="bg-grey-2">
               <q-tab-panel name="pedido">
                 <div class="row">
                   <div class="col-4 col-md-2">Producto</div>
@@ -126,6 +126,48 @@
                     <q-card flat bordered>
                       <div class="text-bold text-center">RESUMEN</div>
                       <q-separator/>
+                      <div class="q-pa-xs">
+                        <div class="row items-center q-px-xs">
+                          Producto
+                          <q-space />
+                          <div class="text-bold">$ {{ pedido.precioProducto }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs">
+                          Diseño
+                          <q-space />
+                          <div class="text-bold">$ {{ pedido.precioDiseno }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs">
+                          Terminacion
+                          <q-space />
+                          <div class="text-bold">$ {{ pedido.precioEspecificaciones }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs">
+                          Envio
+                          <q-space />
+                          <div class="text-bold">$ {{ pedido.precioEnvio }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs">
+                          IVA <span class="text-red">({{pedido.iva}})</span>
+                          <q-space />
+                          <div class="text-bold">$ {{ $filters.iva(pedido.precioTotal, pedido.iva) }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs bg-black text-white">
+                          TOTAL
+                          <q-space />
+                          <div class="text-bold">$ {{ pedido.precioTotal }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs">
+                          Seña
+                          <q-space />
+                          <div class="text-bold">$ {{ pedido.pago }}</div>
+                        </div>
+                        <div class="row items-center q-px-xs">
+                          Deuda
+                          <q-space />
+                          <div class="text-bold text-red">$ {{ pedido.deuda }}</div>
+                        </div>
+                      </div>
                     </q-card>
                   </div>
                 </div>
@@ -174,7 +216,7 @@ export default {
   },
   data () {
     return {
-      tab: 'taller',
+      tab: '$',
       pedidoDato: {},
       loading: false
     }

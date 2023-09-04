@@ -42,7 +42,7 @@ class PedidoFactory extends Factory
             'precioDiseno' => $precioDiseno,
 
             'especificaciones' => $this->faker->text,
-            'terminacion' => $this->faker->text,
+            'terminacion' => $this->faker->word,
             'envio' => $this->faker->randomElement(['Si', 'No']),
             'precioEspecificaciones' => $precioEspecificaciones,
             'precioEnvio' => $precioEnvio,
@@ -50,10 +50,10 @@ class PedidoFactory extends Factory
             'pago' => $pago,
             'metodoPago' => $this->faker->randomElement(['Efectivo', 'Tarjeta', 'Transferencia', 'Cheque']),
             'comentarioPago' => $this->faker->text,
-            'iva' => $this->faker->randomElement(['10%', '15%', '20%']),
+            'iva' => $this->faker->randomElement(['10', '15', '20']),
             'seFacturo' => $this->faker->randomElement(['Si', 'No']),
 
-            'precioTotal' => $precioTotal,
+//            'precioTotal' => $precioTotal,
             'user_id' => $this->faker->numberBetween(1, 10),
 //            'sucursal_id' => $this->faker->numberBetween(1, 10),
 //            'facturacion_id' => $this->faker->numberBetween(1, 10),
