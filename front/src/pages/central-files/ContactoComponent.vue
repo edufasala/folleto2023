@@ -10,6 +10,7 @@
         :sucursals="sucursals"
         @empresaSearch="empresaSearch"/>
       <SucursalComponent
+        class="q-pt-md"
         :empresa="empresa"
         :sucursals="sucursals"
         @empresaSearch="empresaSearch"/>

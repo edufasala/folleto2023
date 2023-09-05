@@ -1,14 +1,17 @@
 <template>
       <div class="row">
-        <div class="col-12 row items-center">
+        <div class="col-12 row items-center q-pa-none">
           <div class="text-bold">PERSONAS</div>
           <q-space />
           <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="personDialogClick">
             <q-tooltip>Crear</q-tooltip>
           </q-btn>
         </div>
+        <div class="col-12 q-mb-md">
+          <q-separator />
+        </div>
         <div class="col-12">
-          <q-card v-for="perosn in persons" :key="perosn.id" flat bordered class="bg-grey-3 q-mb-xs">
+          <q-card v-for="perosn in persons" :key="perosn.id" class="bg-grey-1 q-mb-xs">
             <q-card-section class="q-pa-xs">
               <div class="row text-caption">
                 <div class="col-5">

@@ -8,7 +8,7 @@
       </q-btn>
     </div>
     <div class="col-12">
-      <q-card v-for="d in direccion" :key="d.id" flat bordered class="bg-grey-3 q-mb-xs">
+      <q-card v-for="d in direccion" :key="d.id" class="bg-grey-1 q-mb-xs">
         <q-card-section class="q-pa-xs">
           <div class="row text-caption">
             <div class="col-12 row items-center">
