@@ -55,6 +55,9 @@ class Pedido extends Model implements Auditable
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
+    public function pagos(){
+        return $this->hasMany(Pago::class);
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -78,9 +81,9 @@ class Pedido extends Model implements Auditable
     }
     protected $appends = ['precioTotal','deuda'];
     public function getPrecioTotalAttribute(){
-        return $this->precioProducto + $this->precioDiseno + $this->precioEspecificaciones + $this->precioEnvio;
+        return round( $this->precioProducto + $this->precioDiseno + $this->precioEspecificaciones + $this->precioEnvio,2);
     }
     public function getDeudaAttribute(){
-        return $this->precioTotal - $this->pago;
+        return round( $this->precioTotal - $this->pago,2);
     }
 }

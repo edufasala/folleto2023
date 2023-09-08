@@ -88,6 +88,11 @@ class DatabaseSeeder extends Seeder
                 ];
                 for($i = 0; $i < 30; $i++){
                     Pedido::factory()
+                        ->hasPagos(5, function (array $attributes, Pedido $pedido) use ($empresa) {
+                            return [
+                                'facturacion_id' => $empresa->facturacion->random()->id,
+                            ];
+                        })
                         ->create([
                             'empresa_id' => $empresa->id,
                             'sucursal_id' => $empresa->sucursals->random()->id,

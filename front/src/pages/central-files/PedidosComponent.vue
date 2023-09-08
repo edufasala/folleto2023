@@ -89,9 +89,9 @@ export default {
     }
   },
   mounted () {
-    // setTimeout(() => {
-    //   this.pedidoClickUpdate(this.pedidos[0])
-    // }, 2500)
+    setTimeout(() => {
+      this.pedidoClickUpdate(this.pedidos[0])
+    }, 2500)
   },
   methods: {
     pedidoClickUpdate (pedido) {

@@ -17,7 +17,13 @@ class PagoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'fecha' => $this->faker->date(),
+            'hora' => $this->faker->time(),
+            'monto' => $this->faker->randomFloat(2, 0, 100),
+            'facturado' => $this->faker->randomElement(["No","Si"]),
+            'tipo' => $this->faker->randomElement(["Efectivo","Transferencia","Tarjeta","Cheque","Otro"]),
+            'comentario' => $this->faker->text(),
+            'user_id' => $this->faker->randomElement(\App\Models\User::pluck('id')->toArray()),
         ];
     }
 }

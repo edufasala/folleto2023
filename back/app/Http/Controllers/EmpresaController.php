@@ -25,7 +25,8 @@ class EmpresaController extends Controller{
                 'pedidos.direccion',
                 'pedidos.facturacion',
                 'pedidos.phone',
-                'pedidos.email'
+                'pedidos.email',
+                'pedidos.pagos.user',
             ])
             ->first();
         $promedioDiasCompra = Pedido::where('empresa_id', $empresa->id)

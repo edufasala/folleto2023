@@ -36,6 +36,12 @@ export default boot(({ app, router }) => {
       const mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
       return `${dias[moment(String(fecha)).format('d')]} ${moment(String(fecha)).format('DD')} ${mes[moment(String(fecha)).format('MM') - 1]} ${moment(String(fecha)).format('YYYY')}`
     },
+    shortTime (time) {
+      // 10:10
+      const hora = time.substring(0, 2)
+      const minuto = time.substring(3, 5)
+      return `${hora}:${minuto}`
+    },
     datedMy (fecha) {
       // 30 Sep 72
       fecha = fecha.substring(0, 10)

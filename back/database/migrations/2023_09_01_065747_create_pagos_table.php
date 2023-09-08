@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo')->nullable();
             $table->date('fecha');
             $table->time('hora');
             $table->double('monto',11,2);
             $table->string('facturado')->nullable()->default('No');
+            $table->string('tipo')->nullable()->comment('Efectivo, Transferencia, Tarjeta, Cheque, Otro');
             $table->string('comentario')->nullable();
             $table->unsignedBigInteger('pedido_id');
             $table->foreign('pedido_id')->references('id')->on('pedidos');

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-pa-xs" style="max-width: 750px">
+  <q-card class="q-pa-xs" style="max-width: 900px">
     <q-card-section class="q-py-xs row items-center">
       <div class="text-h5 text-bold"> Pedido # {{pedido.codigo}}</div>
       <q-space />
@@ -166,6 +166,51 @@
                           Deuda
                           <q-space />
                           <div class="text-bold text-red">$ {{ pedido.deuda }}</div>
+                        </div>
+                      </div>
+                    </q-card>
+                  </div>
+                  <div class="col-12 col-md-8 q-px-md">
+                    <div class="text-h6">
+                      Pagos
+                    </div>
+                    <q-markup-table dense>
+                      <thead>
+                        <tr class="bg-black text-white">
+                          <th class="text-left">Fecha</th>
+                          <th class="text-left">Hs</th>
+                          <th class="text-left">Tipo</th>
+                          <th class="text-left">Monto</th>
+                          <th class="text-left">Met. Pago</th>
+                          <th class="text-left">Facturado</th>
+                          <th class="text-left">Usuario</th>
+                        </tr>
+                      </thead>
+                      <thead>
+                      <tr v-for="pago in pedido.pagos" :key="pago.id">
+                        <td class="text-caption">{{$filters.datedMy(pago.fecha)}}</td>
+                        <td class="text-caption">{{$filters.shortTime(pago.hora)}}</td>
+                      </tr>
+                      </thead>
+                    </q-markup-table>
+                    <pre>{{pedido.pagos}}</pre>
+                  </div>
+                  <div class="col-12 col-md-12 q-mt-md">
+                    <q-card flat bordered class="bg-grey-3">
+                      <div class="text-bold q-pl-xs">DATOS FACTURACION</div>
+                      <q-separator/>
+                      <div class="row">
+                        <div class="col-12 col-md-4">
+                          Cuit/Cui/DNI: <span class="text-bold"> {{ pedido.facturacion.cuit }}</span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          Condicional: <span class="text-bold"> {{ pedido.facturacion.condicional }}</span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          R. Social: <span class="text-bold"> {{ pedido.facturacion.razonSocial }}</span>
+                        </div>
+                        <div class="col-12 col-md-12">
+                          Comentario: <span class="text-bold"> {{ pedido.facturacion.comentario }}</span>
                         </div>
                       </div>
                     </q-card>
