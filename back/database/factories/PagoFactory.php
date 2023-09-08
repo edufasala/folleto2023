@@ -19,9 +19,10 @@ class PagoFactory extends Factory
         return [
             'fecha' => $this->faker->date(),
             'hora' => $this->faker->time(),
+            'tipo' => $this->faker->randomElement(["Seña","Pago"]),
             'monto' => $this->faker->randomFloat(2, 0, 100),
             'facturado' => $this->faker->randomElement(["No","Si"]),
-            'tipo' => $this->faker->randomElement(["Efectivo","Transferencia","Tarjeta","Cheque","Otro"]),
+            'metodoPago' => $this->faker->randomElement(["Efectivo","Transferencia","Tarjeta","Cheque","Otro"]),
             'comentario' => $this->faker->text(),
             'user_id' => $this->faker->randomElement(\App\Models\User::pluck('id')->toArray()),
         ];

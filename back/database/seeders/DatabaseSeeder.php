@@ -8,6 +8,7 @@ use App\Models\Empresa;
 use App\Models\Note;
 use App\Models\Pedido;
 use App\Models\Person;
+use App\Models\Statu;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -93,6 +94,7 @@ class DatabaseSeeder extends Seeder
                                 'facturacion_id' => $empresa->facturacion->random()->id,
                             ];
                         })
+                        ->hasStatus(10)
                         ->create([
                             'empresa_id' => $empresa->id,
                             'sucursal_id' => $empresa->sucursals->random()->id,

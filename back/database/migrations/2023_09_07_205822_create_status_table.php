@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pagos', function (Blueprint $table) {
+        Schema::create('status', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
             $table->time('hora');
-            $table->string('tipo')->nullable()->comment('Seña, Pago');
-            $table->double('monto',11,2);
-            $table->string('facturado')->nullable()->default('No');
-            $table->string('metodoPago')->nullable()->comment('Efectivo, Transferencia, Tarjeta, Cheque, Otro');
-            $table->string('comentario')->nullable();
+            $table->string('realizado')->nullable()->comment("'Venta','Entrega','Facturacion','Pago','Envio','Entregado','Cancelado'");
+            $table->string('nota')->nullable();
             $table->unsignedBigInteger('pedido_id');
             $table->foreign('pedido_id')->references('id')->on('pedidos');
-            $table->unsignedBigInteger('facturacion_id');
-            $table->foreign('facturacion_id')->references('id')->on('facturacions');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pagos');
+        Schema::dropIfExists('status');
     }
 };

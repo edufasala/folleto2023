@@ -55,6 +55,9 @@ class Pedido extends Model implements Auditable
     public function empresa(){
         return $this->belongsTo(Empresa::class);
     }
+    public function status(){
+        return $this->hasMany(Statu::class);
+    }
     public function pagos(){
         return $this->hasMany(Pago::class);
     }

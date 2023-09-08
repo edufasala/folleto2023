@@ -190,10 +190,15 @@
                       <tr v-for="pago in pedido.pagos" :key="pago.id">
                         <td class="text-caption">{{$filters.datedMy(pago.fecha)}}</td>
                         <td class="text-caption">{{$filters.shortTime(pago.hora)}}</td>
+                        <td class="text-caption">{{pago.tipo}}</td>
+                        <td class="text-caption">{{$filters.currency(pago.monto)}}</td>
+                        <td class="text-caption">{{pago.metodoPago}}</td>
+                        <td class="text-caption">{{pago.facturado}}</td>
+                        <td class="text-caption">{{pago.user.name}}</td>
                       </tr>
                       </thead>
                     </q-markup-table>
-                    <pre>{{pedido.pagos}}</pre>
+<!--                    <pre>{{pedido.pagos}}</pre>-->
                   </div>
                   <div class="col-12 col-md-12 q-mt-md">
                     <q-card flat bordered class="bg-grey-3">
@@ -214,6 +219,32 @@
                         </div>
                       </div>
                     </q-card>
+                  </div>
+                </div>
+              </q-tab-panel>
+              <q-tab-panel name="status">
+                <div class="row">
+                  <div class="col-12 col-md-12">
+                    <q-markup-table wrapCells separator="horizontal">
+                      <thead>
+                      <tr class="bg-black text-white">
+                        <th class="text-left">Fecha</th>
+                        <th class="text-left">Hs</th>
+                        <th class="text-left">Usuario</th>
+                        <th class="text-left">Realizo</th>
+                        <th class="text-left">Nota</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="statu in pedido.status" :key="statu.id">
+                        <td class="text-caption">{{$filters.datedMy(statu.fecha)}}</td>
+                        <td class="text-caption">{{$filters.shortTime(statu.hora)}}</td>
+                        <td class="text-caption">{{statu.user.name}}</td>
+                        <td class="text-caption">{{statu.realizado}}</td>
+                        <td class="text-caption">{{statu.nota}}</td>
+                      </tr>
+                      </tbody>
+                    </q-markup-table>
                   </div>
                 </div>
               </q-tab-panel>
@@ -239,7 +270,7 @@
           </div>
           <div class="col-12 col-md-1"/>
         </div>
-        <pre>{{pedido}}</pre>
+<!--        <pre>{{pedido}}</pre>-->
 <!--        <pre>{{empresa}}</pre>-->
       </q-form>
     </q-card-section>
