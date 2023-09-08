@@ -53,42 +53,18 @@
             <q-tab-panels v-model="tab" animated class="bg-grey-2">
               <q-tab-panel name="pedido">
                 <div class="row">
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Producto:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.producto" :options="productos"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Otra:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.producto"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Gr:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.gr" :options="[150,90]" />
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Otra:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.gr"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Medida:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.medida" :options="medidas" />
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Otra:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.medida"/>
-                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">Producto:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.producto" :options="productos"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.producto"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Gr:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.gr" :options="[150,90]" /></div>
+                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.gr"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Medida:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.medida" :options="medidas" /></div>
+                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.medida"/></div>
                   <div class="col-6 col-md-2 flex flex-center">
                     Cantidad:
                   </div>
@@ -101,174 +77,86 @@
                   <div class="col-6 col-md-1">
                     <q-input dense outlined v-model="pedido.espº" />
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Termin:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.terminacion" :options="['Brillante', 'Mate']" />
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center text-red text-bold">
-                    F Entrega:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Otra:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.terminacion"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    F Especial:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input type="date" dense outlined v-model="pedido.fechaEspecial"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">
-                    Descripcion:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.descripcion"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">
-                    Precio
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.precioProducto"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">
-                    Precio:
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <q-input dense outlined v-model="pedido.precioEspecificaciones"/>
-                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">Termin:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.terminacion" :options="['Brillante', 'Mate']" /></div>
+                  <div class="col-6 col-md-2 flex flex-center text-red text-bold">F Entrega:</div>
+                  <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEntrega"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.terminacion"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">F Especial:</div>
+                  <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEspecial"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Descripcion:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.descripcion"/></div>
+                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">Precio</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.precioProducto"/></div>
+                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">Precio:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.precioEspecificaciones"/></div>
                 </div>
               </q-tab-panel>
               <q-tab-panel name="taller">
                 <div class="row">
-                  <div class="col-4 col-md-2">Terminacion</div>
-                  <div class="col-8 col-md-6 text-bold">{{ pedido.terminacion }}</div>
-                  <div class="col-4 col-md-2">Envio</div>
-                  <div class="col-8 col-md-2 text-bold">{{ pedido.envio }}</div>
-                  <div class="col-12 col-md-6">
+                  <div class="col-6 col-md-2 flex flex-center">Diseño:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.diseno" :options="disenos"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Envio:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.envio" :options="['Si', 'No']"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Lados:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.lado" :options="lados"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Direccion:</div>
+                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.direccion" :options="empresa.direccion" option-value="id" option-label="direccion"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">Especificaciones:</div>
+                  <div class="col-6 col-md-4"><q-input type="textarea" dense outlined v-model="pedido.especificaciones"/></div>
+                  <div class="col-6">
                     <div class="row">
-                      <div class="col-4">Descripcion</div>
-                      <div class="col-8 text-bold border-round">{{ pedido.especificaciones }}</div>
+                      <div class="col-6 col-md-4 flex flex-center">Localidad:</div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.direccion.localidad" readonly v-if="pedido.direccion"/></div>
+                      <div class="col-6 col-md-4 flex flex-center">CodigoPostal:</div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.direccion.codigoPostal" readonly v-if="pedido.direccion"/></div>
+                      <div class="col-6 col-md-4 flex flex-center">Descripcion:</div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.descripcion"/></div>
                     </div>
                   </div>
-                  <div class="col-12 col-md-6">
-                    <div :class="`row ${$q.screen.lt.md ? '' : 'q-ml-md'}`">
-                      <div class="col-4">Direccion</div>
-                      <div class="col-8 text-bold">{{ pedido.direccion.direccion }}</div>
-                      <div class="col-4">Localidad</div>
-                      <div class="col-8 text-bold">{{ pedido.direccion.localidad }}</div>
-                      <div class="col-4">CP:</div>
-                      <div class="col-8 text-bold">{{ pedido.direccion.codigoPostal }}</div>
-                      <div class="col-4">Descripcion:</div>
-                      <div class="col-8 text-bold">{{ pedido.descripcion }}</div>
-                    </div>
-                  </div>
+                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">Precio Diseño:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.precioDiseno" /></div>
+                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">Envio:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.precioEnvio"/></div>
                 </div>
               </q-tab-panel>
               <q-tab-panel name="pago">
                 <div class="row">
-                  <div class="col-12 col-md-4">
-                    <q-card flat bordered>
-                      <div class="text-bold text-center">RESUMEN</div>
-                      <q-separator/>
-                      <div class="q-pa-xs">
-                        <div class="row items-center q-px-xs">
-                          Producto
-                          <q-space />
-                          <div class="text-bold">$ {{ pedido.precioProducto }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs">
-                          Diseño
-                          <q-space />
-                          <div class="text-bold">$ {{ pedido.precioDiseno }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs">
-                          Terminacion
-                          <q-space />
-                          <div class="text-bold">$ {{ pedido.precioEspecificaciones }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs">
-                          Envio
-                          <q-space />
-                          <div class="text-bold">$ {{ pedido.precioEnvio }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs">
-                          IVA <span class="text-red">({{pedido.iva}})</span>
-                          <q-space />
-                          <div class="text-bold">$ {{ $filters.iva(pedido.precioTotal, pedido.iva) }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs bg-black text-white">
-                          TOTAL
-                          <q-space />
-                          <div class="text-bold">$ {{ pedido.precioTotal }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs">
-                          Seña
-                          <q-space />
-                          <div class="text-bold">$ {{ pedido.pago }}</div>
-                        </div>
-                        <div class="row items-center q-px-xs">
-                          Deuda
-                          <q-space />
-                          <div class="text-bold text-red">$ {{ pedido.deuda }}</div>
-                        </div>
-                      </div>
-                    </q-card>
-                  </div>
-                  <div class="col-12 col-md-8 q-px-md">
-                    <div class="text-h6">
-                      Pagos
+                  <div class="col-6 col-md-2 flex flex-center">Pago:</div>
+                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.pago" /></div>
+                  <div class="col-6 col-md-1 flex flex-center">Iva:</div>
+                  <div class="col-6 col-md-2"><q-input dense outlined v-model="pedido.iva" /></div>
+                  <div class="col-6 col-md-2 flex flex-center">SeFactura:</div>
+                  <div class="col-6 col-md-1"><q-select dense outlined v-model="pedido.seFacturo" :options="['Si','No']" /></div>
+                  <div class="col-12 col-md-6">
+                    <div class="row">
+                      <div class="col-6 col-md-4 flex flex-center">Metodo de $:</div>
+                      <div class="col-6 col-md-8"><q-select dense outlined v-model="pedido.metodoPago" :options="['Efectivo', 'Tarjeta', 'Transferencia']"/></div>
+                      <div class="col-6 col-md-4 flex flex-center">CUIT/DNI:</div>
+                      <div class="col-6 col-md-8"><q-select dense outlined v-model="pedido.facturacion" :options="empresa.facturacion" option-value="id" option-label="cuit"/></div>
+                      <div class="col-6 col-md-4 flex flex-center">Condicional:</div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.facturacion.condicional" readonly v-if="pedido.facturacion"/></div>
+                      <div class="col-6 col-md-4 flex flex-center">Razon social:</div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.facturacion.razonSocial" readonly v-if="pedido.facturacion"/></div>
+                      <div class="col-6 col-md-4 flex flex-center">Comentario:</div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.comentarioPago"/></div>
                     </div>
-                    <q-markup-table dense>
-                      <thead>
-                        <tr class="bg-black text-white">
-                          <th class="text-left">Fecha</th>
-                          <th class="text-left">Hs</th>
-                          <th class="text-left">Tipo</th>
-                          <th class="text-left">Monto</th>
-                          <th class="text-left">Met. Pago</th>
-                          <th class="text-left">Facturado</th>
-                          <th class="text-left">Usuario</th>
-                        </tr>
-                      </thead>
-                      <thead>
-                      <tr v-for="pago in pedido.pagos" :key="pago.id">
-                        <td class="text-caption">{{$filters.datedMy(pago.fecha)}}</td>
-                        <td class="text-caption">{{$filters.shortTime(pago.hora)}}</td>
-                        <td class="text-caption">{{pago.tipo}}</td>
-                        <td class="text-caption">{{$filters.currency(pago.monto)}}</td>
-                        <td class="text-caption">{{pago.metodoPago}}</td>
-                        <td class="text-caption">{{pago.facturado}}</td>
-                        <td class="text-caption">{{pago.user.name}}</td>
-                      </tr>
-                      </thead>
-                    </q-markup-table>
-<!--                    <pre>{{pedido.pagos}}</pre>-->
                   </div>
-                  <div class="col-12 col-md-12 q-mt-md">
-                    <q-card flat bordered class="bg-grey-3">
-                      <div class="text-bold q-pl-xs">DATOS FACTURACION</div>
-                      <q-separator/>
-                      <div class="row">
-                        <div class="col-12 col-md-4">
-                          Cuit/Cui/DNI: <span class="text-bold"> {{ pedido.facturacion.cuit }}</span>
-                        </div>
-                        <div class="col-12 col-md-4">
-                          Condicional: <span class="text-bold"> {{ pedido.facturacion.condicional }}</span>
-                        </div>
-                        <div class="col-12 col-md-4">
-                          R. Social: <span class="text-bold"> {{ pedido.facturacion.razonSocial }}</span>
-                        </div>
-                        <div class="col-12 col-md-12">
-                          Comentario: <span class="text-bold"> {{ pedido.facturacion.comentario }}</span>
-                        </div>
-                      </div>
+                  <div class="col-12 col-md-6">
+                    <q-card>
+                      <q-card-section class="row q-pa-lg">
+                        <div class="col-6 col-md-6 flex flex-center">Subtotal:</div>
+                        <div class="col-6 col-md-6"><div class="text-bold text-right">${{precioTotal}}</div></div>
+                        <div class="col-6 col-md-6 flex flex-center">Iva:</div>
+                        <div class="col-6 col-md-6"><div class="text-bold text-right">${{precioIva}}</div></div>
+                        <div class="col-6 col-md-6 bg-dark text-white flex flex-center">Total:</div>
+                        <div class="col-6 col-md-6 bg-dark text-white"><div class="text-bold text-right">${{precioTotal + precioIva}}</div></div>
+                        <div class="col-6 col-md-6 flex flex-center">Seña:</div>
+                        <div class="col-6 col-md-6"><div class="text-bold text-right">${{pedido.pago}}</div></div>
+                        <div class="col-6 col-md-6 flex flex-center">Deuda:</div>
+                        <div class="col-6 col-md-6"><div class="text-bold text-right text-red">${{deuda}}</div></div>
+                      </q-card-section>
                     </q-card>
                   </div>
                 </div>
@@ -276,23 +164,73 @@
               <q-tab-panel name="status">
                 <div class="row">
                   <div class="col-12 col-md-12">
-                    <q-markup-table wrapCells separator="horizontal">
+                    <q-markup-table wrapCells separator="horizontal" dense>
                       <thead>
                       <tr class="bg-black text-white">
-                        <th class="text-left">Fecha</th>
-                        <th class="text-left">Hs</th>
-                        <th class="text-left">Usuario</th>
-                        <th class="text-left">Realizo</th>
-                        <th class="text-left">Nota</th>
+                        <th class="text-left">Cant.</th>
+                        <th class="text-left">Descripcion</th>
+                        <th class="text-left">Gr</th>
+                        <th class="text-left">Tamaño</th>
+                        <th class="text-left">Entrega</th>
+                        <th class="text-right">Precio</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="statu in pedido.status" :key="statu.id">
-                        <td class="text-caption">{{$filters.datedMy(statu.fecha)}}</td>
-                        <td class="text-caption">{{$filters.shortTime(statu.hora)}}</td>
-                        <td class="text-caption">{{statu.user.name}}</td>
-                        <td class="text-caption">{{statu.realizado}}</td>
-                        <td class="text-caption">{{statu.nota}}</td>
+                      <tr>
+                        <td class="text-left">{{pedido.cantidad}}</td>
+                        <td class="text-left">{{pedido.producto}}</td>
+                        <td class="text-left">{{pedido.gr}}</td>
+                        <td class="text-left">{{pedido.medida}}</td>
+                        <td class="text-left">{{pedido.fechaEntrega}}</td>
+                        <td class="text-right">${{pedido.precioProducto}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">{{pedido.diseno}}</td>
+                        <td class="text-left"></td>
+                        <td class="text-left">{{pedido.lado}}</td>
+                        <td class="text-left"></td>
+                        <td class="text-right">${{pedido.precioDiseno}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Envio {{pedido.envio}}</td>
+                        <td class="text-left">
+                          <template v-if="pedido.envio=='Si'">
+                            {{pedido.direccion.localidad}}
+                          </template>
+                        </td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-right">${{pedido.precioEnvio}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Especificaciones</td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-right">${{pedido.precioEspecificaciones}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Iva {{pedido.iva}}%</td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-right">${{precioIva}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" class="text-right text-bold">Total</td>
+                        <td class="text-right bg-black text-white text-bold">${{precioTotal + precioIva}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" class="text-right text-bold ">Seña</td>
+                        <td class="text-right text-bold ">${{pedido.pago}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" class="text-right text-bold text-red">Deuda</td>
+                        <td class="text-right text-bold text-red">${{deuda}}</td>
                       </tr>
                       </tbody>
                     </q-markup-table>
@@ -308,7 +246,8 @@
             <q-btn no-caps label="Anterior" color="grey" class="w-100" @click="anterior"/>
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Siguiente" color="blue" class="w-100" @click="siguiente"/>
+            <q-btn no-caps label="Siguiente" color="blue" class="w-100" @click="siguiente" v-if="tab!='status'"/>
+            <q-btn no-caps label="Confirmar" :loading="loading" color="green" class="w-100" @click="confimar" v-if="tab=='status'"/>
           </div>
         </div>
 <!--        <pre>{{pedido}}</pre>-->
@@ -367,6 +306,47 @@ export default {
     },
     pedidoSubmit () {
       // this.$emit('pedidoSubmit', this.pedido)
+    },
+    confimar () {
+      if (this.precioTotal <= 0) {
+        this.$alert.error('El precio total no puede ser menor o igual a 0')
+        return false
+      }
+      this.$q.dialog({
+        title: 'Confirmar Pedido',
+        message: 'Esta seguro que desea confirmar el pedido?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.loading = true
+        this.$axios.post('pedidos', this.pedido)
+          .then(response => {
+            this.loading = false
+            this.$alert.success('Pedido confirmado')
+            this.$emit('empresaSearch', this.empresa)
+            this.$emit('closeDialog')
+          })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error(error.response.data.message)
+          })
+      })
+    }
+  },
+  computed: {
+    precioTotal () {
+      const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
+      return Math.round(precio * 100) / 100
+    },
+    precioIva () {
+      const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
+      return Math.round(precio * parseFloat(this.pedido.iva) / 100 * 100) / 100
+    },
+    deuda () {
+      const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
+      const iva = precio * parseFloat(this.pedido.iva / 100)
+      const deuda = parseFloat(precio) + parseFloat(iva) - parseFloat(this.pedido.pago)
+      return Math.round(deuda * 100) / 100
     }
   }
 }

@@ -204,7 +204,7 @@ export default {
   },
   mounted () {
     this.getEmpresas()
-    this.empresaSearch({ id: 1 })
+    // this.empresaSearch({ id: 1 })
   },
   methods: {
     clickEditEmpresa (empresa) {

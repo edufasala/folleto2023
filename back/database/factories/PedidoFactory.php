@@ -21,7 +21,7 @@ class PedidoFactory extends Factory
         $precioEspecificaciones = $this->faker->randomFloat(2, 0,1000);
         $precioEnvio = $this->faker->randomFloat(2, 0,1000);
         $pago = $this->faker->randomFloat(2, 0,1000);
-        $precioTotal = $precioProducto + $precioDiseno + $precioEspecificaciones + $precioEnvio - $pago;
+//        $precioTotal = $precioProducto + $precioDiseno + $precioEspecificaciones + $precioEnvio - $pago;
         return [
             'codigo' => $this->faker->numberBetween(1000, 9999),
             'producto' => $this->faker->randomElement(['Folletos','Tarjetas','Afiches','Banner','Diseño','Logo','Otros']),

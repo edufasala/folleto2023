@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
                     date('Y-m-d', strtotime('-10 day')),
                     date('Y-m-d', strtotime('-5 day'))
                 ];
-                for($i = 0; $i < 30; $i++){
+                for($i = 0; $i < 5; $i++){
                     Pedido::factory()
                         ->hasPagos(5, function (array $attributes, Pedido $pedido) use ($empresa) {
                             return [

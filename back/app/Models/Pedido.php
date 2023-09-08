@@ -84,7 +84,9 @@ class Pedido extends Model implements Auditable
     }
     protected $appends = ['precioTotal','deuda'];
     public function getPrecioTotalAttribute(){
-        return round( $this->precioProducto + $this->precioDiseno + $this->precioEspecificaciones + $this->precioEnvio,2);
+        $total = round( $this->precioProducto + $this->precioDiseno + $this->precioEspecificaciones + $this->precioEnvio,2);
+        $iva = round( $total * ($this->iva/100),2);
+        return $total+$iva;
     }
     public function getDeudaAttribute(){
         return round( $this->precioTotal - $this->pago,2);

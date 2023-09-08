@@ -225,7 +225,7 @@
               <q-tab-panel name="status">
                 <div class="row">
                   <div class="col-12 col-md-12">
-                    <q-markup-table wrapCells separator="horizontal">
+                    <q-markup-table wrapCells separator="horizontal" dense>
                       <thead>
                       <tr class="bg-black text-white">
                         <th class="text-left">Fecha</th>
