@@ -1,51 +1,29 @@
 <template>
   <q-card class="q-pa-xs" style="max-width: 900px">
     <q-card-section class="q-py-xs row items-center">
-      <div class="text-h5 text-bold"> Pedido # {{pedido.codigo}}</div>
+      <div class="text-h5 text-bold"> Pedido Nuevo </div>
       <q-space />
-      <div class="text-right formatFecha">
-        <div>Fecha de Pedido <span class="text-bold">{{$filters.datedMy(pedido.fecha)}}</span></div>
-        <div>Fecha de Entrega <span class="text-bold">{{$filters.datedMy(pedido.fechaEntrega)}}</span></div>
+      <div class="text-right text-red text-h6">
+        # {{pedido.codigo}} <span class="text-grey">{{empresa.nombre}}</span>
       </div>
       <q-btn flat dense icon="cancel" v-close-popup />
     </q-card-section>
     <q-card-section class="q-py-none">
       <q-form @submit="pedidoSubmit">
         <div class="row">
-          <div class="col-12">
-            <div class="row items-center">
-              <div>
-              <div class="text-bold text-subtitle1"><span class="text-red">#{{empresa.id}}</span> {{empresa.nombre}}</div>
-              <div> Sucursal: <span class="text-bold">{{pedido.sucursal.nombre}}</span></div>
-              </div>
-              <q-space />
-              <div>
-                <div> Vendedor: <span class="text-bold">{{pedido.user.name}}</span></div>
-              </div>
-            </div>
+          <div class="col-12 col-md-6 q-pa-xs">
+            <q-select dense outlined v-model="pedido.person" :options="empresa.person" option-value="id" option-label="nombre">
+              <template v-slot:before>
+                <span class="text-subtitle1">Quien lo pide</span>
+              </template>
+            </q-select>
           </div>
-          <div class="col-12">
-            <q-card class="q-pa-xs bg-grey-3" flat bordered cla>
-              <q-card-section class="q-pa-xs">
-                <div class="row">
-                  <div class="col-12 col-md-6">
-                    Nombre: <span class="text-bold">{{pedido.person.nombre}}</span>
-                  </div>
-                  <div class="col-12 col-md-3">
-                    Cargo: <span class="text-bold">{{pedido.person.cargo}}</span>
-                  </div>
-                  <div class="col-12 col-md-3">
-                    DNI: <span class="text-bold">{{pedido.person.dni}}</span>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    Teléfono: <span class="text-bold">{{pedido.phone.phone}}</span>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    Email: <span class="text-bold">{{pedido.email.email}}</span>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+          <div class="col-12 col-md-6 q-pa-xs">
+            <q-select dense outlined v-model="pedido.sucursal" :options="empresa.sucursals" option-value="id" option-label="nombre">
+              <template v-slot:before>
+                <span class="text-subtitle1">Sucursal</span>
+              </template>
+            </q-select>
           </div>
         </div>
         <div class="q-mt-md">
@@ -54,22 +32,21 @@
               v-model="tab"
               dense
               class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
+              indicator-color="blue"
               align="justify"
               narrow-indicator
             >
-              <q-tab name="pedido" no-caps>
+              <q-tab name="pedido" no-caps class="bg-dark text-white">
                   <span class="text-bold">Pedido</span>
               </q-tab>
-              <q-tab name="taller" no-caps>
-                  <span class="text-bold">Taller y Entrega</span>
+              <q-tab name="taller" no-caps class="bg-dark text-white">
+                  <span class="text-bold">Diseño y Entrega</span>
               </q-tab>
-              <q-tab name="$" no-caps>
-                  <span class="text-bold">$</span>
+              <q-tab name="$" no-caps class="bg-dark text-white">
+                  <span class="text-bold">Pago y Facturacion</span>
               </q-tab>
-              <q-tab name="status" no-caps>
-                  <span class="text-bold">Status</span>
+              <q-tab name="status" no-caps class="bg-dark text-white">
+                  <span class="text-bold">Confimacion</span>
               </q-tab>
             </q-tabs>
             <q-separator />
@@ -279,13 +256,13 @@
 <script>
 
 export default {
-  name: 'NotasComponent',
+  name: 'PedidoNewComponent',
   props: {
     empresa: {
       type: Object,
       required: true
     },
-    pedido: {
+    pedidoDato: {
       type: Object,
       required: true
     }
@@ -293,12 +270,12 @@ export default {
   data () {
     return {
       tab: 'pedido',
-      pedidoDato: {},
+      pedido: {},
       loading: false
     }
   },
   mounted () {
-    this.pedidoDato = this.pedido
+    this.pedido = this.pedidoDato
   },
   methods: {
     pedidoSubmit () {

@@ -279,7 +279,7 @@
 <script>
 
 export default {
-  name: 'NotasComponent',
+  name: 'PedidoShowComponent',
   props: {
     empresa: {
       type: Object,
@@ -292,7 +292,7 @@ export default {
   },
   data () {
     return {
-      tab: '$',
+      tab: 'pedido',
       pedidoDato: {},
       loading: false
     }

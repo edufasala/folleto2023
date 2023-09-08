@@ -5,62 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Pedido;
 use App\Http\Requests\StorePedidoRequest;
 use App\Http\Requests\UpdatePedidoRequest;
+use Illuminate\Http\Request;
 
-class PedidoController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePedidoRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePedidoRequest $request, Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pedido $pedido)
-    {
-        //
+class PedidoController extends Controller{
+    public function index(){}
+    public function store(StorePedidoRequest $request){}
+    public function show(Pedido $pedido){}
+    public function update(UpdatePedidoRequest $request, Pedido $pedido){}
+    public function destroy(Pedido $pedido){}
+    public function getNumeroPedido(Request $request){
+        $pedidosCount = Pedido::where('empresa_id', $request->empresa_id)->count();
+        $numeroPedido = $pedidosCount + 1;
+        return $numeroPedido;
     }
 }

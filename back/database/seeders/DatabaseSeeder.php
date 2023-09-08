@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
                             'email_id' => $empresa->person->random()->email->random()->id,
                             'fecha' => $fechas[$i],
                             'fechaEntrega' => $fechas[$i+1],
-                            'codigo' => $i,
+                            'codigo' => $i+1,
                             ]);
                 }
             });

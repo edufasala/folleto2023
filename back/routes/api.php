@@ -35,4 +35,7 @@ Route::group(['middleware'=>'auth:sanctum'],function () {
     Route::resource('phoneDireccions', \App\Http\Controllers\PhoneDireccionsController::class);
     Route::resource('facturacion', \App\Http\Controllers\FacturacionController::class);
     Route::resource('notes', \App\Http\Controllers\NoteController::class);
+    Route::resource('pedidos', \App\Http\Controllers\PedidoController::class);
+    Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
+
 });
