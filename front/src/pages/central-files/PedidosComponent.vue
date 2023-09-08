@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-// import { date } from 'quasar'
+import { date } from 'quasar'
 import PedidoShowComponent from './PedidoShowComponent.vue'
 import PedidoNewComponent from './PedidoNewComponent.vue'
 
@@ -160,26 +160,26 @@ export default {
           this.pedidoDialogNew = true
           this.pedidoDato = {
             codigo: response.data,
-            producto: 'Diseño',
+            producto: 'Folleto',
             medida: '10x15',
-            cantidad: '600',
-            esp: 'ex',
-            gr: '90',
+            cantidad: '1',
+            esp: '',
+            gr: '150',
             lados: '2 lados diferentes',
             diseno: 'nuevo',
-            descripcion: 'Delectus doloremque assumenda dolor et. Qui ut voluptates et incidunt dolore. Nostrum dignissimos dicta odit ut.',
+            descripcion: '',
             estado: 'Cancelado',
             estadoPedido: 'Activo',
             fecha: '2023-07-04',
             diasCompra: 5,
-            fechaEntrega: '2023-07-09',
-            fechaEspecial: '2013-04-29',
-            precioProducto: 188.44,
+            fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+            fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+            precioProducto: 0,
             precioDiseno: 726.69,
             especificaciones: 'Voluptate quia quas consequatur molestiae explicabo qui aut explicabo. Quasi impedit occaecati modi officiis cumque in. Et quaerat perferendis dolorem in amet. Deleniti aut et neque vero aperiam et.',
-            terminacion: 'quibusdam',
+            terminacion: '',
             envio: 'Si',
-            precioEspecificaciones: 655.53,
+            precioEspecificaciones: 0,
             precioEnvio: 23.47,
             pago: 480,
             metodoPago: 'Transferencia',

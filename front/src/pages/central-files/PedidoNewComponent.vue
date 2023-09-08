@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-pa-xs" style="max-width: 900px">
+  <q-card class="q-pa-xs" style="width: 900px;max-width: 900px">
     <q-card-section class="q-py-xs row items-center">
       <div class="text-h5 text-bold"> Pedido Nuevo </div>
       <q-space />
@@ -42,7 +42,7 @@
               <q-tab name="taller" no-caps class="bg-dark text-white">
                   <span class="text-bold">Diseño y Entrega</span>
               </q-tab>
-              <q-tab name="$" no-caps class="bg-dark text-white">
+              <q-tab name="pago" no-caps class="bg-dark text-white">
                   <span class="text-bold">Pago y Facturacion</span>
               </q-tab>
               <q-tab name="status" no-caps class="bg-dark text-white">
@@ -53,22 +53,96 @@
             <q-tab-panels v-model="tab" animated class="bg-grey-2">
               <q-tab-panel name="pedido">
                 <div class="row">
-                  <div class="col-4 col-md-2">Producto</div>
-                  <div class="col-8 col-md-6 text-bold">{{ pedido.producto }}</div>
-                  <div class="col-4 col-md-2">Medida</div>
-                  <div class="col-8 col-md-2 text-bold">{{ pedido.medida }}</div>
-                  <div class="col-4 col-md-2">Cantidad</div>
-                  <div class="col-8 col-md-4 text-bold">{{ pedido.cantidad }}</div>
-                  <div class="col-4 col-md-1">Esp.</div>
-                  <div class="col-8 col-md-1 text-bold q-pr-md">{{ pedido.esp }}</div>
-                  <div class="col-4 col-md-2">Gr.</div>
-                  <div class="col-8 col-md-2 text-bold">{{ pedido.gr }}</div>
-                  <div class="col-4 col-md-2">Lados</div>
-                  <div class="col-8 col-md-4 text-bold">{{ pedido.lados }}</div>
-                  <div class="col-4 col-md-2">Diseño</div>
-                  <div class="col-6 col-md-4 text-bold">{{ pedido.diseno }}</div>
-                  <div class="col-4 col-md-2">Descripcion</div>
-                  <div class="col-8 col-md-10 border-round">{{ pedido.descripcion }}</div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Producto:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.producto" :options="productos"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Otra:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.producto"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Gr:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.gr" :options="[150,90]" />
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Otra:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.gr"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Medida:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.medida" :options="medidas" />
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Otra:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.medida"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Cantidad:
+                  </div>
+                  <div class="col-6 col-md-2">
+                    <q-input dense outlined v-model="pedido.cantidad" />
+                  </div>
+                  <div class="col-6 col-md-1 flex flex-center">
+                    esp:
+                  </div>
+                  <div class="col-6 col-md-1">
+                    <q-input dense outlined v-model="pedido.espº" />
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Termin:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.terminacion" :options="['Brillante', 'Mate']" />
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center text-red text-bold">
+                    F Entrega:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Otra:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.terminacion"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    F Especial:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input type="date" dense outlined v-model="pedido.fechaEspecial"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    Descripcion:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.descripcion"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">
+                    Precio
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.precioProducto"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center text-green text-bold">
+                    Precio:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-input dense outlined v-model="pedido.precioEspecificaciones"/>
+                  </div>
                 </div>
               </q-tab-panel>
               <q-tab-panel name="taller">
@@ -97,7 +171,7 @@
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="$">
+              <q-tab-panel name="pago">
                 <div class="row">
                   <div class="col-12 col-md-4">
                     <q-card flat bordered>
@@ -229,23 +303,13 @@
           </q-card>
         </div>
         <div class="row q-mt-md">
-          <div class="col-12 col-md-1"/>
+          <div class="col-12 col-md-8"/>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Stand by" color="dark" class="w-100" />
+            <q-btn no-caps label="Anterior" color="grey" class="w-100" @click="anterior"/>
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Cancelar" color="red" class="w-100" />
+            <q-btn no-caps label="Siguiente" color="blue" class="w-100" @click="siguiente"/>
           </div>
-          <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Corregir" color="orange" class="w-100" />
-          </div>
-          <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Repetir" color="blue" class="w-100" />
-          </div>
-          <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Cerrar" color="grey" class="w-100" />
-          </div>
-          <div class="col-12 col-md-1"/>
         </div>
 <!--        <pre>{{pedido}}</pre>-->
 <!--        <pre>{{empresa}}</pre>-->
@@ -271,16 +335,38 @@ export default {
     return {
       tab: 'pedido',
       pedido: {},
-      loading: false
+      loading: false,
+      productos: ['Folletos', 'Tarjetas', 'Afiches', 'Banner', 'Diseño', 'Logo', 'Otros'],
+      medidas: ['10x15', '15x21', '21x30', '30x40', '40x50', '50x70', '70x100', '100x140', '140x200', '200x300'],
+      cantidades: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
+      lados: ['1 lado solo', '2 lados iguales', '2 lados diferentes'],
+      disenos: ['nuevo', 'envia el cliente', 'correccion', 'mismo diseno']
     }
   },
   mounted () {
     this.pedido = this.pedidoDato
   },
   methods: {
+    anterior () {
+      if (this.tab === 'status') {
+        this.tab = 'pago'
+      } else if (this.tab === 'pago') {
+        this.tab = 'taller'
+      } else if (this.tab === 'taller') {
+        this.tab = 'pedido'
+      }
+    },
+    siguiente () {
+      if (this.tab === 'pedido') {
+        this.tab = 'taller'
+      } else if (this.tab === 'taller') {
+        this.tab = 'pago'
+      } else if (this.tab === 'pago') {
+        this.tab = 'status'
+      }
+    },
     pedidoSubmit () {
-      // this.loading = true
-      // this.$emit('pedidoSubmit', this.pedidoDato)
+      // this.$emit('pedidoSubmit', this.pedido)
     }
   }
 }
