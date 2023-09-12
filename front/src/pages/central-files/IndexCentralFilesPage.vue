@@ -186,7 +186,7 @@ export default {
   },
   data () {
     return {
-      tab: 'pedido',
+      tab: 'contacto',
       loading: false,
       empresa: {},
       empresas: [],

@@ -103,8 +103,8 @@ class DatabaseSeeder extends Seeder
                             'persona_id' => $empresa->person->random()->id,
                             'phone_id' => $empresa->person->random()->phone->random()->id,
                             'email_id' => $empresa->person->random()->email->random()->id,
-                            'fecha' => $fechas[$i],
-                            'fechaEntrega' => $fechas[$i+1],
+                            'fecha' => date('Y-m-d', strtotime('-'.rand(0, 30).' day')),
+                            'fechaEntrega' => date('Y-m-d', strtotime('-'.rand(0, 30).' day')),
                             'codigo' => $i+1,
                             ]);
                 }

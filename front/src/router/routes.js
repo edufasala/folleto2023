@@ -2,7 +2,7 @@ import LoginPage from 'pages/LoginPage.vue'
 import MainLayout from 'layouts/MainLayout.vue'
 import IndexPage from 'pages/IndexPage.vue'
 import UsuariosPage from 'pages/usuarios/UsuariosPage.vue'
-import EstadisticasPage from 'pages/EstadisticasPage.vue'
+import EstadisticasPage from 'pages/estadisticas/EstadisticasPage.vue'
 import IndexCentralFilesPage from 'pages/central-files/IndexCentralFilesPage.vue'
 
 const routes = [
