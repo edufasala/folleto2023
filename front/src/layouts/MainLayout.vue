@@ -65,11 +65,18 @@
             <q-item-label header class="text-bold text-subtitle2 text-uppercase color-menu cursor-pointer" @click="$router.push('/')">
               Menu
             </q-item-label>
-            <EssentialLink
-              v-for="link in menus"
-              :key="link.title"
-              v-bind="link"
-            />
+            <template v-for="(m,i) in $store.menus">
+              <q-item  :key="i" clickable :to="m.to" :class="`color-menu left-${m.color}`"
+                       active-class="text-white" v-if="m.visible">
+                <q-item-section v-if="m.icon" avatar>
+                  <q-icon :name="m.icon" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-uppercase text-bold">{{ m.title }}</q-item-label>
+                  <q-item-label caption class="color-menu">{{ m.caption }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
           </q-list>
         </q-header>
         <q-footer>
@@ -100,12 +107,8 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
 export default {
   name: 'MainLayout',
-  components: {
-    EssentialLink
-  },
   data () {
     return {
       toggle: false,
@@ -114,55 +117,64 @@ export default {
           title: 'Usuarios',
           icon: 'o_people',
           to: '/usuarios',
-          color: 'orange'
+          color: 'orange',
+          visible: this.$can('Usuarios')
         },
         {
           title: 'Estadisticas',
           icon: 'insert_chart_outlined',
           to: '/estadisticas',
-          color: 'orange'
+          color: 'orange',
+          visible: this.$can('Estadisticas')
         },
         {
           title: 'Central Files',
           icon: 'o_folder',
           to: '/central-files',
-          color: 'purple'
+          color: 'purple',
+          visible: this.$can('Central Files')
         },
         {
           title: 'Precios',
           icon: 'attach_money',
           to: '/precios',
-          color: 'purple'
+          color: 'purple',
+          visible: false
         },
         {
           title: 'Tesoreria',
           icon: 'o_account_balance_wallet',
           to: '/tesoreria',
-          color: 'pink'
+          color: 'pink',
+          visible: false
         },
         {
           title: 'Facturas',
           icon: 'o_receipt',
           to: '/facturas',
-          color: 'pink'
+          color: 'pink',
+          visible: false
         },
         {
           title: 'Diseño',
           icon: 'o_palette',
           to: '/diseno',
-          color: 'green'
+          color: 'green',
+          visible: false
         },
         {
           title: 'Impresion',
           icon: 'o_print',
           to: '/impresion',
-          color: 'green'
+          color: 'green',
+          visible: false
         },
         {
           title: 'Entregas',
           icon: 'o_local_shipping',
           to: '/entregas',
-          color: 'grey'
+          color: 'grey',
+          visible: false
         }
         // {
         //   title: 'Nuevo Cliente',

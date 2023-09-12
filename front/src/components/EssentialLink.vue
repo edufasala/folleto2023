@@ -1,17 +1,8 @@
 <template>
-  <q-item
-    clickable
-    :to="to"
-    :class="`color-menu left-${color}`"
-    active-class="text-white"
-  >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
+  <q-item clickable :to="to" :class="`color-menu left-${color}`" active-class="text-white">
+    <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
-
     <q-item-section>
       <q-item-label class="text-uppercase text-bold">{{ title }}</q-item-label>
       <q-item-label caption class="color-menu">{{ caption }}</q-item-label>
@@ -51,6 +42,10 @@ export default defineComponent({
     color: {
       type: String,
       default: 'primary'
+    },
+    visible: {
+      type: Boolean,
+      default: true
     }
   }
 })

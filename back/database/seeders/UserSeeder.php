@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Diseño']);
         Permission::create(['name' => 'Impresion']);
         Permission::create(['name' => 'Entregas']);
-        Permission::create(['name' => 'Nuevo Cliente']);
+//        Permission::create(['name' => 'Nuevo Cliente']);
         $user = \App\Models\User::find(1);
         $permissions = Permission::all();
         $user->givePermissionTo($permissions);
