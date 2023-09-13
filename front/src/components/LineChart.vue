@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12 text-right">
-<!--        <q-btn label="Dia" color="primary" dense outlined no-caps/>-->
+      <div class="col-12 col-md-6 text-right">
+        <q-select outlined dense label="Usuario" v-model="usuario" :options="usuarios" />
+      </div>
+      <div class="col-12 col-md-6 text-right">
         <q-btn label="Semana" color="primary" dense class="q-ml-xs" outlined no-caps :loading="loading" @click="consulta('semana')"/>
         <q-btn label="Mes" color="primary" dense class="q-ml-xs" outlined no-caps :loading="loading"/>
         <q-btn label="Año" color="primary" dense class="q-ml-xs" outlined no-caps :loading="loading"/>
@@ -27,6 +29,7 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      usuarios: [],
       loading: false,
       dateIni: moment().startOf('month').format('YYYY-MM-DD'),
       dateFin: moment().endOf('month').format('YYYY-MM-DD'),

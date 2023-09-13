@@ -233,6 +233,7 @@ export default {
       if (this.empresaOption === 'create') {
         this.$axios.post('empresas', this.empresa).then(response => {
           this.getEmpresas()
+          this.empresaSearch({ id: response.data.id })
           this.empresaDialog = false
         }).catch(error => {
           this.$alert.error(error)

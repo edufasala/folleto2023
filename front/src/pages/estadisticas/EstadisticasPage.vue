@@ -2,7 +2,7 @@
   <q-page class="container q-pa-md">
     <div class="row">
       <div class="col-12 col-md-12">
-        <LineChart :chartOptions="chartOptions"/>
+        <LineChart/>
       </div>
       <div class="col-12 col-md-6">
         <PieChart :chartOptions="chartOptions"/>
@@ -100,6 +100,19 @@ export default {
             ]
           }
         ]
+      }
+    }
+  },
+  methods: {
+    async getUsuarios () {
+      this.loading = true
+      try {
+        const { data } = await this.$axios.get('/usuarios')
+        this.usuarios = data
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
       }
     }
   }
