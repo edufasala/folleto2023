@@ -59,6 +59,11 @@
                             false-value="No" true-value="Si" color="green" :label="props.row.active"/>
                 </q-td>
               </template>
+              <template v-slot:body-cell-role="props">
+                <q-td :props="props">
+                  {{props.row.roles[0].name}}
+                </q-td>
+              </template>
             </q-table>
           </q-tab-panel>
           <q-tab-panel name="inactivos" class="">
@@ -87,6 +92,11 @@
                   </template>
                 </q-td>
               </template>
+              <template v-slot:body-cell-role="props">
+                <q-td :props="props">
+                  {{props.row.roles[0].name}}
+                </q-td>
+              </template>
               <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
                   <q-btn-group flat>
@@ -112,7 +122,7 @@
       </q-card>
     </div>
     <q-dialog v-model="userDialog" prevent-close>
-      <q-card style="width: 750px">
+      <q-card style="width: 950px">
         <q-card-section class="row items-center q-py-none">
           <q-icon name="account_circle" size="25px"/>
           <div class="text-h6 text-bold q-pl-xs">{{userOption==='add'?'Nuevo':'Editar'}} usuario</div>
@@ -131,9 +141,21 @@
                      :loading="loading" require v-if="userOption=='add'" type="password"
                      :rules="[val => val === user.password || 'Las contraseñas no coinciden']"
             />
-            <q-select dense outlined required v-model="user.role" label="Rol" :options="$roles"/>
-            <div v-for="permission in permissions" :key="permission.id" class="q-pl-lg">
-              <q-checkbox v-model="permission.checked" :label="permission.name" dense />
+            <q-select dense outlined required v-model="user.roles[0].id" label="Rol" :options="roles" emit-value map-options
+                      option-value="id" option-label="name" :loading="loading">
+              <template v-slot:after>
+                <q-icon name="add_circle_outline" class="cursor-pointer" color="green" @click="roleCreate" :loading="loading">
+                  <q-tooltip>Agregar rol</q-tooltip>
+                </q-icon>
+              </template>
+            </q-select>
+            <div class="row">
+              <div v-for="permission in permissions" :key="permission.id" class="q-pl-xs col-3">
+                  <q-checkbox v-model="permission.checked"
+                              class="text-caption"
+                              :label="permission.name.includes('Crear')?'Crear':permission.name.includes('Editar')?'Editar':permission.name.includes('Eliminar')?'Eliminar':permission.name.includes('Ver')?'Ver':permission.name"
+                              dense />
+              </div>
             </div>
             <q-card-actions align="right">
               <q-btn label="Cerrar" color="grey" no-caps @click="userDialog = false"/>
@@ -168,14 +190,21 @@ export default {
         { name: 'active', label: 'Activo', field: 'active', align: 'left', sortable: true }
       ],
       loading: false,
-      permissions: []
+      permissions: [],
+      roles: []
     }
   },
   mounted () {
     this.usersGet()
+    this.rolesGet()
     this.permissionsGet()
   },
   methods: {
+    rolesGet () {
+      this.$axios.get('roles').then(res => {
+        this.roles = res.data
+      })
+    },
     userSubmit () {
       this.loading = true
       if (this.userOption === 'add') {
@@ -200,6 +229,27 @@ export default {
           this.loading = false
         })
       }
+    },
+    roleCreate () {
+      this.$q.dialog({
+        title: 'Nuevo rol',
+        message: 'Ingrese el nombre del rol',
+        prompt: {
+          model: '',
+          type: 'text'
+        },
+        cancel: true
+      }).onOk(data => {
+        this.loading = true
+        this.$axios.post('roles', { name: data }).then(() => {
+          this.$alert.success('Rol creado')
+          this.rolesGet()
+        }).catch((err) => {
+          this.$alert.error(err.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+      })
     },
     permissionsGet () {
       this.$axios.get('permissions').then(res => {
@@ -258,7 +308,13 @@ export default {
       })
     },
     userAdd () {
-      this.user = {}
+      this.user = {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        roles: [{ id: '' }]
+      }
       this.userDialog = true
       this.userOption = 'add'
       this.permissions.forEach(permission => {

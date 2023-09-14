@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123Admin'),
-                'role' => 'Administrador',
+//                'role' => 'Administrador',
             ]
         ]);
         Role::create(['name' => 'Administrador']);
@@ -94,8 +94,10 @@ class UserSeeder extends Seeder
         $user->givePermissionTo($permissions);
         $users = \App\Models\User::factory(20)->create();
         foreach ($users as $user) {
-            $random = rand(1, 10);
-            $user->givePermissionTo($permissions[$random - 1]->name);
+            $randomPermiso = rand(1, 10);
+            $user->givePermissionTo($permissions[$randomPermiso - 1]->name);
+            $roles = Role::all();
+            $user->assignRole($roles[rand(1, 5) - 1]->name);
         }
     }
 }

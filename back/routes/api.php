@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('facturacion', \App\Http\Controllers\FacturacionController::class);
     Route::resource('notes', \App\Http\Controllers\NoteController::class);
     Route::resource('pedidos', \App\Http\Controllers\PedidoController::class);
+    Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);
 });

@@ -17,6 +17,7 @@ class UserController extends Controller
         $users= User::where('id','!=',1)
 //            ->where('id','!=',$request->user()->id)
             ->with('permissions')
+            ->with('roles')
             ->get();
         return $users;
     }
