@@ -115,6 +115,13 @@ export default boot(({ app, router }) => {
           visible: arrayName(res.data.permisos).includes('Central Files')
         },
         {
+          title: 'Cotizaciones',
+          icon: 'o_attach_money',
+          to: '/cotizaciones',
+          color: 'purple',
+          visible: this.arrayName(res.data.permisos).includes('Cotizaciones')
+        },
+        {
           title: 'Precios',
           icon: 'attach_money',
           to: '/precios',
@@ -155,13 +162,13 @@ export default boot(({ app, router }) => {
           to: '/entregas',
           color: 'grey',
           visible: arrayName(res.data.permisos).includes('Entregas')
+        },
+        {
+          title: 'Nuevo Cliente',
+          icon: 'o_person_add',
+          to: '/nuevo-cliente',
+          color: 'yellow'
         }
-        // {
-        //   title: 'Nuevo Cliente',
-        //   icon: 'o_person_add',
-        //   to: '/nuevo-cliente',
-        //   color: 'yellow'
-        // }
       ]
     }).catch(() => {
       app.config.globalProperties.$axios.defaults.headers.common.Authorization = ''

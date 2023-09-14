@@ -93,13 +93,92 @@ export default {
         email: this.email,
         password: this.password
       })
-        .then(response => {
-          this.$alert.success(`Bienvenido ${response.data.user.name}!`)
-          this.$store.user = response.data.user
-          this.$store.permisos = this.arrayName(response.data.permisos)
+        .then(res => {
+          this.$alert.success(`Bienvenido ${res.data.user.name}!`)
+          this.$store.user = res.data.user
+          this.$store.permisos = this.arrayName(res.data.permisos)
           this.$store.isLoggedIn = true
-          this.$axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-          localStorage.setItem('tokenFolleto', response.data.token)
+          this.$store.menus = [
+            {
+              title: 'Usuarios',
+              icon: 'o_people',
+              to: '/usuarios',
+              color: 'orange',
+              visible: this.arrayName(res.data.permisos).includes('Usuarios')
+            },
+            {
+              title: 'Estadisticas',
+              icon: 'insert_chart_outlined',
+              to: '/estadisticas',
+              color: 'orange',
+              visible: this.arrayName(res.data.permisos).includes('Estadisticas')
+            },
+            {
+              title: 'Central Files',
+              icon: 'o_folder',
+              to: '/central-files',
+              color: 'purple',
+              visible: this.arrayName(res.data.permisos).includes('Central Files')
+            },
+            {
+              title: 'Cotizaciones',
+              icon: 'o_attach_money',
+              to: '/cotizaciones',
+              color: 'purple',
+              visible: this.arrayName(res.data.permisos).includes('Cotizaciones')
+            },
+            {
+              title: 'Precios',
+              icon: 'attach_money',
+              to: '/precios',
+              color: 'purple',
+              visible: this.arrayName(res.data.permisos).includes('Precios')
+            },
+            {
+              title: 'Tesoreria',
+              icon: 'o_account_balance_wallet',
+              to: '/tesoreria',
+              color: 'pink',
+              visible: this.arrayName(res.data.permisos).includes('Tesoreria')
+            },
+            {
+              title: 'Facturas',
+              icon: 'o_receipt',
+              to: '/facturas',
+              color: 'pink',
+              visible: this.arrayName(res.data.permisos).includes('Facturas')
+            },
+            {
+              title: 'Diseño',
+              icon: 'o_palette',
+              to: '/diseno',
+              color: 'green',
+              visible: this.arrayName(res.data.permisos).includes('Diseño')
+            },
+            {
+              title: 'Impresion',
+              icon: 'o_print',
+              to: '/impresion',
+              color: 'green',
+              visible: this.arrayName(res.data.permisos).includes('Impresion')
+            },
+            {
+              title: 'Entregas',
+              icon: 'o_local_shipping',
+              to: '/entregas',
+              color: 'grey',
+              visible: this.arrayName(res.data.permisos).includes('Entregas')
+            },
+            {
+              title: 'Nuevo Cliente',
+              icon: 'o_person_add',
+              to: '/nuevo-cliente',
+              color: 'yellow',
+              visible: this.arrayName(res.data.permisos).includes('Usuarios')
+            }
+          ]
+          this.$axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
+          localStorage.setItem('tokenFolleto', res.data.token)
           this.$router.push('/')
         })
         .catch(error => {
