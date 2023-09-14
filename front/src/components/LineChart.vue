@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 col-md-6 text-right">
         <q-select outlined dense label="Usuario" v-model="usuario" :options="usuarios"
-                  map-options="name" emit-value option-value="id" option-label="name" />
+                  emit-value map-options :option-label="item => item.name" :option-value="item => item.id"/>
       </div>
       <div class="col-12 col-md-6 text-right">
         <q-btn label="Semana" color="primary" dense class="q-ml-xs" outlined no-caps :loading="loading" @click="consulta('semana')"/>
@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       usuarios: [],
-      usuario: {},
+      usuario: '',
       loading: false,
       dateIni: moment().startOf('month').format('YYYY-MM-DD'),
       dateFin: moment().endOf('month').format('YYYY-MM-DD'),
@@ -136,7 +136,7 @@ export default {
     usuariosGet () {
       this.$axios.get('users').then(response => {
         this.usuarios = response.data
-        this.usuario = this.usuarios[0]
+        // this.usuario = this.usuarios[0]
       }).catch(error => {
         console.log(error)
       })

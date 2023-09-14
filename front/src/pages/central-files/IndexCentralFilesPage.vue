@@ -5,12 +5,12 @@
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
-          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick">
+          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick" v-if="url === '/nuevo-cliente'">
             <q-tooltip>Crear</q-tooltip>
           </q-btn>
         </div>
         <div class="col-12">
-          <SearchEmpresaComponent @empresaSearch="empresaSearch" :empresas="empresas" />
+          <SearchEmpresaComponent @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
         </div>
       </div>
     </div>
@@ -158,6 +158,9 @@
               <q-input dense outlined v-model="empresa.vendedor" label="Vendedor" type="text"
                        :rules="[val => !!val || 'El vendedor es requerido']"/>
             </div>
+            <template v-if="empresaOption === 'create' ">
+
+            </template>
           </div>
           <q-card-actions align="right">
             <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
@@ -203,6 +206,11 @@ export default {
     }
   },
   mounted () {
+    this.$watch(() => this.$route.path, () => {
+      this.ocultar = true
+      // this.empresas = []
+      this.empresa = {}
+    })
     this.getEmpresas()
     // this.empresaSearch({ id: 1 })
   },
@@ -271,6 +279,13 @@ export default {
           this.loading = false
           this.ocultar = false
         })
+    }
+  },
+  computed: {
+    url () {
+      const path = this.$route.path
+      console.log(path)
+      return path
     }
   }
 }

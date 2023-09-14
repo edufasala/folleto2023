@@ -13,7 +13,8 @@ const routes = [
       { path: '', component: IndexPage, meta: { requiresAuth: true } },
       { path: 'usuarios', component: UsuariosPage, meta: { requiresAuth: true } },
       { path: 'estadisticas', component: EstadisticasPage, meta: { requiresAuth: true } },
-      { path: 'central-files', component: IndexCentralFilesPage, meta: { requiresAuth: true } }
+      { path: 'central-files', component: IndexCentralFilesPage, meta: { requiresAuth: true } },
+      { path: 'nuevo-cliente', component: IndexCentralFilesPage, meta: { requiresAuth: true } }
     ]
   },
   {
