@@ -93,7 +93,50 @@ export default {
       pedidoDialogVer: false,
       pedidoDialogNew: false,
       pedidoOption: '',
-      pedidoDato: {},
+      pedidoDato: {
+        codigo: 0,
+        producto: 'Folleto',
+        medida: '10x15',
+        cantidad: '1',
+        esp: '',
+        gr: '150',
+        lados: '2 lados diferentes',
+        diseno: 'nuevo',
+        descripcion: '',
+        estado: 'Diseño',
+        estadoPedido: 'Activo',
+        fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        diasCompra: 5,
+        fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        precioProducto: 0,
+        precioDiseno: 0,
+        especificaciones: '',
+        terminacion: '',
+        envio: '',
+        precioEspecificaciones: 0,
+        precioEnvio: 0,
+        pago: 0,
+        metodoPago: 'Efectivo',
+        comentarioPago: '',
+        iva: 15,
+        seFacturo: 'Si',
+        empresa_id: this.empresa.id,
+        user_id: 3,
+        sucursal_id: 2,
+        facturacion_id: 2,
+        direccion_id: 1,
+        persona_id: 2,
+        phone_id: 2,
+        email_id: 2,
+        deleted_at: null,
+        precioTotal: 1594.13,
+        deuda: 1114.13,
+        sucursal: this.empresa.sucursals[0],
+        person: this.empresa.person[0],
+        direccion: this.empresa.direccion[0],
+        facturacion: this.empresa.facturacion[0]
+      },
       pedidosDatos: this.pedidos
     }
   },
@@ -140,32 +183,8 @@ export default {
         }).then(response => {
           this.$emit('empresaSearch', this.empresa)
           this.pedidoDialog = false
-        }).catch(error => {
-          this.$alert.error(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      } else {
-        this.$axios.put('pedidos/' + this.pedidoDato.id, {
-          ...this.pedidoDato,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.$emit('empresaSearch', this.empresa)
-          this.pedidoDialog = false
-        }).catch(error => {
-          this.$alert.error(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      }
-    },
-    pedidoDialogClick () {
-      this.loading = true
-      this.$axios.post('getNumeroPedido', { empresa_id: this.empresa.id })
-        .then(response => {
-          this.pedidoDialogNew = true
           this.pedidoDato = {
-            codigo: response.data,
+            codigo: 0,
             producto: 'Folleto',
             medida: '10x15',
             cantidad: '1',
@@ -208,6 +227,31 @@ export default {
             direccion: this.empresa.direccion[0],
             facturacion: this.empresa.facturacion[0]
           }
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      } else {
+        this.$axios.put('pedidos/' + this.pedidoDato.id, {
+          ...this.pedidoDato,
+          empresa_id: this.empresa.id
+        }).then(response => {
+          this.$emit('empresaSearch', this.empresa)
+          this.pedidoDialog = false
+        }).catch(error => {
+          this.$alert.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      }
+    },
+    pedidoDialogClick () {
+      this.loading = true
+      this.$axios.post('getNumeroPedido', { empresa_id: this.empresa.id })
+        .then(response => {
+          this.pedidoDialogNew = true
+          this.pedidoDato.codigo = response.data
         }).catch(error => {
           this.$alert.error(error)
         }).finally(() => {

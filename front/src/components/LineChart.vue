@@ -2,7 +2,8 @@
   <div>
     <div class="row">
       <div class="col-12 col-md-6 text-right">
-        <q-select outlined dense label="Usuario" v-model="usuario" :options="usuarios" />
+        <q-select outlined dense label="Usuario" v-model="usuario" :options="usuarios"
+                  map-options="name" emit-value option-value="id" option-label="name" />
       </div>
       <div class="col-12 col-md-6 text-right">
         <q-btn label="Semana" color="primary" dense class="q-ml-xs" outlined no-caps :loading="loading" @click="consulta('semana')"/>
@@ -30,6 +31,7 @@ export default {
   data () {
     return {
       usuarios: [],
+      usuario: {},
       loading: false,
       dateIni: moment().startOf('month').format('YYYY-MM-DD'),
       dateFin: moment().endOf('month').format('YYYY-MM-DD'),
@@ -112,6 +114,7 @@ export default {
     }
   },
   created () {
+    this.usuariosGet()
     this.loading = true
     this.chartOptions.subtitle.text = `del ${moment(this.dateIni).format('DD/MM/YYYY')} al ${moment(this.dateFin).format('DD/MM/YYYY')}`
     this.$axios.post('reportBetween', {
@@ -128,6 +131,16 @@ export default {
       console.log(error)
       this.loading = false
     })
+  },
+  methods: {
+    usuariosGet () {
+      this.$axios.get('users').then(response => {
+        this.usuarios = response.data
+        this.usuario = this.usuarios[0]
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   }
   // props: {
   //   chartOptions: {

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
+
 class UserController extends Controller
 {
     public function index(Request $request){
@@ -76,14 +78,17 @@ class UserController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required|same:password',
-
         ]);
+
+        $role = Role::find($request->roles[0]['id']);
+
         $user=new User();
         $user->name=$request->name;
         $user->email=$request->email;
-        $user->role=$request->role;
         $user->password= Hash::make($request->password);
         $user->save();
+
+        $user->assignRole($role);
         foreach ($request->permissions as $permission){
             if ($permission['checked']){
                 $user->givePermissionTo($permission['name']);
@@ -97,6 +102,9 @@ class UserController extends Controller
             'email' => 'required|unique:users,email,'.$user->id
         ]);
         $user->update($request->all());
+        $role = Role::find($request->roles[0]['id']);
+        $user->syncRoles($role);
+
         $user->syncPermissions($request->permisos);
         foreach ($request->permissions as $permission){
             if ($permission['checked']){

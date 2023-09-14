@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <pre>{{$store.permisos}}</pre>
+<!--    <pre>{{$store.permisos}}</pre>-->
     <img
       alt="Quasar logo"
       src="logo1.png"

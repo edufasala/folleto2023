@@ -19,7 +19,7 @@
                 <q-btn flat round icon="refresh" @click="usersGet" :loading="loading">
                   <q-tooltip>Actualizar</q-tooltip>
                 </q-btn>
-                <q-input outlined dense v-model="userFilterActive" debounce="500" placeholder="Buscar" class="bg-white">
+                <q-input outlined dense v-model="userFilterActive" debounce="500" placeholder="Buscar" class="bg-white" clearable>
                   <template v-slot:append>
                     <q-icon name="search" class="cursor-pointer">
                       <q-tooltip>Buscar</q-tooltip>
@@ -61,7 +61,9 @@
               </template>
               <template v-slot:body-cell-role="props">
                 <q-td :props="props">
-                  {{props.row.roles[0].name}}
+                  <template v-if="props.row.roles.length > 0">
+                    {{props.row.roles[0].name}}
+                  </template>
                 </q-td>
               </template>
             </q-table>
@@ -74,7 +76,7 @@
                 <q-btn flat round icon="refresh" @click="usersGet" :loading="loading">
                   <q-tooltip>Actualizar</q-tooltip>
                 </q-btn>
-                <q-input outlined dense v-model="userFilterInactive" debounce="500" placeholder="Buscar" class="bg-white">
+                <q-input outlined dense v-model="userFilterInactive" debounce="500" placeholder="Buscar" class="bg-white" clearable>
                   <template v-slot:append>
                     <q-icon name="search" class="cursor-pointer">
                       <q-tooltip>Buscar</q-tooltip>
@@ -94,7 +96,9 @@
               </template>
               <template v-slot:body-cell-role="props">
                 <q-td :props="props">
-                  {{props.row.roles[0].name}}
+                  <template v-if="props.row.roles.length > 0">
+                    {{props.row.roles[0].name}}
+                  </template>
                 </q-td>
               </template>
               <template v-slot:body-cell-actions="props">
@@ -265,6 +269,11 @@ export default {
           }
         })
       })
+      if (user.roles.length > 0) {
+        // user.roles[0].id = user.roles[0].id.toString()
+      } else {
+        user.roles = [{ id: '' }]
+      }
       this.user = user
       this.userDialog = true
       this.userOption = 'edit'
