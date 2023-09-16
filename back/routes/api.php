@@ -40,3 +40,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);
 });
+Route::get('migracion/{tabla}',[\App\Http\Controllers\MigracionController::class,'migracion']);

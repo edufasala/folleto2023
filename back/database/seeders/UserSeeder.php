@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -15,14 +17,23 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            [
-                'name' => 'admin',
-                'email' => 'admin@test.com',
-                'password' => bcrypt('admin123Admin'),
-//                'role' => 'Administrador',
-            ]
-        ]);
+
+        $usuarios = DB::connection('mysql2')->select('select * from users');
+//        User::truncate();
+        foreach ($usuarios as $index=>$usuario) {
+            $password = $index==0?Hash::make('admin123Admin'):$usuario->password;
+            DB::table('users')->insert([
+                'id' => $usuario->id,
+                'name' => $usuario->name,
+                'email' => $usuario->email,
+                'password' => $password,
+                'active' => $usuario->actived==1?'Si':'No',
+                'created_at' => $usuario->created_at,
+                'updated_at' => $usuario->updated_at,
+            ]);
+        }
+
+
         Role::create(['name' => 'Administrador']);
         Role::create(['name' => 'Diseñador']);
         Role::create(['name' => 'Entregador']);
@@ -92,12 +103,8 @@ class UserSeeder extends Seeder
         $user = \App\Models\User::find(1);
         $permissions = Permission::all();
         $user->givePermissionTo($permissions);
-        $users = \App\Models\User::factory(20)->create();
-        foreach ($users as $user) {
-            $randomPermiso = rand(1, 10);
-            $user->givePermissionTo($permissions[$randomPermiso - 1]->name);
-            $roles = Role::all();
-            $user->assignRole($roles[rand(1, 5) - 1]->name);
-        }
+
+
+
     }
 }

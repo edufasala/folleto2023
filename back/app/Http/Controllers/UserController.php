@@ -16,9 +16,10 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     public function index(Request $request){
-        $users= User::where('id','!=',1)
+        $users= User::
+//        where('id','!=',1)
 //            ->where('id','!=',$request->user()->id)
-            ->with('permissions')
+            with('permissions')
             ->with('roles')
             ->get();
         return $users;
