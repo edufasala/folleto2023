@@ -159,7 +159,26 @@
                        :rules="[val => !!val || 'El vendedor es requerido']"/>
             </div>
             <template v-if="empresaOption === 'create' ">
-
+              <div class="col-12">
+                <q-select dense outlined v-model="empresa.vendedorCargo" label="Cargo" :options="$cargos"
+                          :rules="[val => !!val || 'El cargo es requerido']"/>
+              </div>
+              <div class="col-12">
+                <q-input dense outlined v-model="empresa.vendedorNombre" label="Nombre Personal" type="text"
+                         :rules="[val => !!val || 'El nombre del vendedor es requerido']"/>
+              </div>
+              <div class="col-12">
+                <q-input dense outlined v-model="empresa.vendedorDni" label="DNI Personal" type="text"
+                         :rules="[val => !!val || 'El DNI del vendedor es requerido']"/>
+              </div>
+              <div class="col-12">
+                <q-input dense outlined v-model="empresa.vendedorTelefono" label="Telefono Personal" type="text"
+                         :rules="[val => !!val || 'El telefono del vendedor es requerido']"/>
+              </div>
+              <div class="col-12">
+                <q-input dense outlined v-model="empresa.vendedorEmail" label="Email Personal" type="text"
+                         :rules="[val => !!val || 'El email del vendedor es requerido']"/>
+              </div>
             </template>
           </div>
           <q-card-actions align="right">

@@ -6,7 +6,9 @@ use App\Models\Empresa;
 use App\Http\Requests\StoreEmpresaRequest;
 use App\Http\Requests\UpdateEmpresaRequest;
 use App\Models\Pedido;
+use App\Models\Person;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller{
     public function index(){ return Empresa::get(); }
@@ -51,7 +53,22 @@ class EmpresaController extends Controller{
         return $empresa;
     }
     public function store(StoreEmpresaRequest $request){
-        return Empresa::create($request->all());
+        DB::beginTransaction();
+        $empresa= Empresa::create($request->all());
+        $persona = Person::create([
+            'nombre' => $request->vendedorNombre,
+            'cargo' => $request->vendedorCargo,
+            'dni' => $request->vendedorDni,
+            'empresa_id' => $empresa->id,
+        ]);
+        $phone = $persona->phone()->create([
+            'phone' => $request->vendedorTelefono,
+        ]);
+        $email = $persona->email()->create([
+            'email' => $request->vendedorEmail,
+        ]);
+        DB::commit();
+        return $empresa;
     }
     public function update(UpdateEmpresaRequest $request, $id){
         $empresa = Empresa::findOrFail($id);
