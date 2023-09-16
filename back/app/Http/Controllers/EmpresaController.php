@@ -11,7 +11,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller{
-    public function index(){ return Empresa::get(); }
+    public function index(){
+        return Empresa::select('id', 'nombre','created_at')->get();
+    }
     public function show(Empresa $empresa){
         $empresa= Empresa::where('id', $empresa->id)
             ->with([
