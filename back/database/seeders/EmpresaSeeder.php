@@ -21,8 +21,7 @@ from branchs b
 inner join clients c on c.id = b.client_id;
 ");
         foreach ($empresasAntiguas as $empresaAntigua) {
-//            error_log(json_encode($empresaAntigua));
-            DB::table('empresas')->insert([
+            $empresa=DB::table('empresas')->insert([
                 'id' => $empresaAntigua->empresa_id,
                 'nombre' => $empresaAntigua->empresa,
                 'contacto' => $empresaAntigua->contacto,

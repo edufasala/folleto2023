@@ -34,12 +34,16 @@ export default {
     empresas: {
       type: Object,
       default: () => ({})
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       search: '',
-      loading: false,
+      // loading: false,
       // empresas: [],
       empresaColumn: [
         { name: 'codigo', label: 'Código', field: 'codigo', align: 'left', sortable: true, hide: true },

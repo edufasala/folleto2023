@@ -10,7 +10,7 @@
           </q-btn>
         </div>
         <div class="col-12">
-          <SearchEmpresaComponent @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
+          <SearchEmpresaComponent :loading="loading" @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
         </div>
       </div>
     </div>
