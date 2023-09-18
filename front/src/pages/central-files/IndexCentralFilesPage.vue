@@ -151,7 +151,7 @@
                        :rules="[val => !!val || 'El nombre es requerido']"/>
             </div>
             <div class="col-12">
-              <q-select dense outlined v-model="empresa.contacto" label="Contacto" :options="['Facebook','Whatsapp','Telefono', 'Email']"
+              <q-input dense outlined v-model="empresa.contacto" label="Contacto"
                         :rules="[val => !!val || 'El contacto es requerido']"/>
             </div>
             <div class="col-12">

@@ -19,10 +19,10 @@ class UserSeeder extends Seeder
     {
 
         $usuarios = DB::connection('mysql2')->select('select * from users');
-//        User::truncate();
+        $insert = [];
         foreach ($usuarios as $index=>$usuario) {
             $password = $index==0?Hash::make('admin123Admin'):$usuario->password;
-            DB::table('users')->insert([
+            $insert[] = [
                 'id' => $usuario->id,
                 'name' => $usuario->name,
                 'email' => $usuario->email,
@@ -30,8 +30,9 @@ class UserSeeder extends Seeder
                 'active' => $usuario->actived==1?'Si':'No',
                 'created_at' => $usuario->created_at,
                 'updated_at' => $usuario->updated_at,
-            ]);
+            ];
         }
+        DB::table('users')->insert($insert);
 
 
         Role::create(['name' => 'Administrador']);
