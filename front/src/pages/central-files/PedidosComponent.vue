@@ -44,7 +44,11 @@
               {{pedido.estadoPedido}}
           </td>
           <td class="text-center">#{{pedido.codigo}}</td>
-          <td class="text-center">{{pedido.sucursal.nombre}}</td>
+          <td class="text-center">
+            <template v-if="pedido.sucursal">
+              {{pedido.sucursal.nombre}}
+            </template>
+          </td>
           <td class="text-center">{{pedido.producto}}</td>
           <td class="text-center">{{pedido.medida}}</td>
           <td class="text-center">{{pedido.cantidad}}</td>
