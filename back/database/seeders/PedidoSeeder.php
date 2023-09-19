@@ -36,7 +36,7 @@ class PedidoSeeder extends Seeder
                 'estado' => '',
                 'estadoPedido' => 'Terminados',
                 'diasCompra' => 0,
-                'fecha' => now(),
+                'fecha' => date('Y-m-d', strtotime($pedidoAntiguo->created_at)),
                 'fechaEntrega' => now(),
                 'fechaEspecial' => now(),
                 'precioProducto' => $pedidoAntiguo->price_flyer,
