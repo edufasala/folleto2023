@@ -53,10 +53,10 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Central Files Crear']);
         Permission::create(['name' => 'Central Files Editar']);
         Permission::create(['name' => 'Central Files Eliminar']);
-        Permission::create(['name' => 'Cotizaciones']);
-        Permission::create(['name' => 'Cotizaciones Crear']);
-        Permission::create(['name' => 'Cotizaciones Editar']);
-        Permission::create(['name' => 'Cotizaciones Eliminar']);
+//        Permission::create(['name' => 'Cotizaciones']);
+//        Permission::create(['name' => 'Cotizaciones Crear']);
+//        Permission::create(['name' => 'Cotizaciones Editar']);
+//        Permission::create(['name' => 'Cotizaciones Eliminar']);
         Permission::create(['name' => 'Precios']);
         Permission::create(['name' => 'Precios Crear']);
         Permission::create(['name' => 'Precios Editar']);
@@ -96,7 +96,7 @@ class UserSeeder extends Seeder
         $role->givePermissionTo(['Entregas']);
 
         $role = Role::find(4); //vendedor
-        $role->givePermissionTo(['Facturas', 'Tesoreria', 'Cotizaciones']);
+        $role->givePermissionTo(['Facturas', 'Tesoreria']);
 
         $role = Role::find(5); //gerente de ventas
         $role->givePermissionTo(['Estadisticas', 'Central Files', 'Precios', 'Nuevo Cliente']);
@@ -104,6 +104,7 @@ class UserSeeder extends Seeder
         $user = \App\Models\User::find(1);
         $permissions = Permission::all();
         $user->givePermissionTo($permissions);
+        $user->assignRole('Administrador');
 
 
 

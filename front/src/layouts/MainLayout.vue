@@ -172,12 +172,12 @@
                 <q-item-label class="text-uppercase text-bold">Precios</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable to="/cotizaciones" class="color-menu left-purple" active-class="text-white" v-if="$can('Cotizaciones')">
-              <q-item-section avatar><q-icon name="attach_money" /></q-item-section>
-              <q-item-section>
-                <q-item-label class="text-uppercase text-bold">Cotizaciones</q-item-label>
-              </q-item-section>
-            </q-item>
+<!--            <q-item clickable to="/cotizaciones" class="color-menu left-purple" active-class="text-white" v-if="$can('Cotizaciones')">-->
+<!--              <q-item-section avatar><q-icon name="attach_money" /></q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label class="text-uppercase text-bold">Cotizaciones</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
             <q-item clickable to="/tesoreria" class="color-menu left-pink" active-class="text-white" v-if="$can('Tesoreria')">
               <q-item-section avatar><q-icon name="o_account_balance_wallet" /></q-item-section>
               <q-item-section>

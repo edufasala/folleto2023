@@ -146,7 +146,7 @@
                      :rules="[val => val === user.password || 'Las contraseñas no coinciden']"
             />
             <q-select dense outlined required v-model="user.roles[0].id" label="Rol" :options="roles" emit-value map-options
-                      option-value="id" option-label="name" :loading="loading">
+                      option-value="id" option-label="name" :loading="loading" @update:model-value="changeRol">
               <template v-slot:after>
                 <q-icon name="add_circle_outline" class="cursor-pointer" color="green" @click="roleCreate" :loading="loading">
                   <q-tooltip>Agregar rol</q-tooltip>
@@ -204,6 +204,19 @@ export default {
     this.permissionsGet()
   },
   methods: {
+    changeRol (rol) {
+      console.log(rol)
+      const permisosRol = this.roles.filter(role => role.id === rol)
+      console.log(permisosRol)
+      this.permissions.forEach(permission => {
+        permission.checked = false
+        permisosRol[0].permissions.forEach(permisoRol => {
+          if (permission.id === permisoRol.id) {
+            permission.checked = true
+          }
+        })
+      })
+    },
     rolesGet () {
       this.$axios.get('roles').then(res => {
         this.roles = res.data
@@ -217,6 +230,7 @@ export default {
         ).then(() => {
           this.userDialog = false
           this.usersGet()
+          this.rolesGet()
         }).catch((err) => {
           this.$alert.error(err.response.data.message)
           this.loading = false
@@ -227,6 +241,7 @@ export default {
         ).then(() => {
           this.userDialog = false
           this.usersGet()
+          this.rolesGet()
         }).catch((err) => {
           this.$alert.error(err.response.data.message)
         }).finally(() => {
