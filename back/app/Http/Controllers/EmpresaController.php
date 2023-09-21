@@ -8,11 +8,26 @@ use App\Http\Requests\UpdateEmpresaRequest;
 use App\Models\Pedido;
 use App\Models\Person;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller{
-    public function index(){
-        return Empresa::select('id', 'nombre','created_at')->get();
+    public function index(Request $request){
+//        $this->eliminarEmpresasSinPedidos();
+        $search = $request->search;
+        $empresas= Empresa::
+            where('nombre', 'like', '%'.$search.'%')
+            ->paginate(100);
+        return $empresas;
+    }
+    public function eliminarEmpresasSinPedidos(){
+        $empresas = Empresa::all();
+        foreach ($empresas as $empresa){
+            $pedidos = Pedido::where('empresa_id', $empresa->id)->get();
+            if($pedidos->count() == 0){
+                $empresa->delete();
+            }
+        }
     }
     public function show(Empresa $empresa){
         $empresa= Empresa::where('id', $empresa->id)
@@ -34,22 +49,7 @@ class EmpresaController extends Controller{
                 'pedidos.status.user',
             ])
             ->first();
-        $promedioDiasCompra = Pedido::where('empresa_id', $empresa->id)
-//            ->where('estadoPedido', 'Terminado')
-            ->avg('diasCompra');
-
-        $diasCompraEntero = intval($promedioDiasCompra);
-        $ultimoPedido = Pedido::where('empresa_id', $empresa->id)
-            ->orderBy('fecha', 'desc')
-            ->first();
-        if ($ultimoPedido){
-            $fechaUltimoPedido = Carbon::parse($ultimoPedido->fecha);
-            $proximoPedido = $fechaUltimoPedido->addDays($diasCompraEntero);
-            $meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-            $proximoPedido = $proximoPedido->format('d ').$meses[$proximoPedido->format('n')-1].$proximoPedido->format(' Y');
-        }else{
-            $proximoPedido = null;
-        }
+        list($promedioDiasCompra, $proximoPedido) = $this->searchDiasProximoCompra($empresa);
         $empresa->proximoPedido = $proximoPedido;
         $empresa->promedioDiasCompra = round($promedioDiasCompra, 2);
         return $empresa;
@@ -79,5 +79,30 @@ class EmpresaController extends Controller{
     }
     public function destroy(Empresa $empresa){
 //        return $empresa->delete();
+    }
+
+    /**
+     * @param $empresa
+     * @return array
+     */
+    public function searchDiasProximoCompra($empresa): array
+    {
+        $promedioDiasCompra = Pedido::where('empresa_id', $empresa->id)
+//            ->where('estadoPedido', 'Terminado')
+            ->avg('diasCompra');
+
+        $diasCompraEntero = intval($promedioDiasCompra);
+        $ultimoPedido = Pedido::where('empresa_id', $empresa->id)
+            ->orderBy('fecha', 'desc')
+            ->first();
+        if ($ultimoPedido) {
+            $fechaUltimoPedido = Carbon::parse($ultimoPedido->fecha);
+            $proximoPedido = $fechaUltimoPedido->addDays($diasCompraEntero);
+            $meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+            $proximoPedido = $proximoPedido->format('d ') . $meses[$proximoPedido->format('n') - 1] . $proximoPedido->format(' Y');
+        } else {
+            $proximoPedido = null;
+        }
+        return array($promedioDiasCompra, $proximoPedido);
     }
 }

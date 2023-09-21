@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('empresas', \App\Http\Controllers\EmpresaController::class);
+    Route::delete('eliminarEmpresasSinPedidos', [\App\Http\Controllers\EmpresaController::class, 'eliminarEmpresasSinPedidos']);
     Route::get('updateActive/{user}',[ \App\Http\Controllers\UserController::class,'updateActive']);
     Route::put('updatePassword/{user}',[ \App\Http\Controllers\UserController::class,'updatePassword']);
     Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
@@ -40,4 +41,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);
 });
-Route::get('migracion/{tabla}',[\App\Http\Controllers\MigracionController::class,'migracion']);
+//Route::get('migracion/{tabla}',[\App\Http\Controllers\MigracionController::class,'migracion']);

@@ -9,9 +9,20 @@ class ReporteController extends Controller
 {
     public function reportBetween(Request $request)
     {
-        return Pedido::selectRaw('fecha, count(*) as cantidad')
-            ->whereBetween('fecha', [$request->dateIni, $request->dateFin])
-            ->groupBy('fecha')
-            ->get();
+        $fechaIni = $request->dateIni;
+        $fechaFin = $request->dateFin;
+        $usuario = $request->usuario;
+        if ($usuario==0){
+            return Pedido::selectRaw('fecha, count(*) as cantidad')
+                ->whereBetween('fecha', [$fechaIni, $fechaFin])
+                ->groupBy('fecha')
+                ->get();
+        }else{
+            return Pedido::selectRaw('fecha, count(*) as cantidad')
+                ->whereBetween('fecha', [$fechaIni, $fechaFin])
+                ->where('user_id',$usuario)
+                ->groupBy('fecha')
+                ->get();
+        }
     }
 }

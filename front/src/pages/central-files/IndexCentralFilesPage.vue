@@ -5,12 +5,15 @@
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
-          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick" v-if="url === '/nuevo-cliente'">
-            <q-tooltip>Crear</q-tooltip>
+          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick">
+            <q-tooltip>Crear Empresa</q-tooltip>
+          </q-btn>
+          <q-btn :loading="loading" round dense flat icon="o_delete" color="red" @click="eliminarEmpresasSinPedidos">
+            <q-tooltip>Eliminar empresas sin pedidos</q-tooltip>
           </q-btn>
         </div>
         <div class="col-12">
-          <SearchEmpresaComponent :loading="loading" @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
+          <SearchEmpresaComponent @empresaFilter="empresaFilter" :loading="loading" @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
         </div>
       </div>
     </div>
@@ -230,20 +233,45 @@ export default {
       // this.empresas = []
       this.empresa = {}
     })
-    this.getEmpresas()
+    this.getEmpresas('')
     // this.empresaSearch({ id: 1 })
   },
   methods: {
+    eliminarEmpresasSinPedidos () {
+      this.$q.dialog({
+        title: 'Eliminar Empresas',
+        message: '¿Estas seguro de eliminar las empresas sin pedidos?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.loading = true
+        this.$axios.delete('eliminarEmpresasSinPedidos')
+          .then(response => {
+            this.getEmpresas('')
+          }).catch(error => {
+            this.$alert(error.response.data.message)
+          }).finally(() => {
+            this.loading = false
+          })
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    },
     clickEditEmpresa (empresa) {
       this.empresaDialog = true
       this.empresa = { ...empresa }
       this.empresaOption = 'edit'
     },
-    getEmpresas () {
+    empresaFilter (filter) {
+      this.getEmpresas(filter)
+    },
+    getEmpresas (search) {
       this.loading = true
-      this.$axios.get('empresas')
+      this.$axios.get('empresas?search=' + search)
         .then(response => {
-          this.empresas = response.data
+          this.empresas = response.data.data
         }).catch(error => {
           this.$alert(error.response.data.message)
         }).finally(() => {

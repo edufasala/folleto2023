@@ -1,10 +1,11 @@
 <template>
-  <q-table dense :rows="empresas" :rows-per-page-options="[18]"
+  <q-table dense :rows="empresas" :rows-per-page-options="[100]"
            :loading="loading" :separator="null" flat bordered class="bg-blue-1"
-           :columns="empresaColumn" :filter="search" hide-header hide-bottom>
+           :columns="empresaColumn" hide-header hide-bottom>
     <template v-slot:top>
       <q-input clearable rounded dense outlined bg-color="white" class="q-ma-xs"
-               v-model="search" placeholder="Search" :loading="loading">
+               debounce="500"
+               v-model="search" placeholder="Search" :loading="loading" @update:model-value="$emit('empresaFilter', search)">
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
