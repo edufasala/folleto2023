@@ -224,7 +224,8 @@ export default {
       persons: [],
       notes: [],
       empresaDialog: false,
-      empresaOption: ''
+      empresaOption: '',
+      filter: 'numero'
     }
   },
   mounted () {
@@ -233,7 +234,7 @@ export default {
       // this.empresas = []
       this.empresa = {}
     })
-    this.getEmpresas('')
+    this.getEmpresas('', this.filter)
     // this.empresaSearch({ id: 1 })
   },
   methods: {
@@ -247,7 +248,7 @@ export default {
         this.loading = true
         this.$axios.delete('eliminarEmpresasSinPedidos')
           .then(response => {
-            this.getEmpresas('')
+            this.getEmpresas('', this.filter)
           }).catch(error => {
             this.$alert(error.response.data.message)
           }).finally(() => {
@@ -264,12 +265,13 @@ export default {
       this.empresa = { ...empresa }
       this.empresaOption = 'edit'
     },
-    empresaFilter (filter) {
-      this.getEmpresas(filter)
+    empresaFilter (search, filter) {
+      this.filter = filter
+      this.getEmpresas(search, filter)
     },
-    getEmpresas (search) {
+    getEmpresas (search, filter) {
       this.loading = true
-      this.$axios.get('empresas?search=' + search)
+      this.$axios.get('empresas?search=' + search + '&filter=' + filter)
         .then(response => {
           this.empresas = response.data.data
         }).catch(error => {
@@ -331,7 +333,7 @@ export default {
   computed: {
     url () {
       const path = this.$route.path
-      console.log(path)
+      // console.log(path)
       return path
     }
   }

@@ -5,12 +5,57 @@
     <template v-slot:top>
       <q-input clearable rounded dense outlined bg-color="white" class="q-ma-xs"
                debounce="500"
-               v-model="search" placeholder="Search" :loading="loading" @update:model-value="$emit('empresaFilter', search)">
+               v-model="search" placeholder="Search" :loading="loading" @update:model-value="$emit('empresaFilter', search, filtrarPor)">
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
         <template v-slot:after>
-          <q-btn flat round dense icon="more_vert" />
+          <q-btn flat round dense icon="more_vert">
+            <q-menu>
+              <q-list dense bordered>
+                <q-item clickable v-close-popup @click="filtrarPor = 'numero'">
+                  <q-item-section side>
+                    <q-icon :name="filtrarPor === 'numero' ? 'check' : ''" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Numero/Nombre de cliente</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="filtrarPor = 'nombre'">
+                  <q-item-section side>
+                    <q-icon :name="filtrarPor === 'nombre' ? 'check' : ''" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Nombre de personas</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="filtrarPor = 'telefono'">
+                  <q-item-section side>
+                    <q-icon :name="filtrarPor === 'telefono' ? 'check' : ''" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Telefono</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="filtrarPor = 'email'">
+                  <q-item-section side>
+                    <q-icon :name="filtrarPor === 'email' ? 'check' : ''" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Email</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="filtrarPor = 'sucursal'">
+                  <q-item-section side>
+                    <q-icon :name="filtrarPor === 'sucursal' ? 'check' : ''" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>Sucursal</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </template>
       </q-input>
     </template>
@@ -44,6 +89,7 @@ export default {
   data () {
     return {
       search: '',
+      filtrarPor: 'numero',
       // loading: false,
       // empresas: [],
       empresaColumn: [

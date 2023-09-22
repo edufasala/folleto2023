@@ -14,11 +14,9 @@ use function Laravel\Prompts\error;
 
 class EmpresaController extends Controller{
     public function index(Request $request){
-//        $this->eliminarEmpresasSinPedidos();
         $search = $request->search;
         $filter = $request->filter;
         $search = $search=='null'?'':$search;
-//        error_log($filter);
         if ($filter == 'numero') {
             $empresas= Empresa::where('nombre', 'like', '%'.$search.'%')
                 ->orWhere('id', 'like', '%'.$search.'%')
@@ -49,7 +47,6 @@ class EmpresaController extends Controller{
             })->paginate(100);
             return $empresas;
         }
-//        return Empresa::
     }
     public function eliminarEmpresasSinPedidos(){
         Empresa::whereNotExists(function ($query) {

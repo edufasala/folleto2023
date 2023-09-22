@@ -16,7 +16,7 @@
             <div class="row items-center">
               <div>
               <div class="text-bold text-subtitle1"><span class="text-red">#{{empresa.id}}</span> {{empresa.nombre}}</div>
-              <div> Sucursal: <span class="text-bold">{{pedido.sucursal.nombre}}</span></div>
+              <div> Sucursal: <span class="text-bold" v-if="pedido.sucursal">{{pedido.sucursal.nombre}}</span></div>
               </div>
               <q-space />
               <div>
@@ -29,19 +29,19 @@
               <q-card-section class="q-pa-xs">
                 <div class="row">
                   <div class="col-12 col-md-6">
-                    Nombre: <span class="text-bold">{{pedido.person.nombre}}</span>
+                    Nombre: <span class="text-bold" v-if="pedido.person">{{pedido.person.nombre}}</span>
                   </div>
                   <div class="col-12 col-md-3">
-                    Cargo: <span class="text-bold">{{pedido.person.cargo}}</span>
+                    Cargo: <span class="text-bold" v-if="pedido.person">{{pedido.person.cargo}}</span>
                   </div>
                   <div class="col-12 col-md-3">
-                    DNI: <span class="text-bold">{{pedido.person.dni}}</span>
+                    DNI: <span class="text-bold" v-if="pedido.person">{{pedido.person.dni}}</span>
                   </div>
                   <div class="col-12 col-md-6">
-                    Teléfono: <span class="text-bold">{{pedido.phone.phone}}</span>
+                    Teléfono: <span class="text-bold" v-if="pedido.phone">{{pedido.phone.phone}}</span>
                   </div>
                   <div class="col-12 col-md-6">
-                    Email: <span class="text-bold">{{pedido.email.email}}</span>
+                    Email: <span class="text-bold" v-if="pedido.email">{{pedido.email.email}}</span>
                   </div>
                 </div>
               </q-card-section>
@@ -109,11 +109,11 @@
                   <div class="col-12 col-md-6">
                     <div :class="`row ${$q.screen.lt.md ? '' : 'q-ml-md'}`">
                       <div class="col-4">Direccion</div>
-                      <div class="col-8 text-bold">{{ pedido.direccion.direccion }}</div>
+                      <div class="col-8 text-bold" v-if="pedido.direccion">{{ pedido.direccion.direccion }}</div>
                       <div class="col-4">Localidad</div>
-                      <div class="col-8 text-bold">{{ pedido.direccion.localidad }}</div>
+                      <div class="col-8 text-bold" v-if="pedido.direccion">{{ pedido.direccion.localidad }}</div>
                       <div class="col-4">CP:</div>
-                      <div class="col-8 text-bold">{{ pedido.direccion.codigoPostal }}</div>
+                      <div class="col-8 text-bold" v-if="pedido.direccion">{{ pedido.direccion.codigoPostal }}</div>
                       <div class="col-4">Descripcion:</div>
                       <div class="col-8 text-bold">{{ pedido.descripcion }}</div>
                     </div>
@@ -206,16 +206,16 @@
                       <q-separator/>
                       <div class="row">
                         <div class="col-12 col-md-4">
-                          Cuit/Cui/DNI: <span class="text-bold"> {{ pedido.facturacion.cuit }}</span>
+                          Cuit/Cui/DNI: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.cuit }}</span>
                         </div>
                         <div class="col-12 col-md-4">
-                          Condicional: <span class="text-bold"> {{ pedido.facturacion.condicional }}</span>
+                          Condicional: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.condicional }}</span>
                         </div>
                         <div class="col-12 col-md-4">
-                          R. Social: <span class="text-bold"> {{ pedido.facturacion.razonSocial }}</span>
+                          R. Social: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.razonSocial }}</span>
                         </div>
                         <div class="col-12 col-md-12">
-                          Comentario: <span class="text-bold"> {{ pedido.facturacion.comentario }}</span>
+                          Comentario: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.comentario }}</span>
                         </div>
                       </div>
                     </q-card>
