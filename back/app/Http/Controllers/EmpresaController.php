@@ -10,24 +10,53 @@ use App\Models\Person;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\error;
 
 class EmpresaController extends Controller{
     public function index(Request $request){
 //        $this->eliminarEmpresasSinPedidos();
         $search = $request->search;
-        $empresas= Empresa::
-            where('nombre', 'like', '%'.$search.'%')
-            ->paginate(100);
-        return $empresas;
+        $filter = $request->filter;
+        $search = $search=='null'?'':$search;
+//        error_log($filter);
+        if ($filter == 'numero') {
+            $empresas= Empresa::where('nombre', 'like', '%'.$search.'%')
+                ->orWhere('id', 'like', '%'.$search.'%')
+                ->paginate(100);
+            return $empresas;
+        }
+        if ($filter == 'nombre') {
+            $empresas = Empresa::whereHas('person', function ($query) use ($search) {
+                $query->where('nombre', 'like', '%'.$search.'%');
+            })->paginate(100);
+            return $empresas;
+        }
+        if ($filter == 'telefono') {
+            $empresas = Empresa::whereHas('person.phone', function ($query) use ($search) {
+                $query->where('phone', 'like', '%'.$search.'%');
+            })->paginate(100);
+            return $empresas;
+        }
+        if ($filter == 'email') {
+            $empresas = Empresa::whereHas('person.email', function ($query) use ($search) {
+                $query->where('email', 'like', '%'.$search.'%');
+            })->paginate(100);
+            return $empresas;
+        }
+        if ($filter == 'sucursal') {
+            $empresas = Empresa::whereHas('sucursals', function ($query) use ($search) {
+                $query->where('nombre', 'like', '%'.$search.'%');
+            })->paginate(100);
+            return $empresas;
+        }
+//        return Empresa::
     }
     public function eliminarEmpresasSinPedidos(){
-        $empresas = Empresa::all();
-        foreach ($empresas as $empresa){
-            $pedidos = Pedido::where('empresa_id', $empresa->id)->get();
-            if($pedidos->count() == 0){
-                $empresa->delete();
-            }
-        }
+        Empresa::whereNotExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('pedidos')
+                ->whereRaw('pedidos.empresa_id = empresas.id');
+        })->delete();
     }
     public function show(Empresa $empresa){
         $empresa= Empresa::where('id', $empresa->id)
