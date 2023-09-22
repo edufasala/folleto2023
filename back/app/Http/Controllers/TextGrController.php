@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextGrRequest;
 
 class TextGrController extends Controller{
     public function index(){
-        return TextGr::all();
+        return TextGr::pluck('name');
     }
     public function store(StoreTextGrRequest $request){
         $textGr = new TextGr;

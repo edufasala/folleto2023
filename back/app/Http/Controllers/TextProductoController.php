@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextProductoRequest;
 
 class TextProductoController extends Controller{
     public function index(){
-        return TextProducto::all();
+        return TextProducto::pluck('name');
     }
     public function store(StoreTextProductoRequest $request){
         $textProducto = new TextProducto;

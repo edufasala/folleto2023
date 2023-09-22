@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextTerminacionRequest;
 
 class TextTerminacionController extends Controller{
     public function index(){
-        return TextTerminacion::all();
+        return TextTerminacion::pluck('name');
     }
     public function store(StoreTextTerminacionRequest $request){
         $textTerminacion = new TextTerminacion;

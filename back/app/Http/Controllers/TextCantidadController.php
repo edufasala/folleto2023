@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextCantidadRequest;
 
 class TextCantidadController extends Controller{
     public function index(){
-        return TextCantidad::all();
+        return TextCantidad::pluck('name');
     }
     public function store(StoreTextCantidadRequest $request){
         $textCantidad = new TextCantidad;

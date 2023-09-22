@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextDisenoRequest;
 
 class TextDisenoController extends Controller{
     public function index(){
-        return TextDiseno::all();
+        return TextDiseno::pluck('name');
     }
     public function store(StoreTextDisenoRequest $request){
         $textDiseno = new TextDiseno;

@@ -28,14 +28,7 @@
         </div>
         <div class="q-mt-md">
           <q-card>
-            <q-tabs
-              v-model="tab"
-              dense
-              class="text-grey"
-              indicator-color="blue"
-              align="justify"
-              narrow-indicator
-            >
+            <q-tabs v-model="tab" dense class="text-grey" indicator-color="blue" align="justify" narrow-indicator>
               <q-tab name="pedido" no-caps class="bg-dark text-white">
                   <span class="text-bold">Pedido</span>
               </q-tab>
@@ -54,17 +47,41 @@
               <q-tab-panel name="pedido">
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Producto:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.producto" :options="productos"/></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.producto" :options="productos">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Producto')"/>
+                      </template>
+                    </q-select>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
-                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.producto"/></div>
+                  <div class="col-6 col-md-4">
+<!--                    <q-input dense outlined v-model="pedido.producto"/>-->
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Gr:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.gr" :options="[150,90]" /></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.gr" :options="grs">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Gr')"/>
+                      </template>
+                    </q-select>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
-                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.gr"/></div>
+                  <div class="col-6 col-md-4">
+<!--                    <q-input dense outlined v-model="pedido.gr"/>-->
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Medida:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.medida" :options="medidas" /></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.medida" :options="medidas">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Medida')"/>
+                      </template>
+                    </q-select>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
-                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.medida"/></div>
+                  <div class="col-6 col-md-4">
+<!--                    <q-input dense outlined v-model="pedido.medida"/>-->
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">
                     Cantidad:
                   </div>
@@ -78,7 +95,13 @@
                     <q-input dense outlined v-model="pedido.espº" />
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Termin:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.terminacion" :options="['Brillante', 'Mate']" /></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.terminacion" :options="terminaciones">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Terminacion')"/>
+                      </template>
+                    </q-select>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center text-red text-bold">F Entrega:</div>
                   <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEntrega"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
@@ -96,11 +119,23 @@
               <q-tab-panel name="taller">
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Diseño:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.diseno" :options="disenos"/></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.diseno" :options="disenos">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Diseno')"/>
+                      </template>
+                    </q-select>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Envio:</div>
                   <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.envio" :options="['Si', 'No']"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Lados:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.lado" :options="lados"/></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.lado" :options="lados">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Lado')"/>
+                      </template>
+                    </q-select>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Direccion:</div>
                   <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.direccion" :options="empresa.direccion" option-value="id" option-label="direccion"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Especificaciones:</div>
@@ -275,17 +310,76 @@ export default {
       tab: 'pedido',
       pedido: {},
       loading: false,
-      productos: ['Folletos', 'Tarjetas', 'Afiches', 'Banner', 'Diseño', 'Logo', 'Otros'],
-      medidas: ['10x15', '15x21', '21x30', '30x40', '40x50', '50x70', '70x100', '100x140', '140x200', '200x300'],
+      productos: [],
+      grs: [],
+      medidas: [],
       cantidades: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
-      lados: ['1 lado solo', '2 lados iguales', '2 lados diferentes'],
-      disenos: ['nuevo', 'envia el cliente', 'correccion', 'mismo diseno']
+      lados: [],
+      disenos: [],
+      terminaciones: []
     }
   },
-  mounted () {
+  async mounted () {
+    this.getTextProduct()
+    this.getTextGr()
+    this.getTextMedida()
+    this.getLados()
+    this.getDisenos()
+    this.getTerminaciones()
     this.pedido = this.pedidoDato
   },
   methods: {
+    async getLados () {
+      this.lados = await this.$axios.get('textLado').then(response => response.data)
+    },
+    async getDisenos () {
+      this.disenos = await this.$axios.get('textDiseno').then(response => response.data)
+    },
+    async getTerminaciones () {
+      this.terminaciones = await this.$axios.get('textTerminacion').then(response => response.data)
+    },
+    async getTextProduct () {
+      this.productos = await this.$axios.get('textProducto').then(response => response.data)
+    },
+    async getTextGr () {
+      this.grs = await this.$axios.get('textGr').then(response => response.data)
+    },
+    async getTextMedida () {
+      this.medidas = await this.$axios.get('textMedida').then(response => response.data)
+    },
+    add (type) {
+      this.$q.dialog({
+        title: 'Agregar ' + type,
+        message: 'Ingrese el nombre del ' + type,
+        prompt: {
+          model: '',
+          type: 'text'
+        },
+        cancel: true,
+        persistent: true
+      }).onOk(data => {
+        this.$axios.post('text' + type, { name: data })
+          .then(response => {
+            this.$alert.success(type + ' agregado')
+            if (type === 'Producto') {
+              this.getTextProduct()
+            } else if (type === 'Gr') {
+              this.getTextGr()
+            } else if (type === 'Medida') {
+              this.getTextMedida()
+            } else if (type === 'Lado') {
+              this.getLados()
+            } else if (type === 'Diseno') {
+              this.getDisenos()
+            } else if (type === 'Terminacion') {
+              this.getTerminaciones()
+            }
+          })
+          .catch(error => {
+            this.$alert.error(error.response.data.message)
+          })
+      })
+    },
     anterior () {
       if (this.tab === 'status') {
         this.tab = 'pago'

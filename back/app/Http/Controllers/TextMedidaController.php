@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextMedidaRequest;
 
 class TextMedidaController extends Controller{
     public function index(){
-        return TextMedida::all();
+        return TextMedida::pluck('name');
     }
     public function store(StoreTextMedidaRequest $request){
         $textMedida = new TextMedida;

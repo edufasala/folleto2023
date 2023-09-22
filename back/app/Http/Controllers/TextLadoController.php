@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateTextLadoRequest;
 
 class TextLadoController extends Controller{
     public function index(){
-        return TextLado::all();
+        return TextLado::pluck('name');
     }
     public function store(StoreTextLadoRequest $request){
         $textLado = new TextLado;
