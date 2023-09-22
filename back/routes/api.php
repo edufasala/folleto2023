@@ -38,6 +38,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('notes', \App\Http\Controllers\NoteController::class);
     Route::resource('pedidos', \App\Http\Controllers\PedidoController::class);
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
+    Route::resource('textCantidad', \App\Http\Controllers\TextCantidadController::class);
+    Route::resource('textDiseno', \App\Http\Controllers\TextDisenoController::class);
+    Route::resource('textGr', \App\Http\Controllers\TextGrController::class);
+    Route::resource('textLado', \App\Http\Controllers\TextLadoController::class);
+    Route::resource('textMedida', \App\Http\Controllers\TextMedidaController::class);
+    Route::resource('textProducto', \App\Http\Controllers\TextProductoController::class);
+    Route::resource('textTerminacion', \App\Http\Controllers\TextTerminacionController::class);
+
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);
 });

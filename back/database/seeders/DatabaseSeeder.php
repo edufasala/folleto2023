@@ -28,6 +28,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EmpresaSeeder::class,
             PedidoSeeder::class,
+            TextCantidadSeeder::class,
+            TextDisenoSeeder::class,
+            TextGrSeeder::class,
+            TextLadoSeeder::class,
+            TextMedidaSeeder::class,
+            TextProductoSeeder::class,
+            TextTerminacionSeeder::class,
         ]);
 
 //        Empresa::factory()

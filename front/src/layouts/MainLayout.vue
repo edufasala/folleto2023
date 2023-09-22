@@ -208,12 +208,12 @@
                 <q-item-label class="text-uppercase text-bold">Entregas</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable to="/nuevo-cliente" class="color-menu left-yellow" active-class="text-white" v-if="$can('Nuevo Cliente')">
-              <q-item-section avatar><q-icon name="o_person_add" /></q-item-section>
-              <q-item-section>
-                <q-item-label class="text-uppercase text-bold">Nuevo Cliente</q-item-label>
-              </q-item-section>
-            </q-item>
+<!--            <q-item clickable to="/nuevo-cliente" class="color-menu left-yellow" active-class="text-white" v-if="$can('Nuevo Cliente')">-->
+<!--              <q-item-section avatar><q-icon name="o_person_add" /></q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label class="text-uppercase text-bold">Nuevo Cliente</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
           </q-list>
         </q-header>
         <q-footer>
