@@ -26,6 +26,7 @@ class Pedido extends Model implements Auditable
         'fecha',
         'fechaEntrega',
         'fechaEspecial',
+        'fechaTexto',
         'precioProducto',
         'precioDiseno',
 
@@ -40,6 +41,7 @@ class Pedido extends Model implements Auditable
         'comentarioPago',
         'iva',
         'seFacturo',
+        'facturaA',
 
 //        'precioTotal',
         'user_id',

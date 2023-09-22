@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('diasCompra')->nullable()->comment('Dias que tarda en llegar el pedido');
             $table->date('fechaEntrega')->nullable();
             $table->date('fechaEspecial')->nullable();
+            $table->string('fechaTexto')->nullable();
             $table->double('precioProducto',11,2)->nullable();
             $table->double('precioDiseno',11,2)->nullable();
 
@@ -44,6 +45,7 @@ return new class extends Migration
             $table->string('comentarioPago')->nullable();
             $table->integer('iva')->nullable();
             $table->string('seFacturo')->nullable();
+            $table->string('facturaA')->nullable();
 
 //            $table->double('precioTotal',11,2)->nullable();
 

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PedidoController extends Controller{
     public function index(){}
     public function store(StorePedidoRequest $request){
-        error_log("asa".json_encode($request->person));
+//        error_log("asa".json_encode($request->person));
         $pedido = new Pedido();
         $pedido->codigo = $request->codigo;
         $pedido->producto = $request->producto;
@@ -41,15 +41,16 @@ class PedidoController extends Controller{
         $pedido->comentarioPago = $request->comentarioPago;
         $pedido->iva = $request->iva;
         $pedido->seFacturo = $request->seFacturo;
+        $pedido->facturaA = $request->facturaA;
         $pedido->user_id = $request->user()->id;
         $pedido->empresa_id = $request->empresa_id;
         $pedido->sucursal_id = $request->sucursal['id'];
-        $pedido->facturacion_id = $request->facturacion['id'];
-        $pedido->direccion_id = $request->direccion['id'];
-        $pedido->persona_id = $request->person['id'];
+        $pedido->facturacion_id = isset($request->facturacion['id']) ? $request->facturacion['id'] : null;
+        $pedido->direccion_id = isset($request->direccion['id']) ? $request->direccion['id'] : null;
+        $pedido->persona_id = isset($request->person['id']) ? $request->person['id'] : null;
         $persona = Person::find($request->person['id']);
-        $pedido->phone_id = $persona->phone[0]->id;
-        $pedido->email_id = $persona->email[0]->id;
+        $pedido->phone_id = isset($persona->phone[0]->id) ? $persona->phone[0]->id : null;
+        $pedido->email_id = isset($persona->email[0]->id) ? $persona->email[0]->id : null;
         $pedido->save();
     }
     public function show(Pedido $pedido){}

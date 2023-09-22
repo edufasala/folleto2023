@@ -103,7 +103,10 @@
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center text-red text-bold">F Entrega:</div>
-                  <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEntrega"/></div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.fechaTexto" :options="['Una semana', 'Un mes']"/>
+                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
                   <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.terminacion"/></div>
                   <div class="col-6 col-md-2 flex flex-center">F Especial:</div>
@@ -161,9 +164,16 @@
                   <div class="col-6 col-md-2 flex flex-center">Pago:</div>
                   <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.pago" /></div>
                   <div class="col-6 col-md-1 flex flex-center">Iva:</div>
-                  <div class="col-6 col-md-2"><q-input dense outlined v-model="pedido.iva" /></div>
-                  <div class="col-6 col-md-2 flex flex-center">SeFactura:</div>
-                  <div class="col-6 col-md-1"><q-select dense outlined v-model="pedido.seFacturo" :options="['Si','No']" /></div>
+                  <div class="col-6 col-md-2">
+<!--                    <q-input dense outlined v-model="pedido.iva" />-->
+                    <q-select dense outlined v-model="pedido.facturaA" :options="['Factura ninguna', 'Factura pedido', 'Factura seña']"
+                              :hint="`Iva: ${pedido.iva}%`"/>
+                  </div>
+                  <div class="col-6 col-md-2 flex flex-center">Se Facturo:</div>
+                  <div class="col-6 col-md-1">
+<!--                    <q-select dense outlined v-model="pedido.seFacturo" :options="['Si','No']" />-->
+                    <q-toggle v-model="pedido.seFacturo" color="primary" false-value="No" true-value="Si" :label="pedido.seFacturo" disable/>
+                  </div>
                   <div class="col-12 col-md-6">
                     <div class="row">
                       <div class="col-6 col-md-4 flex flex-center">Metodo de $:</div>
@@ -417,6 +427,7 @@ export default {
           .then(response => {
             this.loading = false
             this.$alert.success('Pedido confirmado')
+            this.pedido = this.pedidoDato
             this.$emit('empresaSearch', this.empresa)
             this.$emit('closeDialog')
           })
@@ -433,12 +444,28 @@ export default {
       return Math.round(precio * 100) / 100
     },
     precioIva () {
-      const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
-      return Math.round(precio * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      // const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
+      // return Math.round(precio * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      if (this.pedido.facturaA === 'Factura ninguna') {
+        return 0
+      } else if (this.pedido.facturaA === 'Factura pedido') {
+        return Math.round(this.precioTotal * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      } else if (this.pedido.facturaA === 'Factura seña') {
+        return Math.round(this.pedido.pago * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      }
+      return 0
     },
     deuda () {
       const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
-      const iva = precio * parseFloat(this.pedido.iva / 100)
+      // const iva = precio * parseFloat(this.pedido.iva / 100)
+      let iva = 0
+      if (this.pedido.facturaA === 'Factura ninguna') {
+        iva = 0
+      } else if (this.pedido.facturaA === 'Factura pedido') {
+        iva = Math.round(this.precioTotal * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      } else if (this.pedido.facturaA === 'Factura seña') {
+        iva = Math.round(this.pedido.pago * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      }
       const deuda = parseFloat(precio) + parseFloat(iva) - parseFloat(this.pedido.pago)
       return Math.round(deuda * 100) / 100
     }

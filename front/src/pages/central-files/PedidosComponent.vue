@@ -59,12 +59,12 @@
       </q-markup-table>
     </div>
     <q-dialog v-model="pedidoDialogVer">
-      <PedidoShowComponent :empresa="empresa" :pedido="pedidoDato" @empresaSearch="$emit('empresaSearch', $event)"/>
+      <PedidoShowComponent :empresa="empresa" :pedido="pedidoDatoUpdate" @empresaSearch="$emit('empresaSearch', $event)"/>
     </q-dialog>
     <q-dialog v-model="pedidoDialogNew">
       <PedidoNewComponent :empresa="empresa" :pedidoDato="pedidoDato"
                           @empresaSearch="$emit('empresaSearch', $event)"
-                          @closeDialog="pedidoDialogNew = false"
+                          @closeDialog="closeDialog"
       />
     </q-dialog>
   </div>
@@ -108,6 +108,7 @@ export default {
         diseno: 'nuevo',
         descripcion: '',
         estado: 'Diseño',
+        fechaTexto: '',
         estadoPedido: 'Activo',
         fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
         diasCompra: 5,
@@ -124,7 +125,8 @@ export default {
         metodoPago: 'Efectivo',
         comentarioPago: '',
         iva: 15,
-        seFacturo: 'Si',
+        seFacturo: 'No',
+        facturaA: 'Factura ninguna',
         empresa_id: this.empresa.id,
         user_id: 3,
         sucursal_id: 2,
@@ -141,6 +143,7 @@ export default {
         direccion: this.empresa.direccion[0],
         facturacion: this.empresa.facturacion[0]
       },
+      pedidoDatoUpdate: {},
       pedidosDatos: this.pedidos
     }
   },
@@ -153,10 +156,59 @@ export default {
     // }, 1000)
   },
   methods: {
+    closeDialog () {
+      this.pedidoDialogNew = false
+      this.pedidoDato = {
+        codigo: 0,
+        producto: 'Folleto',
+        medida: '10x15',
+        cantidad: '1',
+        esp: '',
+        gr: '150',
+        lados: '2 lados diferentes',
+        diseno: 'nuevo',
+        descripcion: '',
+        estado: 'Diseño',
+        fechaTexto: '',
+        estadoPedido: 'Activo',
+        fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        diasCompra: 5,
+        fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        precioProducto: 0,
+        precioDiseno: 0,
+        especificaciones: '',
+        terminacion: '',
+        envio: '',
+        precioEspecificaciones: 0,
+        precioEnvio: 0,
+        pago: 0,
+        metodoPago: 'Efectivo',
+        comentarioPago: '',
+        iva: 15,
+        seFacturo: 'No',
+        facturaA: 'Factura ninguna',
+        empresa_id: this.empresa.id,
+        user_id: 3,
+        sucursal_id: 2,
+        facturacion_id: 2,
+        direccion_id: 1,
+        persona_id: 2,
+        phone_id: 2,
+        email_id: 2,
+        deleted_at: null,
+        precioTotal: 1594.13,
+        deuda: 1114.13,
+        sucursal: this.empresa.sucursals[0],
+        person: this.empresa.person[0],
+        direccion: this.empresa.direccion[0],
+        facturacion: this.empresa.facturacion[0]
+      }
+    },
     pedidoClickUpdate (pedido) {
       this.pedidoDialogVer = true
       this.pedidoOption = 'update'
-      this.pedidoDato = {
+      this.pedidoDatoUpdate = {
         ...pedido
       }
     },
@@ -177,78 +229,6 @@ export default {
             this.loading = false
           })
       })
-    },
-    pedidoSubmit () {
-      this.loading = true
-      if (this.pedidoOption === 'create') {
-        this.$axios.post('pedidos', {
-          ...this.pedidoDato,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.$emit('empresaSearch', this.empresa)
-          this.pedidoDialog = false
-          this.pedidoDato = {
-            codigo: 0,
-            producto: 'Folleto',
-            medida: '10x15',
-            cantidad: '1',
-            esp: '',
-            gr: '150',
-            lados: '2 lados diferentes',
-            diseno: 'nuevo',
-            descripcion: '',
-            estado: 'Diseño',
-            estadoPedido: 'Activo',
-            fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
-            diasCompra: 5,
-            fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
-            fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
-            precioProducto: 0,
-            precioDiseno: 0,
-            especificaciones: '',
-            terminacion: '',
-            envio: '',
-            precioEspecificaciones: 0,
-            precioEnvio: 0,
-            pago: 0,
-            metodoPago: 'Efectivo',
-            comentarioPago: '',
-            iva: 15,
-            seFacturo: 'Si',
-            empresa_id: this.empresa.id,
-            user_id: 3,
-            sucursal_id: 2,
-            facturacion_id: 2,
-            direccion_id: 1,
-            persona_id: 2,
-            phone_id: 2,
-            email_id: 2,
-            deleted_at: null,
-            precioTotal: 1594.13,
-            deuda: 1114.13,
-            sucursal: this.empresa.sucursals[0],
-            person: this.empresa.person[0],
-            direccion: this.empresa.direccion[0],
-            facturacion: this.empresa.facturacion[0]
-          }
-        }).catch(error => {
-          this.$alert.error(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      } else {
-        this.$axios.put('pedidos/' + this.pedidoDato.id, {
-          ...this.pedidoDato,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.$emit('empresaSearch', this.empresa)
-          this.pedidoDialog = false
-        }).catch(error => {
-          this.$alert.error(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      }
     },
     pedidoDialogClick () {
       this.loading = true
