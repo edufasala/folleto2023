@@ -5,6 +5,7 @@ import UsuariosPage from 'pages/usuarios/UsuariosPage.vue'
 import EstadisticasPage from 'pages/estadisticas/EstadisticasPage.vue'
 import IndexCentralFilesPage from 'pages/central-files/IndexCentralFilesPage.vue'
 import IndexTesoreriaPage from 'pages/tesoreria/IndexTesoreriaPage.vue'
+import IndexPreciosPage from 'pages/precios/IndexPreciosPage.vue'
 
 const routes = [
   {
@@ -16,7 +17,8 @@ const routes = [
       { path: 'estadisticas', component: EstadisticasPage, meta: { requiresAuth: true } },
       { path: 'central-files', component: IndexCentralFilesPage, meta: { requiresAuth: true } },
       { path: 'nuevo-cliente', component: IndexCentralFilesPage, meta: { requiresAuth: true } },
-      { path: 'tesoreria', component: IndexTesoreriaPage, meta: { requiresAuth: true } }
+      { path: 'tesoreria', component: IndexTesoreriaPage, meta: { requiresAuth: true } },
+      { path: 'precios', component: IndexPreciosPage, meta: { requiresAuth: true } }
     ]
   },
   {

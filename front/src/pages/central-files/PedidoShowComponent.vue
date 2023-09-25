@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-pa-xs" style="max-width: 900px">
     <q-card-section class="q-py-xs row items-center">
-      <div class="text-h5 text-bold"> Pedido # {{pedido.codigo}}</div>
+      <div class="text-h5 text-bold"> Pedido # {{pedidoDato.codigo}}</div>
       <q-space />
       <div class="text-right formatFecha">
         <div>Fecha de Pedido <span class="text-bold">{{$filters.datedMy(pedido.fecha)}}</span></div>
@@ -10,13 +10,13 @@
       <q-btn flat dense icon="cancel" v-close-popup />
     </q-card-section>
     <q-card-section class="q-py-none">
-      <q-form @submit="pedidoSubmit">
+      <q-form>
         <div class="row">
           <div class="col-12">
             <div class="row items-center">
               <div>
               <div class="text-bold text-subtitle1"><span class="text-red">#{{empresa.id}}</span> {{empresa.nombre}}</div>
-              <div> Sucursal: <span class="text-bold" v-if="pedido.sucursal">{{pedido.sucursal.nombre}}</span></div>
+              <div> Sucursal: <span class="text-bold" v-if="pedidoDato.sucursal">{{pedidoDato.sucursal.nombre}}</span></div>
               </div>
               <q-space />
               <div>
@@ -25,23 +25,23 @@
             </div>
           </div>
           <div class="col-12">
-            <q-card class="q-pa-xs bg-grey-3" flat bordered cla>
+            <q-card class="q-pa-xs bg-grey-3" flat bordered>
               <q-card-section class="q-pa-xs">
                 <div class="row">
                   <div class="col-12 col-md-6">
-                    Nombre: <span class="text-bold" v-if="pedido.person">{{pedido.person.nombre}}</span>
+                    Nombre: <span class="text-bold" v-if="pedidoDato.person">{{pedidoDato.person.nombre}}</span>
                   </div>
                   <div class="col-12 col-md-3">
-                    Cargo: <span class="text-bold" v-if="pedido.person">{{pedido.person.cargo}}</span>
+                    Cargo: <span class="text-bold" v-if="pedidoDato.person">{{pedidoDato.person.cargo}}</span>
                   </div>
                   <div class="col-12 col-md-3">
-                    DNI: <span class="text-bold" v-if="pedido.person">{{pedido.person.dni}}</span>
+                    DNI: <span class="text-bold" v-if="pedidoDato.person">{{pedidoDato.person.dni}}</span>
                   </div>
                   <div class="col-12 col-md-6">
-                    Teléfono: <span class="text-bold" v-if="pedido.phone">{{pedido.phone.phone}}</span>
+                    Teléfono: <span class="text-bold" v-if="pedidoDato.phone">{{pedidoDato.phone.phone}}</span>
                   </div>
                   <div class="col-12 col-md-6">
-                    Email: <span class="text-bold" v-if="pedido.email">{{pedido.email.email}}</span>
+                    Email: <span class="text-bold" v-if="pedidoDato.email">{{pedidoDato.email.email}}</span>
                   </div>
                 </div>
               </q-card-section>
@@ -77,45 +77,45 @@
               <q-tab-panel name="pedido">
                 <div class="row">
                   <div class="col-4 col-md-2">Producto</div>
-                  <div class="col-8 col-md-6 text-bold">{{ pedido.producto }}</div>
+                  <div class="col-8 col-md-6 text-bold">{{ pedidoDato.producto }}</div>
                   <div class="col-4 col-md-2">Medida</div>
-                  <div class="col-8 col-md-2 text-bold">{{ pedido.medida }}</div>
+                  <div class="col-8 col-md-2 text-bold">{{ pedidoDato.medida }}</div>
                   <div class="col-4 col-md-2">Cantidad</div>
-                  <div class="col-8 col-md-4 text-bold">{{ pedido.cantidad }}</div>
+                  <div class="col-8 col-md-4 text-bold">{{ pedidoDato.cantidad }}</div>
                   <div class="col-4 col-md-1">Esp.</div>
-                  <div class="col-8 col-md-1 text-bold q-pr-md">{{ pedido.esp }}</div>
+                  <div class="col-8 col-md-1 text-bold q-pr-md">{{ pedidoDato.esp }}</div>
                   <div class="col-4 col-md-2">Gr.</div>
-                  <div class="col-8 col-md-2 text-bold">{{ pedido.gr }}</div>
+                  <div class="col-8 col-md-2 text-bold">{{ pedidoDato.gr }}</div>
                   <div class="col-4 col-md-2">Lados</div>
-                  <div class="col-8 col-md-4 text-bold">{{ pedido.lados }}</div>
+                  <div class="col-8 col-md-4 text-bold">{{ pedidoDato.lados }}</div>
                   <div class="col-4 col-md-2">Diseño</div>
-                  <div class="col-6 col-md-4 text-bold">{{ pedido.diseno }}</div>
+                  <div class="col-6 col-md-4 text-bold">{{ pedidoDato.diseno }}</div>
                   <div class="col-4 col-md-2">Descripcion</div>
-                  <div class="col-8 col-md-10 border-round">{{ pedido.descripcion }}</div>
+                  <div class="col-8 col-md-10 border-round">{{ pedidoDato.descripcion }}</div>
                 </div>
               </q-tab-panel>
               <q-tab-panel name="taller">
                 <div class="row">
                   <div class="col-4 col-md-2">Terminacion</div>
-                  <div class="col-8 col-md-6 text-bold">{{ pedido.terminacion }}</div>
+                  <div class="col-8 col-md-6 text-bold">{{ pedidoDato.terminacion }}</div>
                   <div class="col-4 col-md-2">Envio</div>
-                  <div class="col-8 col-md-2 text-bold">{{ pedido.envio }}</div>
+                  <div class="col-8 col-md-2 text-bold">{{ pedidoDato.envio }}</div>
                   <div class="col-12 col-md-6">
                     <div class="row">
                       <div class="col-4">Descripcion</div>
-                      <div class="col-8 text-bold border-round">{{ pedido.especificaciones }}</div>
+                      <div class="col-8 text-bold border-round">{{ pedidoDato.especificaciones }}</div>
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div :class="`row ${$q.screen.lt.md ? '' : 'q-ml-md'}`">
                       <div class="col-4">Direccion</div>
-                      <div class="col-8 text-bold" v-if="pedido.direccion">{{ pedido.direccion.direccion }}</div>
+                      <div class="col-8 text-bold" v-if="pedidoDato.direccion">{{ pedidoDato.direccion.direccion }}</div>
                       <div class="col-4">Localidad</div>
-                      <div class="col-8 text-bold" v-if="pedido.direccion">{{ pedido.direccion.localidad }}</div>
+                      <div class="col-8 text-bold" v-if="pedidoDato.direccion">{{ pedidoDato.direccion.localidad }}</div>
                       <div class="col-4">CP:</div>
-                      <div class="col-8 text-bold" v-if="pedido.direccion">{{ pedido.direccion.codigoPostal }}</div>
+                      <div class="col-8 text-bold" v-if="pedidoDato.direccion">{{ pedidoDato.direccion.codigoPostal }}</div>
                       <div class="col-4">Descripcion:</div>
-                      <div class="col-8 text-bold">{{ pedido.descripcion }}</div>
+                      <div class="col-8 text-bold">{{ pedidoDato.descripcion }}</div>
                     </div>
                   </div>
                 </div>
@@ -130,49 +130,52 @@
                         <div class="row items-center q-px-xs">
                           Producto
                           <q-space />
-                          <div class="text-bold">$ {{ pedido.precioProducto }}</div>
+                          <div class="text-bold">$ {{ pedidoDato.precioProducto }}</div>
                         </div>
                         <div class="row items-center q-px-xs">
                           Diseño
                           <q-space />
-                          <div class="text-bold">$ {{ pedido.precioDiseno }}</div>
+                          <div class="text-bold">$ {{ pedidoDato.precioDiseno }}</div>
                         </div>
                         <div class="row items-center q-px-xs">
                           Terminacion
                           <q-space />
-                          <div class="text-bold">$ {{ pedido.precioEspecificaciones }}</div>
+                          <div class="text-bold">$ {{ pedidoDato.precioEspecificaciones }}</div>
                         </div>
                         <div class="row items-center q-px-xs">
                           Envio
                           <q-space />
-                          <div class="text-bold">$ {{ pedido.precioEnvio }}</div>
+                          <div class="text-bold">$ {{ pedidoDato.precioEnvio }}</div>
                         </div>
                         <div class="row items-center q-px-xs">
-                          IVA <span class="text-red">({{pedido.iva}})</span>
+                          IVA <span class="text-red">({{pedidoDato.iva}})</span>
                           <q-space />
-                          <div class="text-bold">$ {{ $filters.iva(pedido.precioTotal, pedido.iva) }}</div>
+<!--                          <div class="text-bold">$ {{ $filters.iva(pedidoDato.precioTotal, pedidoDato.iva) }}</div>-->
+                          <div class="text-bold">$ {{ precioIva }}</div>
                         </div>
                         <div class="row items-center q-px-xs bg-black text-white">
                           TOTAL
                           <q-space />
-                          <div class="text-bold">$ {{ pedido.precioTotal }}</div>
+                          <div class="text-bold">$ {{ pedidoDato.precioTotal }}</div>
                         </div>
                         <div class="row items-center q-px-xs">
                           Seña
                           <q-space />
-                          <div class="text-bold">$ {{ pedido.pago }}</div>
+                          <div class="text-bold">$ {{ pedidoDato.sena }}</div>
                         </div>
                         <div class="row items-center q-px-xs">
                           Deuda
                           <q-space />
-                          <div class="text-bold text-red">$ {{ pedido.deuda }}</div>
+                          <div class="text-bold text-red">$ {{ pedidoDato.deuda }}</div>
                         </div>
                       </div>
                     </q-card>
                   </div>
                   <div class="col-12 col-md-8 q-px-md">
-                    <div class="text-h6">
+                    <div class="text-h6 row items-center">
                       Pagos
+                      <q-space />
+                      <q-btn color="green" size="10px" dense icon="add" @click="pagoDialogClick" label="Agregar Pago" no-caps />
                     </div>
                     <q-markup-table dense>
                       <thead>
@@ -187,7 +190,7 @@
                         </tr>
                       </thead>
                       <thead>
-                      <tr v-for="pago in pedido.pagos" :key="pago.id">
+                      <tr v-for="pago in pedidoDato.pagos" :key="pago.id">
                         <td class="text-caption">{{$filters.datedMy(pago.fecha)}}</td>
                         <td class="text-caption">{{$filters.shortTime(pago.hora)}}</td>
                         <td class="text-caption">{{pago.tipo}}</td>
@@ -196,26 +199,35 @@
                         <td class="text-caption">{{pago.facturado}}</td>
                         <td class="text-caption">{{pago.user.name}}</td>
                       </tr>
+                      <tr>
+                        <td class="text-caption"/>
+                        <td class="text-caption"/>
+                        <td class="text-caption">Total:</td>
+                        <td class="text-caption text-bold">{{$filters.currencyTotal(pedidoDato.pagos)}}</td>
+                        <td class="text-caption"/>
+                        <td class="text-caption"/>
+                        <td class="text-caption"/>
+                      </tr>
                       </thead>
                     </q-markup-table>
-<!--                    <pre>{{pedido.pagos}}</pre>-->
+<!--                    <pre>{{pedidoDato.pagos}}</pre>-->
                   </div>
                   <div class="col-12 col-md-12 q-mt-md">
                     <q-card flat bordered class="bg-grey-3">
-                      <div class="text-bold q-pl-xs">DATOS FACTURACION</div>
+                      <div class="text-bold q-pl-xs">DATOS FACTURACION <span class="text-caption text-grey">{{pedidoDato.facturaA}}</span></div>
                       <q-separator/>
                       <div class="row">
                         <div class="col-12 col-md-4">
-                          Cuit/Cui/DNI: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.cuit }}</span>
+                          Cuit/Cui/DNI: <span class="text-bold" v-if="pedidoDato.facturacion"> {{ pedidoDato.facturacion.cuit }}</span>
                         </div>
                         <div class="col-12 col-md-4">
-                          Condicional: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.condicional }}</span>
+                          Condicional: <span class="text-bold" v-if="pedidoDato.facturacion"> {{ pedidoDato.facturacion.condicional }}</span>
                         </div>
                         <div class="col-12 col-md-4">
-                          R. Social: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.razonSocial }}</span>
+                          R. Social: <span class="text-bold" v-if="pedidoDato.facturacion"> {{ pedidoDato.facturacion.razonSocial }}</span>
                         </div>
                         <div class="col-12 col-md-12">
-                          Comentario: <span class="text-bold" v-if="pedido.facturacion"> {{ pedido.facturacion.comentario }}</span>
+                          Comentario: <span class="text-bold" v-if="pedidoDato.facturacion"> {{ pedidoDato.facturacion.comentario }}</span>
                         </div>
                       </div>
                     </q-card>
@@ -236,7 +248,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="statu in pedido.status" :key="statu.id">
+                      <tr v-for="statu in pedidoDato.status" :key="statu.id">
                         <td class="text-caption">{{$filters.datedMy(statu.fecha)}}</td>
                         <td class="text-caption">{{$filters.shortTime(statu.hora)}}</td>
                         <td class="text-caption">{{statu.user.name}}</td>
@@ -266,7 +278,7 @@
             <q-btn no-caps label="Repetir" color="blue" class="w-100" />
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Cerrar" color="grey" class="w-100" />
+            <q-btn no-caps label="Cerrar" color="grey" class="w-100" v-close-popup />
           </div>
           <div class="col-12 col-md-1"/>
         </div>
@@ -274,6 +286,50 @@
 <!--        <pre>{{empresa}}</pre>-->
       </q-form>
     </q-card-section>
+    <q-dialog v-model="pagoDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-subtitle1">Agregar Pago</div>
+          <q-space />
+          <q-btn flat dense icon="cancel" v-close-popup />
+        </q-card-section>
+        <q-card-section>
+          <q-form>
+            <q-input
+              filled
+              v-model="pago.monto"
+              label="Monto"
+              type="number"
+              color="primary"
+              :rules="[val => !!val || 'Campo requerido']"
+            />
+<!--            Efectivo, Transferencia, Tarjeta, Cheque, Otro');-->
+            <q-select
+              filled
+              v-model="pago.metodoPago"
+              label="Metodo de Pago"
+              color="primary"
+              :options="['EFECTIVO', 'TRANSFERENCIA', 'TARJETA', 'CHEQUE', 'OTRO']"
+              :rules="[val => !!val || 'Campo requerido']"
+            />
+            <q-input
+              filled
+              type="textarea"
+              v-model="pago.comentario"
+              label="Comentario"
+              color="primary"
+            />
+            <q-btn
+              color="primary"
+              label="Agregar"
+              class="full-width"
+              :loading="loading"
+              @click="pagoSubmit"
+            />
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 <script>
@@ -292,18 +348,66 @@ export default {
   },
   data () {
     return {
+      pagoDialog: false,
       tab: 'pedido',
       pedidoDato: {},
-      loading: false
+      loading: false,
+      pago: {
+        tipo: 'PAGO',
+        monto: '0',
+        metodoPago: 'EFECTIVO',
+        comentario: '',
+        pedido_id: this.pedido.id
+      }
     }
   },
   mounted () {
     this.pedidoDato = this.pedido
   },
   methods: {
-    pedidoSubmit () {
-      // this.loading = true
-      // this.$emit('pedidoSubmit', this.pedidoDato)
+    pagoDialogClick () {
+      this.pagoDialog = true
+    },
+    pagoSubmit () {
+      this.loading = true
+      this.$axios.post('pagos', this.pago)
+        .then(response => {
+          this.$alert.success('Pago agregado')
+          console.log(response.data)
+          this.pedidoDato.pagos.push(response.data)
+          this.pedidoDato.pago = parseFloat(this.pedidoDato.pago) + parseFloat(this.pago.monto)
+          this.pedidoDato.deuda = parseFloat(this.pedidoDato.deuda) - parseFloat(this.pago.monto)
+          this.pago = {
+            tipo: 'PAGO',
+            monto: '0',
+            metodoPago: 'EFECTIVO',
+            comentario: '',
+            pedido_id: this.pedido.id
+          }
+          this.pagoDialog = false
+        }).catch(error => {
+          this.$alert.error(error.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+    }
+  },
+  computed: {
+    precioTotal () {
+      const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
+      return Math.round(precio * 100) / 100
+    },
+    precioIva () {
+      // const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
+      // return Math.round(precio * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      if (this.pedido.facturaA === 'Factura ninguna') {
+        return 0
+      } else if (this.pedido.facturaA === 'Factura pedido') {
+        return Math.round(this.precioTotal * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      } else if (this.pedido.facturaA === 'Factura seña') {
+        return Math.round(this.pedido.pago * parseFloat(this.pedido.iva) / 100 * 100) / 100
+      }
+      return 0
     }
   }
 }

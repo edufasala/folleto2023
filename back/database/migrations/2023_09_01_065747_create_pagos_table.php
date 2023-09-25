@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('comentario')->nullable();
             $table->unsignedBigInteger('pedido_id');
             $table->foreign('pedido_id')->references('id')->on('pedidos');
-            $table->unsignedBigInteger('facturacion_id');
+            $table->unsignedBigInteger('facturacion_id')->nullable();
             $table->foreign('facturacion_id')->references('id')->on('facturacions');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

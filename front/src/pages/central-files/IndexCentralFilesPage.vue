@@ -8,9 +8,9 @@
           <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick">
             <q-tooltip>Crear Empresa</q-tooltip>
           </q-btn>
-          <q-btn :loading="loading" round dense flat icon="o_delete" color="red" @click="eliminarEmpresasSinPedidos">
-            <q-tooltip>Eliminar empresas sin pedidos</q-tooltip>
-          </q-btn>
+<!--          <q-btn :loading="loading" round dense flat icon="o_delete" color="red" @click="eliminarEmpresasSinPedidos">-->
+<!--            <q-tooltip>Eliminar empresas sin pedidos</q-tooltip>-->
+<!--          </q-btn>-->
         </div>
         <div class="col-12">
           <SearchEmpresaComponent @empresaFilter="empresaFilter" :loading="loading" @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
@@ -311,6 +311,7 @@ export default {
     empresaSearch (empresa) {
       this.empresa = empresa
       this.loading = true
+      this.tab = 'contacto'
       this.$axios.get('empresas/' + empresa.id)
         .then(response => {
           this.empresa = response.data

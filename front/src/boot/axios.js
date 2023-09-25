@@ -49,6 +49,16 @@ export default boot(({ app, router }) => {
       }
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
     },
+    currencyTotal (pagos) {
+      if (!pagos) {
+        pagos = []
+      }
+      let total = 0
+      pagos.forEach((element) => {
+        total += element.monto
+      })
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total)
+    },
     shortTime (time) {
       // 10:10
       const hora = time.substring(0, 2)

@@ -104,7 +104,8 @@
                   </div>
                   <div class="col-6 col-md-2 flex flex-center text-red text-bold">F Entrega:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.fechaTexto" :options="['Una semana', 'Un mes']"/>
+                    <q-select dense outlined v-model="pedido.fechaTexto" :options="['Una semana', 'Un mes']"
+                              @update:model-value="calculateFechaEntrega"/>
                     <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
@@ -162,9 +163,9 @@
               <q-tab-panel name="pago">
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Pago:</div>
-                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.pago" /></div>
+                  <div class="col-6 col-md-3"><q-input dense outlined v-model="pedido.pago" /></div>
                   <div class="col-6 col-md-1 flex flex-center">Iva:</div>
-                  <div class="col-6 col-md-2">
+                  <div class="col-6 col-md-3">
 <!--                    <q-input dense outlined v-model="pedido.iva" />-->
                     <q-select dense outlined v-model="pedido.facturaA" :options="['Factura ninguna', 'Factura pedido', 'Factura seña']"
                               :hint="`Iva: ${pedido.iva}%`"/>
@@ -339,6 +340,19 @@ export default {
     this.pedido = this.pedidoDato
   },
   methods: {
+    calculateFechaEntrega () {
+      if (this.pedido.fechaTexto === 'Una semana') {
+        const fecha = new Date()
+        fecha.setDate(fecha.getDate() + 7)
+        this.pedido.fechaEntrega = fecha.toISOString().substr(0, 10)
+        this.pedido.fechaEspecial = fecha.toISOString().substr(0, 10)
+      } else if (this.pedido.fechaTexto === 'Un mes') {
+        const fecha = new Date()
+        fecha.setDate(fecha.getDate() + 30)
+        this.pedido.fechaEntrega = fecha.toISOString().substr(0, 10)
+        this.pedido.fechaEspecial = fecha.toISOString().substr(0, 10)
+      }
+    },
     async getLados () {
       this.lados = await this.$axios.get('textLado').then(response => response.data)
     },

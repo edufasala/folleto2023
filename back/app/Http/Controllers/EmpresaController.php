@@ -14,6 +14,7 @@ use function Laravel\Prompts\error;
 
 class EmpresaController extends Controller{
     public function index(Request $request){
+        $this->eliminarEmpresasSinPedidos();
         $search = $request->search;
         $filter = $request->filter;
         $search = $search=='null'?'':$search;

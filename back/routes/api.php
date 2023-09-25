@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('facturacion', \App\Http\Controllers\FacturacionController::class);
     Route::resource('notes', \App\Http\Controllers\NoteController::class);
     Route::resource('pedidos', \App\Http\Controllers\PedidoController::class);
+    Route::resource('pagos', \App\Http\Controllers\PagoController::class);
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('textCantidad', \App\Http\Controllers\TextCantidadController::class);
     Route::resource('textDiseno', \App\Http\Controllers\TextDisenoController::class);
