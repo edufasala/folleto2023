@@ -5,27 +5,31 @@
       PRECIOS
     </div>
     <div class="col-12">
-      <q-btn :loading="loading" :color="tab==='revisionPago'?'white':'grey'"
-             label="REVISION DE PAGOS" no-caps text-color="black"
-             :class="`text-bold w-200`"
-             size="15px" @click="tab = 'revisionPago'"/>
-      <q-btn :loading="loading" :color="tab==='revisionPedido'?'white':'grey'"
-             label="REVISION DE PEDIDOS" no-caps text-color="black"
-             :class="`text-bold w-200`"
-             size="15px" @click="tab = 'revisionPedido'"/>
-      <q-btn :loading="loading" :color="tab==='busqueda'?'white':'grey'"
-             label="BUSQUEDA" no-caps text-color="black"
-             :class="`text-bold w-200`"
-             size="15px" @click="tab = 'busqueda'"/>
+      <q-btn :loading="loading" :color="tab==='90gr'?'white':'grey'"
+             label="90GR" no-caps text-color="black"
+             :class="`text-bold w-50`"
+             size="15px" @click="tab = '90gr'"/>
+      <q-btn :loading="loading" :color="tab==='15gr'?'white':'grey'"
+             label="150GR" no-caps text-color="black"
+             :class="`text-bold w-50`"
+             size="15px" @click="tab = '15gr'"/>
+      <q-btn :loading="loading" :color="tab==='tarjeta'?'white':'grey'"
+             label="TARGETA" no-caps text-color="black"
+             :class="`text-bold w-50`"
+             size="15px" @click="tab = 'tarjeta'"/>
+      <q-btn :loading="loading" :color="tab==='diseno'?'white':'grey'"
+             label="DISEÑO" no-caps text-color="black"
+             :class="`text-bold w-50`"
+             size="15px" @click="tab = 'diseno'"/>
       <q-card>
         <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="revisionPago">
+          <q-tab-panel name="90gr">
             contacto
           </q-tab-panel>
-          <q-tab-panel name="revisionPedido">
+          <q-tab-panel name="15gr">
             notas
           </q-tab-panel>
-          <q-tab-panel name="busqueda">
+          <q-tab-panel name="tarjeta">
             pedido
           </q-tab-panel>
         </q-tab-panels>
@@ -104,7 +108,7 @@ export default {
   // },
   data () {
     return {
-      tab: 'revisionPago',
+      tab: '90gr',
       loading: false,
       empresa: {},
       empresas: [],

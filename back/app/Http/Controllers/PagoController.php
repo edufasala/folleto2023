@@ -8,7 +8,9 @@ use App\Http\Requests\UpdatePagoRequest;
 use App\Models\Pedido;
 
 class PagoController extends Controller{
-    public function index(){}
+    public function index(){
+        return Pago::with('user')->get();
+    }
     public function store(StorePagoRequest $request){
 //        'fecha',
 //        'hora',

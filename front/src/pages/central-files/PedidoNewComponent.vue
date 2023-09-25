@@ -44,7 +44,7 @@
             </q-tabs>
             <q-separator />
             <q-tab-panels v-model="tab" animated class="bg-grey-2">
-              <q-tab-panel name="pedido">
+              <q-tab-panel style="height: 350px" name="pedido">
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Producto:</div>
                   <div class="col-6 col-md-4">
@@ -120,7 +120,7 @@
                   <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.precioEspecificaciones"/></div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="taller">
+              <q-tab-panel style="height: 350px" name="taller">
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Diseño:</div>
                   <div class="col-6 col-md-4">
@@ -160,7 +160,7 @@
                   <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.precioEnvio"/></div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="pago">
+              <q-tab-panel style="height: 350px" name="pago">
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Pago:</div>
                   <div class="col-6 col-md-3"><q-input dense outlined v-model="pedido.pago" /></div>
@@ -207,7 +207,7 @@
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="status">
+              <q-tab-panel style="height: 350px" name="status">
                 <div class="row">
                   <div class="col-12 col-md-12">
                     <q-markup-table wrapCells separator="horizontal" dense>

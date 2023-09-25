@@ -20,7 +20,36 @@
       <q-card>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="revisionPago">
-            contacto
+            <q-markup-table>
+              <thead>
+              <tr class="bg-black text-white">
+                <th class="text-left"><q-checkbox v-model="allSelected" dark label="All" /></th>
+                <th class="text-left">Fecha</th>
+                <th class="text-left">Nº CI.</th>
+                <th class="text-left">Nombre</th>
+                <th class="text-left">Medio</th>
+                <th class="text-left">Monto</th>
+                <th class="text-left">Facturado</th>
+                <th class="text-left">Usuario</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr v-for="pago in pagos" :key="pago.id">
+                  <td class="text-left"><q-checkbox v-model="pago.selected"/></td>
+                  <td class="text-left">{{pago.fecha}}</td>
+                  <td class="text-left">{{pago.dni}}</td>
+                  <td class="text-left">{{pago.nombre}}</td>
+                  <td class="text-left">{{pago.metodoPago}}</td>
+                  <td class="text-left">{{$filters.currency(pago.monto)}}</td>
+                  <td class="text-left">
+                    <q-badge :color="pago.facturado?'green':'red'">
+                      {{pago.facturado}}
+                    </q-badge>
+                  </td>
+                  <td class="text-left">{{pago.user.name}}</td>
+                </tr>
+              </tbody>
+            </q-markup-table>
           </q-tab-panel>
           <q-tab-panel name="revisionPedido">
             notas
@@ -32,82 +61,18 @@
       </q-card>
     </div>
   </div>
-  <q-dialog v-model="empresaDialog">
-    <q-card class="q-pa-xs" style="max-width: 400px">
-      <q-card-section class="q-py-none row items-center">
-        <div class="text-h6">{{empresaOption === 'create' ? 'Crear' : 'Editar'}} Empresa</div>
-        <q-space />
-        <q-btn flat dense icon="cancel" v-close-popup />
-      </q-card-section>
-      <q-card-section class="q-py-none">
-        <q-form @submit="empresaSubmit">
-          <div class="row">
-            <div class="col-12">
-              <q-input dense outlined v-model="empresa.nombre" label="Nombre" type="text"
-                       :rules="[val => !!val || 'El nombre es requerido']"/>
-            </div>
-            <div class="col-12">
-              <q-input dense outlined v-model="empresa.contacto" label="Contacto"
-                        :rules="[val => !!val || 'El contacto es requerido']"/>
-            </div>
-            <div class="col-12">
-              <q-input dense outlined v-model="empresa.vendedor" label="Vendedor" type="text"
-                       :rules="[val => !!val || 'El vendedor es requerido']"/>
-            </div>
-            <template v-if="empresaOption === 'create' ">
-              <div class="col-12">
-                <q-select dense outlined v-model="empresa.vendedorCargo" label="Cargo" :options="$cargos"
-                          :rules="[val => !!val || 'El cargo es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorNombre" label="Nombre Personal" type="text"
-                         :rules="[val => !!val || 'El nombre del vendedor es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorDni" label="DNI Personal" type="text"
-                         :rules="[val => !!val || 'El DNI del vendedor es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorTelefono" label="Telefono Personal" type="text"
-                         :rules="[val => !!val || 'El telefono del vendedor es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorEmail" label="Email Personal" type="text"
-                         :rules="[val => !!val || 'El email del vendedor es requerido']"/>
-              </div>
-            </template>
-          </div>
-          <q-card-actions align="right">
-            <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-            <q-btn dense no-caps :loading="loading" type="submit"
-                   :label="empresaOption === 'create' ? 'Crear' : 'Editar'"
-                   :color="empresaOption === 'create' ? 'blue' : 'orange'" />
-          </q-card-actions>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
 </q-page>
 </template>
 <script>
-// import SearchEmpresaComponent from 'pages/central-files/SearchEmpresaComponent.vue'
-// import ContactoComponent from 'pages/central-files/ContactoComponent.vue'
-// import NotasComponent from 'pages/central-files/NotasComponent.vue'
-// import PedidosComponent from 'pages/central-files/PedidosComponent.vue'
 export default {
   name: 'IndexTesoreriaPage',
-  // components: {
-  //   SearchEmpresaComponent,
-  //   ContactoComponent,
-  //   NotasComponent,
-  //   PedidosComponent
-  // },
   data () {
     return {
       tab: 'revisionPago',
       loading: false,
-      empresa: {},
-      empresas: [],
+      pago: {},
+      allSelected: false,
+      pagos: [],
       pedidos: [],
       ocultar: true,
       direccion: [],
@@ -122,51 +87,44 @@ export default {
     }
   },
   mounted () {
-    this.$watch(() => this.$route.path, () => {
-      this.ocultar = true
-      // this.empresas = []
-      this.empresa = {}
-    })
-    this.getEmpresas('', this.filter)
-    // this.empresaSearch({ id: 1 })
+    this.getPagos()
   },
   methods: {
-    eliminarEmpresasSinPedidos () {
-      this.$q.dialog({
-        title: 'Eliminar Empresas',
-        message: '¿Estas seguro de eliminar las empresas sin pedidos?',
-        cancel: true,
-        persistent: true
-      }).onOk(() => {
-        this.loading = true
-        this.$axios.delete('eliminarEmpresasSinPedidos')
-          .then(response => {
-            this.getEmpresas('', this.filter)
-          }).catch(error => {
-            this.$alert(error.response.data.message)
-          }).finally(() => {
-            this.loading = false
-          })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
-    },
-    clickEditEmpresa (empresa) {
-      this.empresaDialog = true
-      this.empresa = { ...empresa }
-      this.empresaOption = 'edit'
-    },
-    empresaFilter (search, filter) {
-      this.filter = filter
-      this.getEmpresas(search, filter)
-    },
-    getEmpresas (search, filter) {
+    // eliminarEmpresasSinPedidos () {
+    //   this.$q.dialog({
+    //     title: 'Eliminar Empresas',
+    //     message: '¿Estas seguro de eliminar las empresas sin pedidos?',
+    //     cancel: true,
+    //     persistent: true
+    //   }).onOk(() => {
+    //     this.loading = true
+    //     this.$axios.delete('eliminarEmpresasSinPedidos')
+    //       .then(response => {
+    //         this.getEmpresas('', this.filter)
+    //       }).catch(error => {
+    //         this.$alert(error.response.data.message)
+    //       }).finally(() => {
+    //         this.loading = false
+    //       })
+    //   }).onCancel(() => {
+    //   }).onDismiss(() => {
+    //   })
+    // },
+    // clickEditEmpresa (empresa) {
+    //   this.empresaDialog = true
+    //   this.empresa = { ...empresa }
+    //   this.empresaOption = 'edit'
+    // },
+    // empresaFilter (search, filter) {
+    //   this.filter = filter
+    //   this.getEmpresas(search, filter)
+    // },
+    getPagos () {
       this.loading = true
-      this.$axios.get('empresas?search=' + search + '&filter=' + filter)
+      this.$axios.get('pagos')
         .then(response => {
-          this.empresas = response.data.data
+          this.pagos = response.data
+          console.log(this.pagos)
         }).catch(error => {
           this.$alert(error.response.data.message)
         }).finally(() => {
@@ -226,7 +184,6 @@ export default {
   computed: {
     url () {
       const path = this.$route.path
-      // console.log(path)
       return path
     }
   }

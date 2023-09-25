@@ -21,9 +21,18 @@ class Pago extends Model implements Auditable
         'user_id',
         'pedido_id',
     ];
-    public function pedido()
+    protected $appends = ['dni','nombre'];
+    public function getDniAttribute()
     {
-        return $this->belongsTo(Pedido::class);
+        $pedido = Pedido::find($this->pedido_id);
+        $persona = Person::find($pedido->persona_id);
+        return $persona->dni;
+    }
+    public function getNombreAttribute()
+    {
+        $pedido = Pedido::find($this->pedido_id);
+        $persona = Person::find($pedido->persona_id);
+        return $persona->nombre;
     }
     public function facturacion()
     {

@@ -74,7 +74,7 @@
             </q-tabs>
             <q-separator />
             <q-tab-panels v-model="tab" animated class="bg-grey-2">
-              <q-tab-panel name="pedido">
+              <q-tab-panel style="height: 300px" name="pedido">
                 <div class="row">
                   <div class="col-4 col-md-2">Producto</div>
                   <div class="col-8 col-md-6 text-bold">{{ pedidoDato.producto }}</div>
@@ -94,7 +94,7 @@
                   <div class="col-8 col-md-10 border-round">{{ pedidoDato.descripcion }}</div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="taller">
+              <q-tab-panel style="height: 300px" name="taller">
                 <div class="row">
                   <div class="col-4 col-md-2">Terminacion</div>
                   <div class="col-8 col-md-6 text-bold">{{ pedidoDato.terminacion }}</div>
@@ -120,7 +120,7 @@
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="$">
+              <q-tab-panel style="height: 300px" name="$">
                 <div class="row">
                   <div class="col-12 col-md-4">
                     <q-card flat bordered>
@@ -234,7 +234,7 @@
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="status">
+              <q-tab-panel style="height: 300px" name="status">
                 <div class="row">
                   <div class="col-12 col-md-12">
                     <q-markup-table wrapCells separator="horizontal" dense>
