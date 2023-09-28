@@ -14,38 +14,39 @@ use function Laravel\Prompts\error;
 
 class EmpresaController extends Controller{
     public function index(Request $request){
-        $this->eliminarEmpresasSinPedidos();
+//        $this->eliminarEmpresasSinPedidos();
         $search = $request->search;
         $filter = $request->filter;
         $search = $search=='null'?'':$search;
+        $paginate = 15;
         if ($filter == 'numero') {
             $empresas= Empresa::where('nombre', 'like', '%'.$search.'%')
                 ->orWhere('id', 'like', '%'.$search.'%')
-                ->paginate(100);
+                ->paginate($paginate);
             return $empresas;
         }
         if ($filter == 'nombre') {
             $empresas = Empresa::whereHas('person', function ($query) use ($search) {
                 $query->where('nombre', 'like', '%'.$search.'%');
-            })->paginate(100);
+            })->paginate($paginate);
             return $empresas;
         }
         if ($filter == 'telefono') {
             $empresas = Empresa::whereHas('person.phone', function ($query) use ($search) {
                 $query->where('phone', 'like', '%'.$search.'%');
-            })->paginate(100);
+            })->paginate($paginate);
             return $empresas;
         }
         if ($filter == 'email') {
             $empresas = Empresa::whereHas('person.email', function ($query) use ($search) {
                 $query->where('email', 'like', '%'.$search.'%');
-            })->paginate(100);
+            })->paginate($paginate);
             return $empresas;
         }
         if ($filter == 'sucursal') {
             $empresas = Empresa::whereHas('sucursals', function ($query) use ($search) {
                 $query->where('nombre', 'like', '%'.$search.'%');
-            })->paginate(100);
+            })->paginate($paginate);
             return $empresas;
         }
     }

@@ -5,7 +5,8 @@
       <div class="row">
         <div class="col-12 text-uppercase luckiest text-h6 text-center">
           Central Files
-          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="empresaDialogClick">
+          <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue"
+                 to="create-empresa">
             <q-tooltip>Crear Empresa</q-tooltip>
           </q-btn>
 <!--          <q-btn :loading="loading" round dense flat icon="o_delete" color="red" @click="eliminarEmpresasSinPedidos">-->
@@ -161,28 +162,28 @@
               <q-input dense outlined v-model="empresa.vendedor" label="Vendedor" type="text"
                        :rules="[val => !!val || 'El vendedor es requerido']"/>
             </div>
-            <template v-if="empresaOption === 'create' ">
-              <div class="col-12">
-                <q-select dense outlined v-model="empresa.vendedorCargo" label="Cargo" :options="$cargos"
-                          :rules="[val => !!val || 'El cargo es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorNombre" label="Nombre Personal" type="text"
-                         :rules="[val => !!val || 'El nombre del vendedor es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorDni" label="DNI Personal" type="text"
-                         :rules="[val => !!val || 'El DNI del vendedor es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorTelefono" label="Telefono Personal" type="text"
-                         :rules="[val => !!val || 'El telefono del vendedor es requerido']"/>
-              </div>
-              <div class="col-12">
-                <q-input dense outlined v-model="empresa.vendedorEmail" label="Email Personal" type="text"
-                         :rules="[val => !!val || 'El email del vendedor es requerido']"/>
-              </div>
-            </template>
+<!--            <template v-if="empresaOption === 'create' ">-->
+<!--              <div class="col-12">-->
+<!--                <q-select dense outlined v-model="empresa.vendedorCargo" label="Cargo" :options="$cargos"-->
+<!--                          :rules="[val => !!val || 'El cargo es requerido']"/>-->
+<!--              </div>-->
+<!--              <div class="col-12">-->
+<!--                <q-input dense outlined v-model="empresa.vendedorNombre" label="Nombre Personal" type="text"-->
+<!--                         :rules="[val => !!val || 'El nombre del vendedor es requerido']"/>-->
+<!--              </div>-->
+<!--              <div class="col-12">-->
+<!--                <q-input dense outlined v-model="empresa.vendedorDni" label="DNI Personal" type="text"-->
+<!--                         :rules="[val => !!val || 'El DNI del vendedor es requerido']"/>-->
+<!--              </div>-->
+<!--              <div class="col-12">-->
+<!--                <q-input dense outlined v-model="empresa.vendedorTelefono" label="Telefono Personal" type="text"-->
+<!--                         :rules="[val => !!val || 'El telefono del vendedor es requerido']"/>-->
+<!--              </div>-->
+<!--              <div class="col-12">-->
+<!--                <q-input dense outlined v-model="empresa.vendedorEmail" label="Email Personal" type="text"-->
+<!--                         :rules="[val => !!val || 'El email del vendedor es requerido']"/>-->
+<!--              </div>-->
+<!--            </template>-->
           </div>
           <q-card-actions align="right">
             <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
