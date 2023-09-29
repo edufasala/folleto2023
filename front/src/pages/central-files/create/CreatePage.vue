@@ -63,6 +63,7 @@
                                      :persons="persons"
                                      @newPerson="newPerson"
                                      @newSucursal="newSucursal"
+                                     @newDireccion="newDireccion"
                   />
                 </q-tab-panel>
 <!--                <q-tab-panel name="pedido">-->
@@ -98,15 +99,6 @@ export default {
         promedioDiasCompra: 0,
         codigo: '#0001',
         direccion: [
-          {
-            id: 1,
-            direccion: 'Av. Brasil 2357',
-            codigoPostal: '0000',
-            localidad: '',
-            empresa_id: 1,
-            deleted_at: null,
-            phone_direccions: []
-          }
         ],
         facturacion: [
           {
@@ -203,6 +195,18 @@ export default {
     this.pedidos = this.empresa.pedidos
   },
   methods: {
+    newDireccion (direccion) {
+      const id = this.direccion.length + 1
+      direccion.id = id
+      direccion.empresa_id = this.empresa.id
+      direccion.phone_direccions = [
+        {
+          phone: direccion.phone
+        }
+      ]
+      this.direccion.push(direccion)
+      // this.empresas.direccion = this.direccion
+    },
     newSucursal (sucursal) {
       const id = this.sucursals.length + 1
       sucursal.id = id

@@ -24,6 +24,7 @@
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
+        @newDireccion="newDireccion"
         />
       <FacturacionComponent
         :empresa="empresa"
@@ -87,6 +88,9 @@ export default {
     }
   },
   methods: {
+    newDireccion (direccion) {
+      this.$emit('newDireccion', direccion)
+    },
     newSucursal (sucursal) {
       this.$emit('newSucursal', sucursal)
     },
