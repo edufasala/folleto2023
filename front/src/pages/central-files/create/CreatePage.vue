@@ -5,32 +5,82 @@
         Nuevo Cliente
       </div>
       <div class="col-12 flex flex-center">
-        <div class="row">
-          <div class="col-4 flex flex-center">
-            Empresa:
-          </div>
-          <div class="col-8">
-            <q-input dense
-                     outlined
-                     v-model="empresa.nombre"/>
-          </div>
-          <div class="col-4 flex flex-center">
-            Empresa:
-          </div>
-          <div class="col-8">
-            <q-input dense
-                     outlined
-                     label="Hello"/>
-          </div>
-          <div class="col-4 flex flex-center">
-            Empresa:
-          </div>
-          <div class="col-8">
-            <q-input dense
-                     outlined
-                     label="Hello"/>
-          </div>
+        <div style="width: 500px">
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar>
+              <q-icon name="account_circle" size="45px" color="grey-8" />
+            </q-avatar>
+          </q-item-section>
+
+          <q-item-section>
+            <div class="row">
+              <div class="col-4 flex flex-center">
+                Empresa:
+              </div>
+              <div class="col-8">
+                <q-input dense
+                         class="super-small"
+                         outlined
+                         v-model="empresa.nombre"
+                         :input-style="{ fontSize: '12px' }" />
+              </div>
+              <div class="col-4 flex flex-center">
+                Contacto:
+              </div>
+              <div class="col-8">
+                <q-input dense
+                         class="super-small"
+                         outlined
+                         v-model="empresa.contacto"
+                         :input-style="{ fontSize: '12px' }" />
+              </div>
+              <div class="col-4 flex flex-center">
+                Vendedor:
+              </div>
+              <div class="col-8">
+                <q-input dense
+                         class="super-small"
+                         outlined
+                         v-model="empresa.vendedor"
+                         :input-style="{ fontSize: '12px' }" />
+              </div>
+            </div>
+          </q-item-section>
+        </q-item>
         </div>
+<!--        <div class="row">-->
+<!--          <div class="col-4 flex flex-center">-->
+<!--            Empresa:-->
+<!--          </div>-->
+<!--          <div class="col-8">-->
+<!--            <q-input dense-->
+<!--                     class="super-small"-->
+<!--                     outlined-->
+<!--                     v-model="empresa.nombre"-->
+<!--                     :input-style="{ fontSize: '12px' }" />-->
+<!--          </div>-->
+<!--          <div class="col-4 flex flex-center">-->
+<!--            Contacto:-->
+<!--          </div>-->
+<!--          <div class="col-8">-->
+<!--            <q-input dense-->
+<!--                     class="super-small"-->
+<!--                     outlined-->
+<!--                     v-model="empresa.contacto"-->
+<!--                     :input-style="{ fontSize: '12px' }" />-->
+<!--          </div>-->
+<!--          <div class="col-4 flex flex-center">-->
+<!--            Vendedor:-->
+<!--          </div>-->
+<!--          <div class="col-8">-->
+<!--            <q-input dense-->
+<!--                     class="super-small"-->
+<!--                     outlined-->
+<!--                     v-model="empresa.vendedor"-->
+<!--                     :input-style="{ fontSize: '12px' }" />-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div class="col-12 q-pa-xs">
         <div class="row">
@@ -322,5 +372,24 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+.super-small.q-field--dense {
+  .q-field__control-container,
+  .q-field__native {
+    //padding-top: 10px !important;
+  }
+
+  .q-field__control {
+    height: 25px !important;
+    min-height: 25px !important;
+  }
+
+  .q-field__marginal {
+    height: 25px !important;
+  }
+
+  .q-field__label {
+    top: 6px !important;
+  }
+}
 </style>
