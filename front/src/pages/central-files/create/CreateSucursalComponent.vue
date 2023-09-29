@@ -101,6 +101,10 @@ export default {
     sucursalAdd () {
       this.sucursalOption = 'create'
       this.sucursalDialog = true
+      this.sucursal = {
+        nombre: '',
+        comentario: ''
+      }
     },
     sucursalEdit (sucursal) {
       this.sucursalOption = 'edit'
