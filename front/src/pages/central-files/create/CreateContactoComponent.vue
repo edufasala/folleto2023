@@ -8,12 +8,12 @@
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
-        @empresaSearch="empresaSearch"/>
+      />
       <SucursalComponent
         class="q-pt-md"
         :empresa="empresa"
         :sucursals="sucursals"
-        @empresaSearch="empresaSearch"/>
+        />
     </div>
     <div class="col-12 col-md-4 q-px-xs">
       <DireccionComponent
@@ -22,24 +22,24 @@
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
-        @empresaSearch="empresaSearch"/>
+        />
       <FacturacionComponent
         :empresa="empresa"
         :direccion="direccion"
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
-        @empresaSearch="empresaSearch"/>
+        />
     </div>
   </div>
 </template>
 <script>
-import PersonComponent from './PersonComponent.vue'
-import SucursalComponent from './SucursalComponent.vue'
-import DireccionComponent from './DireccionComponent.vue'
-import FacturacionComponent from './FacturacionComponent.vue'
+import PersonComponent from './CreatePersonComponent.vue'
+import SucursalComponent from './CreateSucursalComponent.vue'
+import DireccionComponent from './CreateDireccionComponent.vue'
+import FacturacionComponent from './CreateFacturacionComponent.vue'
 export default {
-  name: 'ContactoComponent',
+  name: 'CreateContactoComponent',
   components: {
     SucursalComponent,
     PersonComponent,

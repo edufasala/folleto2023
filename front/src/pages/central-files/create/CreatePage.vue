@@ -49,71 +49,24 @@
           </q-item-section>
         </q-item>
         </div>
-<!--        <div class="row">-->
-<!--          <div class="col-4 flex flex-center">-->
-<!--            Empresa:-->
-<!--          </div>-->
-<!--          <div class="col-8">-->
-<!--            <q-input dense-->
-<!--                     class="super-small"-->
-<!--                     outlined-->
-<!--                     v-model="empresa.nombre"-->
-<!--                     :input-style="{ fontSize: '12px' }" />-->
-<!--          </div>-->
-<!--          <div class="col-4 flex flex-center">-->
-<!--            Contacto:-->
-<!--          </div>-->
-<!--          <div class="col-8">-->
-<!--            <q-input dense-->
-<!--                     class="super-small"-->
-<!--                     outlined-->
-<!--                     v-model="empresa.contacto"-->
-<!--                     :input-style="{ fontSize: '12px' }" />-->
-<!--          </div>-->
-<!--          <div class="col-4 flex flex-center">-->
-<!--            Vendedor:-->
-<!--          </div>-->
-<!--          <div class="col-8">-->
-<!--            <q-input dense-->
-<!--                     class="super-small"-->
-<!--                     outlined-->
-<!--                     v-model="empresa.vendedor"-->
-<!--                     :input-style="{ fontSize: '12px' }" />-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
       <div class="col-12 q-pa-xs">
         <div class="row">
           <div class="col-12">
-            <q-btn :loading="loading" :color="tab==='contacto'?'white':'grey'"
-                   label="CONTACTO" no-caps text-color="black"
-                   :class="`text-bold w-150`"
-                   size="15px" @click="tab = 'contacto'"/>
-            <q-btn :loading="loading" :color="tab==='pedido'?'white':'grey'"
-                   label="PEDIDOS" no-caps text-color="black"
-                   :class="`text-bold w-150`"
-                   size="15px" @click="tab = 'pedido'"/>
-            <q-btn :loading="loading" :color="tab==='notas'?'white':'grey'"
-                   label="NOTAS" no-caps text-color="black"
-                   :class="`text-bold w-150`"
-                   size="15px" @click="tab = 'notas'"/>
             <q-card>
-              <q-tab-panels v-model="tab" animated>
+<!--              <q-tab-panels v-model="tab" animated>-->
                 <q-tab-panel name="contacto">
                   <ContactoComponent :empresa="empresa" :direccion="direccion"
                                      :phoneDireccions="phoneDireccions"
                                      :facturacion="facturacion"
                                      :sucursals="sucursals"
                                      :persons="persons"
-                                     @empresaSearch="empresaSearch"/>
+                  />
                 </q-tab-panel>
-                <q-tab-panel name="notas">
-                  <NotasComponent :empresa="empresa" :notes="notes" @empresaSearch="empresaSearch"/>
-                </q-tab-panel>
-                <q-tab-panel name="pedido">
-                  <PedidosComponent :empresa="empresa" :pedidos="pedidos" @empresaSearch="empresaSearch"/>
-                </q-tab-panel>
-              </q-tab-panels>
+<!--                <q-tab-panel name="pedido">-->
+<!--                  <PedidosComponent :empresa="empresa" :pedidos="pedidos" @empresaSearch="empresaSearch"/>-->
+<!--                </q-tab-panel>-->
+<!--              </q-tab-panels>-->
             </q-card>
           </div>
         </div>
@@ -123,19 +76,16 @@
   </q-page>
 </template>
 <script>
-import ContactoComponent from 'pages/central-files/ContactoComponent.vue'
-import NotasComponent from 'pages/central-files/NotasComponent.vue'
-import PedidosComponent from 'pages/central-files/PedidosComponent.vue'
+import ContactoComponent from 'pages/central-files/create/CreateContactoComponent.vue'
+// import PedidosComponent from 'pages/central-files/PedidosComponent.vue'
 export default {
   name: 'IndexCentralFilesPage',
   components: {
-    ContactoComponent,
-    NotasComponent,
-    PedidosComponent
+    ContactoComponent
+    // PedidosComponent
   },
   data () {
     return {
-      tab: 'contacto',
       loading: false,
       empresa: {
         id: 1,
@@ -261,62 +211,15 @@ export default {
     }
   },
   mounted () {
-    // this.$watch(() => this.$route.path, () => {
-    //   this.ocultar = true
-    //   // this.empresas = []
-    //   this.empresa = {}
-    // })
-    // this.getEmpresas('', this.filter)
-    // this.empresaSearch({ id: 1 })
+    this.direccion = this.empresa.direccion
+    this.phoneDireccions = this.direccion.phone_direccions
+    this.facturacion = this.empresa.facturacion
+    this.sucursals = this.empresa.sucursals
+    this.persons = this.empresa.person
+    this.notes = this.empresa.notes
+    this.pedidos = this.empresa.pedidos
   },
   methods: {
-    eliminarEmpresasSinPedidos () {
-      this.$q.dialog({
-        title: 'Eliminar Empresas',
-        message: '¿Estas seguro de eliminar las empresas sin pedidos?',
-        cancel: true,
-        persistent: true
-      }).onOk(() => {
-        this.loading = true
-        this.$axios.delete('eliminarEmpresasSinPedidos')
-          .then(response => {
-            this.getEmpresas('', this.filter)
-          }).catch(error => {
-            this.$alert(error.response.data.message)
-          }).finally(() => {
-            this.loading = false
-          })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
-    },
-    clickEditEmpresa (empresa) {
-      this.empresaDialog = true
-      this.empresa = { ...empresa }
-      this.empresaOption = 'edit'
-    },
-    empresaFilter (search, filter) {
-      this.filter = filter
-      this.getEmpresas(search, filter)
-    },
-    getEmpresas (search, filter) {
-      this.loading = true
-      this.$axios.get('empresas?search=' + search + '&filter=' + filter)
-        .then(response => {
-          this.empresas = response.data.data
-        }).catch(error => {
-          this.$alert(error.response.data.message)
-        }).finally(() => {
-          this.loading = false
-        })
-    },
-    empresaDialogClick () {
-      this.empresaDialog = true
-      this.empresaOption = 'create'
-      this.empresa = {}
-    },
     empresaSubmit () {
       this.loading = true
       if (this.empresaOption === 'create') {
@@ -339,28 +242,6 @@ export default {
           this.loading = false
         })
       }
-    },
-    empresaSearch (empresa) {
-      this.empresa = empresa
-      this.loading = true
-      this.tab = 'contacto'
-      this.$axios.get('empresas/' + empresa.id)
-        .then(response => {
-          this.empresa = response.data
-          this.direccion = response.data.direccion
-          this.phoneDireccions = this.direccion.phone_direccions
-          this.facturacion = response.data.facturacion
-          this.sucursals = response.data.sucursals
-          this.persons = response.data.person
-          this.notes = response.data.notes
-          this.pedidos = response.data.pedidos
-        })
-        .catch(error => {
-          console.log(error)
-        }).finally(() => {
-          this.loading = false
-          this.ocultar = false
-        })
     }
   },
   computed: {
