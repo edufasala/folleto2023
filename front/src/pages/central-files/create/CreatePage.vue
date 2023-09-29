@@ -61,6 +61,7 @@
                                      :facturacion="facturacion"
                                      :sucursals="sucursals"
                                      :persons="persons"
+                                     @newPerson="newPerson"
                   />
                 </q-tab-panel>
 <!--                <q-tab-panel name="pedido">-->
@@ -89,11 +90,9 @@ export default {
       loading: false,
       empresa: {
         id: 1,
-        nombre: 'Tapiceria Los Salteños',
-        contacto: 'Marcos',
-        vendedor: 'Tapiceria Los Salteños',
-        deleted_at: null,
-        created_at: '2018-05-02T03:48:54.000000Z',
+        nombre: '',
+        contacto: '',
+        vendedor: '',
         proximoPedido: '28 dic 2021',
         promedioDiasCompra: 0,
         codigo: '#0001',
@@ -129,16 +128,6 @@ export default {
           }
         ],
         person: [
-          {
-            id: 1,
-            nombre: 'Tapiceria Los Salteños',
-            cargo: 'No se conoce',
-            dni: '1',
-            empresa_id: 1,
-            deleted_at: null,
-            phone: [],
-            email: []
-          }
         ],
         notes: [],
         pedidos: [
@@ -220,6 +209,24 @@ export default {
     this.pedidos = this.empresa.pedidos
   },
   methods: {
+    newPerson (person) {
+      const id = this.persons.length + 1
+      person.id = id
+      person.phone = [
+        {
+          phone: person.phone
+        }
+      ]
+      person.email = [
+        {
+          email: person.email,
+          status: 'Si'
+        }
+      ]
+      console.log(person)
+      this.persons.push(person)
+      // this.empresas.person = this.persons
+    },
     empresaSubmit () {
       this.loading = true
       if (this.empresaOption === 'create') {

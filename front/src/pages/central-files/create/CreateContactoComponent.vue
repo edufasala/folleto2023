@@ -8,6 +8,7 @@
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
+        @newPerson="newPerson"
       />
       <SucursalComponent
         class="q-pt-md"
@@ -85,8 +86,10 @@ export default {
     }
   },
   methods: {
+    newPerson (person) {
+      this.$emit('newPerson', person)
+    },
     empresaSearch (empresa) {
-      console.log(empresa)
       this.$emit('empresaSearch', empresa)
     }
   }

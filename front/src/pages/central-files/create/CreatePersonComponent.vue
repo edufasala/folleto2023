@@ -23,44 +23,44 @@
                 <div class="col-3 row items-center">
                   DNI: <b>{{perosn.dni}}</b>
                   <q-space />
-                  <q-btn size="10px" flat dense icon="o_edit" no-caps
-                         color="orange" :loading="loading"
-                         @click="person = perosn; personDialog = true; personOption = 'edit'">
-                    <q-tooltip>
-                      Editar
-                    </q-tooltip>
-                  </q-btn>
-                  <q-btn size="10px" flat dense icon="cancel" no-caps
-                         color="grey" :loading="loading"
-                         @click="deletePerson(perosn.id)">
-                    <q-tooltip>
-                      Eliminar
-                    </q-tooltip>
-                  </q-btn>
+<!--                  <q-btn size="10px" flat dense icon="o_edit" no-caps-->
+<!--                         color="orange" :loading="loading"-->
+<!--                         @click="person = perosn; personDialog = true; personOption = 'edit'">-->
+<!--                    <q-tooltip>-->
+<!--                      Editar-->
+<!--                    </q-tooltip>-->
+<!--                  </q-btn>-->
+<!--                  <q-btn size="10px" flat dense icon="cancel" no-caps-->
+<!--                         color="grey" :loading="loading"-->
+<!--                         @click="deletePerson(perosn.id)">-->
+<!--                    <q-tooltip>-->
+<!--                      Eliminar-->
+<!--                    </q-tooltip>-->
+<!--                  </q-btn>-->
                 </div>
                 <div class="col-5">
                   <template v-if="perosn.phone.length>0">
                     <div v-for="phone in perosn.phone" :key="phone.id" class="row items-center q-mr-md">
                       Telefono: <b>{{phone.phone}}</b>
                       <q-space />
-                      <q-btn size="10px" flat dense icon="cancel"
-                             @click="deletePhone(phone.id)"
-                             :loading="loading"
-                             no-caps color="grey">
-                        <q-tooltip>
-                          Eliminar Telefono
-                        </q-tooltip>
-                      </q-btn>
-                      <q-btn size="10px" flat dense icon="add_circle_outline"
-                             @click="addPhone(perosn.id)"
-                             :loading="loading"
-                             v-if="phone.id == perosn.phone[perosn.phone.length - 1].id"
-                             no-caps color="blue">
-                        <q-tooltip>
-                          Agregar Telefono
-                        </q-tooltip>
-                      </q-btn>
-                      <q-btn v-else size="10px" flat dense icon=""/>
+<!--                      <q-btn size="10px" flat dense icon="cancel"-->
+<!--                             @click="deletePhone(phone.id)"-->
+<!--                             :loading="loading"-->
+<!--                             no-caps color="grey">-->
+<!--                        <q-tooltip>-->
+<!--                          Eliminar Telefono-->
+<!--                        </q-tooltip>-->
+<!--                      </q-btn>-->
+<!--                      <q-btn size="10px" flat dense icon="add_circle_outline"-->
+<!--                             @click="addPhone(perosn.id)"-->
+<!--                             :loading="loading"-->
+<!--                             v-if="phone.id == perosn.phone[perosn.phone.length - 1].id"-->
+<!--                             no-caps color="blue">-->
+<!--                        <q-tooltip>-->
+<!--                          Agregar Telefono-->
+<!--                        </q-tooltip>-->
+<!--                      </q-btn>-->
+<!--                      <q-btn v-else size="10px" flat dense icon=""/>-->
                     </div>
                   </template>
                   <template v-else>
@@ -81,20 +81,20 @@
                       <q-space />
                       <q-checkbox dense v-model="email.status" left-label :label="email.status"
                                   false-value="No" true-value="Si" :disable="loading" @update:model-value="updateEmailStatus(email)"/>
-                      <q-btn size="10px" flat dense icon="cancel" no-caps
-                             color="grey" :loading="loading" @click="deleteEmail(email.id)">
-                        <q-tooltip>
-                          Eliminar Email
-                        </q-tooltip>
-                      </q-btn>
-                      <q-btn size="10px" flat dense icon="add_circle_outline" no-caps
-                             color="blue" :loading="loading" v-if="email.id == perosn.email[perosn.email.length - 1].id"
-                             @click="addEmail(perosn.id)">
-                        <q-tooltip>
-                          Agregar Email
-                        </q-tooltip>
-                      </q-btn>
-                      <q-btn v-else size="10px" flat dense icon=""/>
+<!--                      <q-btn size="10px" flat dense icon="cancel" no-caps-->
+<!--                             color="grey" :loading="loading" @click="deleteEmail(email.id)">-->
+<!--                        <q-tooltip>-->
+<!--                          Eliminar Email-->
+<!--                        </q-tooltip>-->
+<!--                      </q-btn>-->
+<!--                      <q-btn size="10px" flat dense icon="add_circle_outline" no-caps-->
+<!--                             color="blue" :loading="loading" v-if="email.id == perosn.email[perosn.email.length - 1].id"-->
+<!--                             @click="addEmail(perosn.id)">-->
+<!--                        <q-tooltip>-->
+<!--                          Agregar Email-->
+<!--                        </q-tooltip>-->
+<!--                      </q-btn>-->
+<!--                      <q-btn v-else size="10px" flat dense icon=""/>-->
                     </div>
                   </template>
                   <template v-else>
@@ -129,7 +129,17 @@
                               :rules="[val => !!val || 'El cargo es requerido']"/>
                   </div>
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.dni" label="DNI"/>
+                    <q-input dense outlined v-model="person.dni" label="DNI" hint=""/>
+                  </div>
+                  <div class="col-12">
+                    <q-input dense outlined v-model="person.phone" label="Telefono"
+                              :rules="[val => !!val || 'El telefono es requerido']"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <q-input dense outlined v-model="person.email" label="Email"
+                              :rules="[val => !!val || 'El email es requerido']"
+                    />
                   </div>
                 </div>
                 <q-card-actions align="right">
@@ -205,6 +215,8 @@ export default {
       })
     },
     personSubmit () {
+      this.$emit('newPerson', this.person)
+      this.personDialog = false
       // this.loading = true
       // if (this.personOption === 'create') {
       //   this.$axios.post('persons', {
