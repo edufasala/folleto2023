@@ -62,6 +62,7 @@
                                      :sucursals="sucursals"
                                      :persons="persons"
                                      @newPerson="newPerson"
+                                     @newSucursal="newSucursal"
                   />
                 </q-tab-panel>
 <!--                <q-tab-panel name="pedido">-->
@@ -119,13 +120,6 @@ export default {
           }
         ],
         sucursals: [
-          {
-            id: 1,
-            nombre: 'Av. Brasil 2357',
-            comentario: '27425677670  \nAldana Rocio Leiva',
-            empresa_id: 1,
-            deleted_at: null
-          }
         ],
         person: [
         ],
@@ -209,6 +203,13 @@ export default {
     this.pedidos = this.empresa.pedidos
   },
   methods: {
+    newSucursal (sucursal) {
+      const id = this.sucursals.length + 1
+      sucursal.id = id
+      sucursal.empresa_id = this.empresa.id
+      this.sucursals.push(sucursal)
+      // this.empresas.sucursals = this.sucursals
+    },
     newPerson (person) {
       const id = this.persons.length + 1
       person.id = id

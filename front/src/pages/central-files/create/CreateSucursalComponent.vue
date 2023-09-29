@@ -29,14 +29,14 @@
                     {{ sucursal.comentario }}
                   </td>
                   <td class="text-right">
-                    <q-btn-group flat dense>
-                      <q-btn :loading="loading" dense size="10px" flat icon="o_edit" color="orange" @click="sucursalEdit(sucursal)">
-                        <q-tooltip>Editar Sucursal</q-tooltip>
-                      </q-btn>
-                      <q-btn :loading="loading" dense size="10px" flat icon="cancel" color="grey" @click="sucursalDelete(sucursal)">
-                        <q-tooltip>Eliminar Sucursal</q-tooltip>
-                      </q-btn>
-                    </q-btn-group>
+<!--                    <q-btn-group flat dense>-->
+<!--                      <q-btn :loading="loading" dense size="10px" flat icon="o_edit" color="orange" @click="sucursalEdit(sucursal)">-->
+<!--                        <q-tooltip>Editar Sucursal</q-tooltip>-->
+<!--                      </q-btn>-->
+<!--                      <q-btn :loading="loading" dense size="10px" flat icon="cancel" color="grey" @click="sucursalDelete(sucursal)">-->
+<!--                        <q-tooltip>Eliminar Sucursal</q-tooltip>-->
+<!--                      </q-btn>-->
+<!--                    </q-btn-group>-->
                   </td>
                 </tr>
                 </tbody>
@@ -126,34 +126,36 @@ export default {
       })
     },
     sucursalSubmit () {
-      this.loading = true
-      if (this.sucursalOption === 'create') {
-        this.$axios.post('sucursal', {
-          nombre: this.sucursal.nombre,
-          comentario: this.sucursal.comentario,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.sucursalDialog = false
-          this.$emit('empresaSearch', this.empresa)
-        }).catch(error => {
-          this.$alert(error.response.data.message)
-        }).finally(() => {
-          this.loading = false
-        })
-      } else {
-        this.$axios.put('sucursal/' + this.sucursal.id, {
-          nombre: this.sucursal.nombre,
-          comentario: this.sucursal.comentario,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.sucursalDialog = false
-          this.$emit('empresaSearch', this.empresa)
-        }).catch(error => {
-          this.$alert(error.response.data.message)
-        }).finally(() => {
-          this.loading = false
-        })
-      }
+      this.$emit('newSucursal', this.sucursal)
+      this.sucursalDialog = false
+      // this.loading = true
+      // if (this.sucursalOption === 'create') {
+      //   this.$axios.post('sucursal', {
+      //     nombre: this.sucursal.nombre,
+      //     comentario: this.sucursal.comentario,
+      //     empresa_id: this.empresa.id
+      //   }).then(response => {
+      //     this.sucursalDialog = false
+      //     this.$emit('empresaSearch', this.empresa)
+      //   }).catch(error => {
+      //     this.$alert(error.response.data.message)
+      //   }).finally(() => {
+      //     this.loading = false
+      //   })
+      // } else {
+      //   this.$axios.put('sucursal/' + this.sucursal.id, {
+      //     nombre: this.sucursal.nombre,
+      //     comentario: this.sucursal.comentario,
+      //     empresa_id: this.empresa.id
+      //   }).then(response => {
+      //     this.sucursalDialog = false
+      //     this.$emit('empresaSearch', this.empresa)
+      //   }).catch(error => {
+      //     this.$alert(error.response.data.message)
+      //   }).finally(() => {
+      //     this.loading = false
+      //   })
+      // }
     }
   }
 }

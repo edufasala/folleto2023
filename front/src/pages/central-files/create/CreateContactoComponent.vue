@@ -14,6 +14,7 @@
         class="q-pt-md"
         :empresa="empresa"
         :sucursals="sucursals"
+        @newSucursal="newSucursal"
         />
     </div>
     <div class="col-12 col-md-4 q-px-xs">
@@ -86,6 +87,9 @@ export default {
     }
   },
   methods: {
+    newSucursal (sucursal) {
+      this.$emit('newSucursal', sucursal)
+    },
     newPerson (person) {
       this.$emit('newPerson', person)
     },
