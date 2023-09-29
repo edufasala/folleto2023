@@ -32,6 +32,7 @@
         :phoneDireccions="phoneDireccions"
         :facturacion="facturacion"
         :sucursals="sucursals"
+        @newFacturacion="newFacturacion"
         />
     </div>
   </div>
@@ -88,6 +89,9 @@ export default {
     }
   },
   methods: {
+    newFacturacion (facturacion) {
+      this.$emit('newFacturacion', facturacion)
+    },
     newDireccion (direccion) {
       this.$emit('newDireccion', direccion)
     },

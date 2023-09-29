@@ -14,20 +14,20 @@
             <div class="col-12 row items-center">
               CUIT/CUIL: <b>{{d.cuit}}</b>
               <q-space />
-              <q-btn size="10px" flat dense icon="o_edit" no-caps
-                     color="orange" :loading="loading"
-                     @click="facturacionDato = d; facturacionDialog = true; facturacionOption = 'edit'">
-                <q-tooltip>
-                  Editar
-                </q-tooltip>
-              </q-btn>
-              <q-btn size="10px" flat dense icon="cancel" no-caps
-                     color="grey" :loading="loading"
-                     @click="deleteFacturacion(d.id)">
-                <q-tooltip>
-                  Eliminar
-                </q-tooltip>
-              </q-btn>
+<!--              <q-btn size="10px" flat dense icon="o_edit" no-caps-->
+<!--                     color="orange" :loading="loading"-->
+<!--                     @click="facturacionDato = d; facturacionDialog = true; facturacionOption = 'edit'">-->
+<!--                <q-tooltip>-->
+<!--                  Editar-->
+<!--                </q-tooltip>-->
+<!--              </q-btn>-->
+<!--              <q-btn size="10px" flat dense icon="cancel" no-caps-->
+<!--                     color="grey" :loading="loading"-->
+<!--                     @click="deleteFacturacion(d.id)">-->
+<!--                <q-tooltip>-->
+<!--                  Eliminar-->
+<!--                </q-tooltip>-->
+<!--              </q-btn>-->
             </div>
             <div class="col-12">
               Condicional: <b>{{d.condicional}}</b>
@@ -123,32 +123,34 @@ export default {
       })
     },
     facturacionSubmit () {
-      this.loading = true
-      if (this.facturacionOption === 'create') {
-        this.$axios.post('facturacion', {
-          ...this.facturacionDato,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.$emit('empresaSearch', this.empresa)
-          this.facturacionDialog = false
-        }).catch(error => {
-          this.$alert.error(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      } else {
-        this.$axios.put('facturacion/' + this.facturacionDato.id, {
-          ...this.facturacionDato,
-          empresa_id: this.empresa.id
-        }).then(response => {
-          this.$emit('empresaSearch', this.empresa)
-          this.facturacionDialog = false
-        }).catch(error => {
-          this.$alert.error(error)
-        }).finally(() => {
-          this.loading = false
-        })
-      }
+      this.$emit('newFacturacion', this.facturacionDato)
+      this.facturacionDialog = false
+      // this.loading = true
+      // if (this.facturacionOption === 'create') {
+      //   this.$axios.post('facturacion', {
+      //     ...this.facturacionDato,
+      //     empresa_id: this.empresa.id
+      //   }).then(response => {
+      //     this.$emit('empresaSearch', this.empresa)
+      //     this.facturacionDialog = false
+      //   }).catch(error => {
+      //     this.$alert.error(error)
+      //   }).finally(() => {
+      //     this.loading = false
+      //   })
+      // } else {
+      //   this.$axios.put('facturacion/' + this.facturacionDato.id, {
+      //     ...this.facturacionDato,
+      //     empresa_id: this.empresa.id
+      //   }).then(response => {
+      //     this.$emit('empresaSearch', this.empresa)
+      //     this.facturacionDialog = false
+      //   }).catch(error => {
+      //     this.$alert.error(error)
+      //   }).finally(() => {
+      //     this.loading = false
+      //   })
+      // }
     },
     facturacionDialogClick () {
       this.facturacionDialog = true

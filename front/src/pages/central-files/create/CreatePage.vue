@@ -64,12 +64,16 @@
                                      @newPerson="newPerson"
                                      @newSucursal="newSucursal"
                                      @newDireccion="newDireccion"
+                                      @newFacturacion="newFacturacion"
                   />
                 </q-tab-panel>
 <!--                <q-tab-panel name="pedido">-->
 <!--                  <PedidosComponent :empresa="empresa" :pedidos="pedidos" @empresaSearch="empresaSearch"/>-->
 <!--                </q-tab-panel>-->
 <!--              </q-tab-panels>-->
+              <div class="text-center q-pb-xs">
+                <q-btn no-caps label="Crear Pedido" color="blue" class="text-bold" />
+              </div>
             </q-card>
           </div>
         </div>
@@ -101,15 +105,6 @@ export default {
         direccion: [
         ],
         facturacion: [
-          {
-            id: 1,
-            cuit: '123456',
-            condicional: 'CONDICIONAL',
-            razonSocial: 'RAZON SOCIAL',
-            comentario: 'COMENTARIO',
-            empresa_id: 1,
-            deleted_at: null
-          }
         ],
         sucursals: [
         ],
@@ -195,6 +190,13 @@ export default {
     this.pedidos = this.empresa.pedidos
   },
   methods: {
+    newFacturacion (facturacion) {
+      const id = this.facturacion.length + 1
+      facturacion.id = id
+      facturacion.empresa_id = this.empresa.id
+      this.facturacion.push(facturacion)
+      // this.empresas.facturacion = this.facturacion
+    },
     newDireccion (direccion) {
       const id = this.direccion.length + 1
       direccion.id = id
