@@ -123,26 +123,26 @@ class UserController extends Controller
 //        return $namePermissionArray;
         $user->syncPermissions($namePermissionArray);
 
-        // Devolver una respuesta adecuada (si es necesario)
-//        //buscamos usuario igual rol
-//        $userIgualRol=User::where('id','!=',$user->id)->whereHas('roles',function ($query) use ($role){
-//            $query->where('id',$role->id);
-//        })->get();
-//////        return $userIgualRol;
-//        foreach ($userIgualRol as $userIR){
-//            $userIR->syncPermissions($request->permissions);
-//        }
-//
-//        foreach ($request->permissions as $permission){
-//            if ($permission['checked']){
-//                $user->givePermissionTo($permission['name']);
-//                $role->givePermissionTo($permission['name']);
-//                foreach ($userIgualRol as $userIR){
-//                    //damos permisos a los usuarios con el mismo rol
-//                    $userIR->givePermissionTo($permission['name']);
-//                }
-//            }
-//        }
+//         Devolver una respuesta adecuada (si es necesario)
+        //buscamos usuario igual rol
+        $userIgualRol=User::where('id','!=',$user->id)->whereHas('roles',function ($query) use ($role){
+            $query->where('id',$role->id);
+        })->get();
+////        return $userIgualRol;
+        foreach ($userIgualRol as $userIR){
+            $userIR->syncPermissions($request->permissions);
+        }
+
+        foreach ($request->permissions as $permission){
+            if ($permission['checked']){
+                $user->givePermissionTo($permission['name']);
+                $role->givePermissionTo($permission['name']);
+                foreach ($userIgualRol as $userIR){
+                    //damos permisos a los usuarios con el mismo rol
+                    $userIR->givePermissionTo($permission['name']);
+                }
+            }
+        }
         return $user;
     }
     public function updateActive(User $user){
