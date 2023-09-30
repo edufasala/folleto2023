@@ -119,7 +119,8 @@ class UserController extends Controller
                 $namePermissionArray[] = $permission['name'];
             }
         }
-        $user->givePermissionTo($namePermissionArray);
+        return $namePermissionArray;
+//        $user->givePermissionTo($namePermissionArray);
 
         // Devolver una respuesta adecuada (si es necesario)
 //        //buscamos usuario igual rol
