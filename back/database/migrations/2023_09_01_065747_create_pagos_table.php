@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tipo')->nullable()->comment('Seña, Pago');
             $table->double('monto',11,2);
             $table->string('facturado')->nullable()->default('No');
-            $table->string('estado')->nullable()->default('Aceptado')->comment('Aceptado, Rechazado, Pendiente');
+            $table->string('estado')->nullable()->default('Pendiente')->comment('Aceptado, Rechazado, Pendiente');
             $table->string('metodoPago')->nullable()->comment('Efectivo, Transferencia, Tarjeta, Cheque, Otro');
             $table->string('comentario')->nullable();
             $table->unsignedBigInteger('pedido_id');

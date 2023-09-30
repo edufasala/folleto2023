@@ -15,6 +15,7 @@ class Pago extends Model implements Auditable
         'hora',
         'monto',
         'facturado',
+        'estado', // 'PENDIENTE','ACEPTADO','RECHAZADO'
         'tipo',
         'metodoPago',
         'comentario',
