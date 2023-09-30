@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-pa-xs" style="max-width: 900px">
+  <q-card class="q-pa-xs" style="max-width: 950px">
     <q-card-section class="q-py-xs row items-center">
       <div class="text-h5 text-bold"> Pedido # {{pedidoDato.codigo}}</div>
       <q-space />
@@ -122,7 +122,7 @@
               </q-tab-panel>
               <q-tab-panel style="height: 300px" name="$">
                 <div class="row">
-                  <div class="col-12 col-md-4">
+                  <div class="col-12 col-md-3">
                     <q-card flat bordered>
                       <div class="text-bold text-center">RESUMEN</div>
                       <q-separator/>
@@ -171,7 +171,7 @@
                       </div>
                     </q-card>
                   </div>
-                  <div class="col-12 col-md-8 q-px-md">
+                  <div class="col-12 col-md-9 q-px-md">
                     <div class="text-h6 row items-center">
                       Pagos
                       <q-space />
@@ -187,6 +187,7 @@
                           <th class="text-left">Met. Pago</th>
                           <th class="text-left">Facturado</th>
                           <th class="text-left">Usuario</th>
+                          <th class="text-left">Estado</th>
                         </tr>
                       </thead>
                       <thead>
@@ -198,6 +199,12 @@
                         <td class="text-caption">{{pago.metodoPago}}</td>
                         <td class="text-caption">{{pago.facturado}}</td>
                         <td class="text-caption">{{pago.user.name}}</td>
+                        <td class="text-caption">
+                          <q-chip dense size="10px"
+                            :color="pago.estado === 'Pendiente' ? 'orange' : pago.estado === 'Aceptado' ? 'green' : 'red'"
+                            :label="pago.estado"
+                            :icon="pago.estado === 'Pendiente' ? 'schedule' : 'done'"></q-chip>
+                        </td>
                       </tr>
                       <tr>
                         <td class="text-caption"/>
