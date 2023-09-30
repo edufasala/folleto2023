@@ -98,21 +98,29 @@ class UserController extends Controller
         return $user;
     }
     public function update(Request $request,User $user){
+        // Validación de datos de entrada
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$user->id
         ]);
+
+        // Actualizar datos del usuario
         $user->update($request->all());
+
+        // Obtener y sincronizar roles
         $role = Role::find($request->roles[0]['id']);
         $user->syncRoles($role);
-        $namePermissionArray=[];
-        foreach ($request->permissions as $permission){
-            if ($permission['checked']){
-                $namePermissionArray[]=$permission['name'];
+
+        // Obtener y sincronizar permisos
+        $namePermissionArray = [];
+        foreach ($request->permissions as $permission) {
+            if ($permission['checked']) {
+                $namePermissionArray[] = $permission['name'];
             }
         }
-
         $user->syncPermissions($namePermissionArray);
+
+        // Devolver una respuesta adecuada (si es necesario)
 //        //buscamos usuario igual rol
 //        $userIgualRol=User::where('id','!=',$user->id)->whereHas('roles',function ($query) use ($role){
 //            $query->where('id',$role->id);
