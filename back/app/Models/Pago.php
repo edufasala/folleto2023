@@ -26,13 +26,21 @@ class Pago extends Model implements Auditable
     {
         $pedido = Pedido::find($this->pedido_id);
         $persona = Person::find($pedido->persona_id);
-        return $persona->dni;
+        if($persona){
+            return $persona->dni;
+        }else{
+            return '';
+        }
     }
     public function getNombreAttribute()
     {
         $pedido = Pedido::find($this->pedido_id);
         $persona = Person::find($pedido->persona_id);
-        return $persona->nombre;
+        if ($persona) {
+            return $persona->nombre;
+        } else {
+            return '';
+        }
     }
     public function facturacion()
     {
