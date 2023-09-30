@@ -13,11 +13,13 @@ class ProductoConPliegoController extends Controller{
         $productoConPliego = ProductoConPliego::create($request->all());
         return response()->json($productoConPliego, 201);
     }
-    public function update(UpdateProductoConPliegoRequest $request, ProductoConPliego $productoConPliego){
+    public function update(UpdateProductoConPliegoRequest $request, $id){
+        $productoConPliego = ProductoConPliego::findOrFail($id);
         $productoConPliego->update($request->all());
         return response()->json($productoConPliego, 200);
     }
-    public function destroy(ProductoConPliego $productoConPliego){
+    public function destroy($id){
+        $productoConPliego = ProductoConPliego::findOrFail($id);
         $productoConPliego->delete();
         return response()->json(null, 204);
     }

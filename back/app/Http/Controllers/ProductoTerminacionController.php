@@ -13,11 +13,13 @@ class ProductoTerminacionController extends Controller{
         $productoTerminacion = ProductoTerminacion::create($request->all());
         return response()->json($productoTerminacion, 201);
     }
-    public function update(UpdateProductoTerminacionRequest $request, ProductoTerminacion $productoTerminacion){
+    public function update(UpdateProductoTerminacionRequest $request, $id){
+        $productoTerminacion = ProductoTerminacion::findOrFail($id);
         $productoTerminacion->update($request->all());
         return response()->json($productoTerminacion, 200);
     }
-    public function destroy(ProductoTerminacion $productoTerminacion){
+    public function destroy($id){
+        $productoTerminacion = ProductoTerminacion::findOrFail($id);
         $productoTerminacion->delete();
         return response()->json(null, 204);
     }

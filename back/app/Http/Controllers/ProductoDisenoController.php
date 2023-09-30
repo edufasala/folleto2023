@@ -13,11 +13,13 @@ class ProductoDisenoController extends Controller{
         $productoDiseno = ProductoDiseno::create($request->all());
         return response()->json($productoDiseno, 201);
     }
-    public function update(UpdateProductoDisenoRequest $request, ProductoDiseno $productoDiseno){
+    public function update(UpdateProductoDisenoRequest $request, $id){
+        $productoDiseno = ProductoDiseno::findOrFail($id);
         $productoDiseno->update($request->all());
         return response()->json($productoDiseno, 200);
     }
-    public function destroy(ProductoDiseno $productoDiseno){
+    public function destroy($id){
+        $productoDiseno = ProductoDiseno::findOrFail($id);
         $productoDiseno->delete();
         return response()->json(null, 204);
     }
