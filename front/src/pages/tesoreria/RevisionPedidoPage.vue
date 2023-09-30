@@ -1,92 +1,51 @@
 <script>
 export default {
-  name: 'RevisionPagoPage',
+  name: 'RevisionPedidoPage',
   data () {
     return {
-      tab: 'revisionPago',
       loading: false,
-      pago: {},
-      allSelected: false,
-      pagos: [],
+      pedido: {},
       pedidos: []
     }
   },
   mounted () {
-    this.getPagos()
+    this.getPedidos()
   },
   methods: {
-    aceptar () {
+    aceptarPedido (pedido) {
       this.loading = true
-      const pagos = []
-      this.pagos.forEach(pago => {
-        if (pago.selected) {
-          pagos.push(pago)
-        }
-      })
-      this.$axios.post('aceptarEstadoPago', {
-        pagos
-      })
+      this.$axios.post('aceptarPedido', pedido)
         .then(response => {
-          this.getPagos()
+          this.$alert.success('Pedido aceptado')
+          this.getPedidos()
+        }).catch(error => {
+          this.$alert.error(error.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+    },
+    rechazarPedido (pedido) {
+      this.loading = true
+      this.$axios.post('rechazarPedido', pedido)
+        .then(response => {
+          this.$alert.success('Pedido rechazado')
+          this.getPedidos()
+        }).catch(error => {
+          this.$alert.error(error.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+    },
+    getPedidos () {
+      this.loading = true
+      this.$axios.get('revisionPedidos')
+        .then(response => {
+          this.pedidos = response.data
         }).catch(error => {
           this.$alert(error.response.data.message)
         }).finally(() => {
           this.loading = false
         })
-    },
-    rechazar () {
-      this.loading = true
-      const pagos = []
-      this.pagos.forEach(pago => {
-        if (pago.selected) {
-          pagos.push(pago)
-        }
-      })
-      this.$axios.post('rechazarEstadoPago', {
-        pagos
-      })
-        .then(response => {
-          this.getPagos()
-        }).catch(error => {
-          this.$alert(error.response.data.message)
-        }).finally(() => {
-          this.loading = false
-        })
-    },
-    getPagos () {
-      this.loading = true
-      this.$axios.get('pagos')
-        .then(response => {
-          this.pagos = []
-          response.data.forEach(pago => {
-            pago.selected = false
-            this.pagos.push(pago)
-          })
-        }).catch(error => {
-          this.$alert(error.response.data.message)
-        }).finally(() => {
-          this.loading = false
-        })
-    }
-  },
-  computed: {
-    totalSinRevisar () {
-      let total = 0
-      this.pagos.forEach(pago => {
-        if (pago.estado === 'Pendiente') {
-          total += pago.monto
-        }
-      })
-      return total
-    },
-    seleccionado () {
-      let seleccionado = 0
-      this.pagos.forEach(pago => {
-        if (pago.selected) {
-          seleccionado += pago.monto
-        }
-      })
-      return seleccionado
     }
   }
 }
@@ -94,55 +53,47 @@ export default {
 
 <template>
   <div>
-    <div class="row items-center q-pa-xs">
-              <span class="bg-grey-4 q-pa-xs text-subtitle1 text-bold">
-                Selecionado <span class="text-blue">${{seleccionado}}</span>
-                <q-btn :loading="loading" class="q-ml-lg" label="Aceptar" color="green" @click="aceptar" no-caps/>
-                <q-btn :loading="loading" class="q-ml-sm" label="Rechazar" color="red" @click="rechazar" no-caps/>
-              </span>
-      <q-space/>
-      <div>
-        Total sin revisar <span class="text-blue">${{totalSinRevisar}}</span>
-      </div>
+    <div class="text-right">
+        Pedidos para revisar <span class="text-bold">{{pedidos.length}}</span>
     </div>
     <q-markup-table>
       <thead>
       <tr class="bg-black text-white">
-        <th class="text-left"><q-checkbox v-model="allSelected" dark label="All" @update:modelValue="v => {pagos.forEach(pago => pago.selected = v)}"/></th>
         <th class="text-left">Fecha</th>
-        <th class="text-left">Estado</th>
-        <th class="text-left">Nº CI.</th>
-        <th class="text-left">Nombre</th>
-        <th class="text-left">Medio</th>
-        <th class="text-left">Monto</th>
-        <th class="text-left">Facturado</th>
         <th class="text-left">Usuario</th>
-        <th class="text-left">Comentario</th>
+        <th class="text-left">Nº CI.</th>
+        <th class="text-left">Producto</th>
+        <th class="text-left">Gr</th>
+        <th class="text-left">Cantidad</th>
+        <th class="text-left">Medida</th>
+        <th class="text-left">Precio</th>
+        <th class="text-left">Estado</th>
+        <th class="text-left">Opciones</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="pago in pagos" :key="pago.id">
-        <td class="text-left"><q-checkbox v-model="pago.selected"/></td>
-        <td class="text-left">{{pago.fecha}}</td>
+      <tr v-for="pedido in pedidos" :key="pedido.id">
+        <td class="text-left">{{pedido.fecha}}</td>
+        <td class="text-left">{{pedido.user.name}}</td>
+        <td class="text-left">{{pedido.dni}}</td>
+        <td class="text-left">{{pedido.producto}}</td>
+        <td class="text-left">{{pedido.gr}}</td>
+        <td class="text-left">{{pedido.cantidad}}</td>
+        <td class="text-left">{{pedido.medida}}</td>
+        <td class="text-left">{{$filters.currency(pedido.precioTotal)}}</td>
         <td class="text-left">
-          <q-badge :color="pago.estado==='Pendiente'?'orange':pago.estado==='Aceptado'?'green':'red'">
-            {{pago.estado}}
+          <q-badge :color="pedido.estadoPedido==='Activo'?'orange':pedido.estadoPedido==='Aceptado'?'green':'red'">
+            {{pedido.estadoPedido}}
           </q-badge>
         </td>
-        <td class="text-left">{{pago.dni}}</td>
-        <td class="text-left">{{pago.nombre}}</td>
-        <td class="text-left">{{pago.metodoPago}}</td>
-        <td class="text-left">{{$filters.currency(pago.monto)}}</td>
         <td class="text-left">
-          <q-badge :color="pago.facturado?'green':'red'">
-            {{pago.facturado}}
-          </q-badge>
+          <q-btn :loading="loading" color="red" dense rounded icon="close" @click="rechazarPedido(pedido)"/>
+          <q-btn :loading="loading" color="green" dense rounded icon="check" @click="aceptarPedido(pedido)"/>
         </td>
-        <td class="text-left">{{pago.user.name}}</td>
-        <td class="text-left">{{pago.comentario}}</td>
       </tr>
       </tbody>
     </q-markup-table>
+<!--    <pre>{{pedidos}}</pre>-->
   </div>
 </template>
 

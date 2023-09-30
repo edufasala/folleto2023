@@ -23,7 +23,7 @@
             <RevisionPagoPage/>
           </q-tab-panel>
           <q-tab-panel name="revisionPedido">
-            notas
+            <RevisionPedidoPage/>
           </q-tab-panel>
           <q-tab-panel name="busqueda">
             pedido
@@ -36,13 +36,14 @@
 </template>
 <script>
 import RevisionPagoPage from 'pages/tesoreria/RevisionPagoPage.vue'
+import RevisionPedidoPage from 'pages/tesoreria/RevisionPedidoPage.vue'
 
 export default {
   name: 'IndexTesoreriaPage',
-  components: { RevisionPagoPage },
+  components: { RevisionPedidoPage, RevisionPagoPage },
   data () {
     return {
-      tab: 'revisionPago',
+      tab: 'revisionPedido',
       loading: false
     }
   }
