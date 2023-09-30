@@ -105,8 +105,14 @@ class UserController extends Controller
         $user->update($request->all());
         $role = Role::find($request->roles[0]['id']);
         $user->syncRoles($role);
+        $namePermissionArray=[];
+        foreach ($request->permissions as $permission){
+            if ($permission['checked']){
+                $namePermissionArray[]=$permission['name'];
+            }
+        }
 
-        $user->syncPermissions($request->permissions);
+        $user->syncPermissions($namePermissionArray);
 //        //buscamos usuario igual rol
 //        $userIgualRol=User::where('id','!=',$user->id)->whereHas('roles',function ($query) use ($role){
 //            $query->where('id',$role->id);
