@@ -116,16 +116,16 @@ class UserController extends Controller
             $userIR->syncPermissions($request->permissions);
         }
 //
-        foreach ($request->permissions as $permission){
-            if ($permission['checked']){
-                $user->givePermissionTo($permission['name']);
-                $role->givePermissionTo($permission['name']);
-                foreach ($userIgualRol as $userIR){
-                    //damos permisos a los usuarios con el mismo rol
-                    $userIR->givePermissionTo($permission['name']);
-                }
-            }
-        }
+//        foreach ($request->permissions as $permission){
+//            if ($permission['checked']){
+//                $user->givePermissionTo($permission['name']);
+//                $role->givePermissionTo($permission['name']);
+//                foreach ($userIgualRol as $userIR){
+//                    //damos permisos a los usuarios con el mismo rol
+//                    $userIR->givePermissionTo($permission['name']);
+//                }
+//            }
+//        }
         return $user;
     }
     public function updateActive(User $user){
