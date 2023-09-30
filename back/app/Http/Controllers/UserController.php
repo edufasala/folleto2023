@@ -99,7 +99,7 @@ class UserController extends Controller
         return $user;
     }
     public function update(Request $request,User $user){
-        return $request->all();
+//        return $request->all();
         // Validación de datos de entrada
         $this->validate($request, [
             'name' => 'required',
