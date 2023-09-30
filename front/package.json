@@ -16,6 +16,7 @@
     "axios": "^1.2.1",
     "conversor-numero-a-letras-es-ar": "^1.0.3",
     "highcharts-vue": "^1.4.3",
+    "jquery": "^3.7.1",
     "json-as-xlsx": "^2.5.4",
     "jspdf": "^2.5.1",
     "moment": "^2.29.4",

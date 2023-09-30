@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import { useCounterStore } from 'stores/example-store'
 import { Alert } from 'src/addons/Alert'
+import { Reportes } from 'src/addons/Reportes'
 import moment from 'moment'
 import HighchartsVue from 'highcharts-vue'
 // Be careful when using SSR for cross-request state pollution
@@ -19,6 +20,7 @@ export default boot(({ app, router }) => {
   app.config.globalProperties.$url = import.meta.env.VITE_API_BACK
   app.config.globalProperties.$store = useCounterStore()
   app.config.globalProperties.$alert = Alert
+  app.config.globalProperties.$reporte = Reportes
   app.config.globalProperties.$roles = ['Administrador', 'Diseñador', 'Entregador', 'Vendedor', 'Gerente de ventas']
   app.config.globalProperties.$cargos = ['Administrador', 'Empleado', 'Dueño', 'Cliente', 'Marketing']
   app.config.globalProperties.$metodoPago = ['EFECTIVO', 'TRANSFERENCIA', 'TARJETA', 'CHEQUE', 'OTRO']

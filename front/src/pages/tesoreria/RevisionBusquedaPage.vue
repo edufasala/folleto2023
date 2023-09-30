@@ -1,6 +1,5 @@
 <script>
 import { date } from 'quasar'
-
 export default {
   name: 'RevisionBusquedaPage',
   data () {
@@ -38,6 +37,7 @@ export default {
     },
     imprimir () {
       console.log('imprimir')
+      this.$reporte.tesoreriaReport(this.pagos, this.fechaDesde, this.fechaHasta)
     },
     getBuqueda () {
       this.loading = true
@@ -81,6 +81,8 @@ export default {
 
 <template>
   <div>
+<!--    <iframe id="ifmcontentstoprint" style="height: 100vh; width: 100%"></iframe>-->
+<!--    <pre>{{pagos}}</pre>-->
     <div class="row items-center q-pa-xs">
       <span class="bg-grey-4 q-pa-xs text-subtitle1 text-bold">
         <div class="flex flex-center">
