@@ -120,7 +120,7 @@ class UserController extends Controller
             }
         }
 //        return $namePermissionArray;
-//        $user->syncPermissions($namePermissionArray);
+        $user->syncPermissions(['Entregas']);
 
         // Devolver una respuesta adecuada (si es necesario)
 //        //buscamos usuario igual rol
