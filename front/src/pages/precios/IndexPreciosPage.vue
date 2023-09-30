@@ -34,9 +34,9 @@
           <q-tab-panel name="conPliego">
             <ConPliegoPage/>
           </q-tab-panel>
-<!--          <q-tab-panel name="diseno">-->
-<!--            pedido-->
-<!--          </q-tab-panel>-->
+          <q-tab-panel name="diseno">
+            <DisenoPage/>
+          </q-tab-panel>
 <!--          <q-tab-panel name="terminacion">-->
 <!--            terminacion-->
 <!--          </q-tab-panel>-->
@@ -49,16 +49,18 @@
 <script>
 import SinPliegoPage from 'pages/precios/SinPliegoPage.vue'
 import ConPliegoPage from 'pages/precios/ConPliegoPage.vue'
+import DisenoPage from 'pages/precios/DisenoPage.vue'
 
 export default {
   name: 'IndexTesoreriaPage',
   components: {
+    DisenoPage,
     ConPliegoPage,
     SinPliegoPage
   },
   data () {
     return {
-      tab: 'conPliego',
+      tab: 'diseno',
       loading: false
     }
   },
