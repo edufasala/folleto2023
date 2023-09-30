@@ -316,7 +316,7 @@
               v-model="pago.metodoPago"
               label="Metodo de Pago"
               color="primary"
-              :options="['EFECTIVO', 'TRANSFERENCIA', 'TARJETA', 'CHEQUE', 'OTRO']"
+              :options="$metodoPago"
               :rules="[val => !!val || 'Campo requerido']"
             />
             <q-input

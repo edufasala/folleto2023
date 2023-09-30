@@ -64,4 +64,13 @@ class PagoController extends Controller{
             $pago->save();
         }
     }
+    public function busquedaPagos(Request $request){
+//        http://localhost:8000/api/busquedaPagos?fechaDesde=2023-09-30&fechaHasta=2023-09-30%20%20%20%20%20%20&metodoPago=&user=
+        $fechaDesde = $request->fechaDesde;
+        $fechaHasta = $request->fechaHasta;
+        $metodoPago = $request->metodoPago;
+        $user = $request->user=="undefined"?"":$request->user;
+        $pagos = Pago::with('user')->whereBetween('fecha', [$fechaDesde, $fechaHasta])->where('metodoPago', 'LIKE', "%$metodoPago%")->where('user_id', 'LIKE', "%$user%")->orderBy('id', 'desc')->get();
+        return $pagos;
+    }
 }
