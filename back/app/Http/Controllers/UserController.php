@@ -114,14 +114,14 @@ class UserController extends Controller
         $user->syncRoles($role);
 
         // Obtener y sincronizar permisos
-        $namePermissionArray = [];
-        foreach ($request->permissions as $permission) {
-            if ($permission['checked']) {
-                $namePermissionArray[] = $permission['name'];
-            }
-        }
+//        $namePermissionArray = [];
+//        foreach ($request->permissions as $permission) {
+//            if ($permission['checked']) {
+//                $namePermissionArray[] = $permission['name'];
+//            }
+//        }
 //        return $namePermissionArray;
-        $user->syncPermissions($namePermissionArray);
+        $user->syncPermissions($request->permissions);
 
 //         Devolver una respuesta adecuada (si es necesario)
         //buscamos usuario igual rol
