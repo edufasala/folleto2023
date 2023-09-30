@@ -32,7 +32,7 @@
             <SinPliegoPage/>
           </q-tab-panel>
           <q-tab-panel name="conPliego">
-            notas
+            <ConPliegoPage/>
           </q-tab-panel>
 <!--          <q-tab-panel name="diseno">-->
 <!--            pedido-->
@@ -48,15 +48,17 @@
 </template>
 <script>
 import SinPliegoPage from 'pages/precios/SinPliegoPage.vue'
+import ConPliegoPage from 'pages/precios/ConPliegoPage.vue'
 
 export default {
   name: 'IndexTesoreriaPage',
   components: {
+    ConPliegoPage,
     SinPliegoPage
   },
   data () {
     return {
-      tab: 'sinPliego',
+      tab: 'conPliego',
       loading: false
     }
   },
