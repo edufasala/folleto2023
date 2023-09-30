@@ -9,6 +9,22 @@ use App\Models\Person;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller{
+    public function revisionPedidos(){
+        return Pedido::where('estadoPedido', 'Activo')
+            ->orWhere('estadoPedido', 'Aceptado')
+            ->orWhere('estadoPedido', 'Rechazado')
+            ->with('user')->get();
+    }
+    public function rechazarPedido(Request $request){
+        $pedido = Pedido::find($request->id);
+        $pedido->estadoPedido = 'Rechazado';
+        $pedido->save();
+    }
+    public function aceptarPedido(Request $request){
+        $pedido = Pedido::find($request->id);
+        $pedido->estadoPedido = 'Aceptado';
+        $pedido->save();
+    }
     public function index(){}
     public function store(StorePedidoRequest $request){
 //        error_log("asa".json_encode($request->person));

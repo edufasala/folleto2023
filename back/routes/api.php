@@ -54,6 +54,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('productoTerminaciones', \App\Http\Controllers\ProductoTerminacionController::class);
     Route::post('aceptarEstadoPago', [\App\Http\Controllers\PagoController::class, 'aceptarEstadoPago']);
     Route::post('rechazarEstadoPago', [\App\Http\Controllers\PagoController::class, 'rechazarEstadoPago']);
+    Route::get('revisionPedidos', [\App\Http\Controllers\PedidoController::class, 'revisionPedidos']);
+    Route::post('rechazarPedido', [\App\Http\Controllers\PedidoController::class, 'rechazarPedido']);
+    Route::post('aceptarPedido', [\App\Http\Controllers\PedidoController::class, 'aceptarPedido']);
 
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);
