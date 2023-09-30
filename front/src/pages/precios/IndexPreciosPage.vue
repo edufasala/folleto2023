@@ -29,17 +29,17 @@
       <q-card>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="sinPliego">
-            contacto
+            <SinPliegoPage/>
           </q-tab-panel>
           <q-tab-panel name="conPliego">
             notas
           </q-tab-panel>
-          <q-tab-panel name="diseno">
-            pedido
-          </q-tab-panel>
-          <q-tab-panel name="terminacion">
-            terminacion
-          </q-tab-panel>
+<!--          <q-tab-panel name="diseno">-->
+<!--            pedido-->
+<!--          </q-tab-panel>-->
+<!--          <q-tab-panel name="terminacion">-->
+<!--            terminacion-->
+<!--          </q-tab-panel>-->
         </q-tab-panels>
       </q-card>
     </div>
@@ -47,8 +47,13 @@
 </q-page>
 </template>
 <script>
+import SinPliegoPage from 'pages/precios/SinPliegoPage.vue'
+
 export default {
   name: 'IndexTesoreriaPage',
+  components: {
+    SinPliegoPage
+  },
   data () {
     return {
       tab: 'sinPliego',

@@ -48,6 +48,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('textMedida', \App\Http\Controllers\TextMedidaController::class);
     Route::resource('textProducto', \App\Http\Controllers\TextProductoController::class);
     Route::resource('textTerminacion', \App\Http\Controllers\TextTerminacionController::class);
+    Route::resource('conPliegos', \App\Http\Controllers\ProductoConPliegoController::class);
+    Route::resource('sinPliegos', \App\Http\Controllers\ProductoSinPliegoController::class);
+    Route::resource('disenos', \App\Http\Controllers\ProductoDisenoController::class);
+    Route::resource('terminaciones', \App\Http\Controllers\ProductoTerminacionController::class);
 
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);

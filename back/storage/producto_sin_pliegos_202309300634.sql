@@ -68,7 +68,7 @@ INSERT INTO folletos.producto_sin_pliegos (productoServicio,imprime,nombre,tipoM
 	 ('Producto','Digital','Calendario','Cartulina','300','30x40','si','250','1',1,2,60.0,'',NULL,NULL),
 	 ('Producto','Digital','Calendario','Cartulina','300','30x40','si','500','1',1,2,100.0,'',NULL,NULL),
 	 ('Producto','Digital','Calendario','Cartulina','300','30x40','si','1000','1',1,1000,150.0,'',NULL,NULL),
-	 ('Servicio','-','Dise�o redes sociales','-','-','10x15','','-','1',1,1000,3.0,'',NULL,NULL),
-	 ('Servicio','-','Logo - Dise�o Nuevo','-','-','10x10','','-','1',1,1000,10.0,'',NULL,NULL),
+	 ('Servicio','-','Diseño redes sociales','-','-','10x15','','-','1',1,1000,3.0,'',NULL,NULL),
+	 ('Servicio','-','Logo - Diseño Nuevo','-','-','10x10','','-','1',1,1000,10.0,'',NULL,NULL),
 	 ('Servicio','-','Logo - Correccion','-','-','10x10','','-','1',1,1000,5.0,'',NULL,NULL),
 	 ('Servicio','-','Logo - Digitalizacion','-','-','10x10','','-','1',1,1000,6.0,'',NULL,NULL);
