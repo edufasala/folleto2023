@@ -100,6 +100,69 @@ class EmpresaController extends Controller{
         DB::commit();
         return $empresa;
     }
+    public function createEmpresaTotal(Request $request){
+        error_log(json_encode($request->empresa['person']));
+        DB::beginTransaction();
+        $empresa = Empresa::create($request->empresa);
+        $persona = Person::create([
+            'nombre' => $request->empresa['person'][0]['nombre'],//['nombre'
+            'cargo' => $request->empresa['person'][0]['cargo'],//['cargo'
+            'dni' => $request->empresa['person'][0]['dni'],//['dni'
+            'empresa_id' => $empresa->id,
+        ]);
+        $phone = $persona->phone()->create([
+            'phone' => $request->empresa['person'][0]['phone'][0]['phone'],//['phone'
+        ]);
+        $email = $persona->email()->create([
+            'email' => $request->empresa['person'][0]['email'][0]['email'],//['email'
+        ]);
+        $sucursal = $empresa->sucursals()->create([
+            'nombre' => $request->empresa['sucursals'][0]['nombre'],//['nombre'
+            'comentario' => $request->empresa['sucursals'][0]['comentario'],//['comentario'
+        ]);
+        $pedido = new Pedido();
+        $pedido->codigo = 1;
+        $pedido->producto = $request->pedido['producto'];//['producto'
+        $pedido->medida = $request->pedido['medida'];//['medida'
+        $pedido->cantidad = $request->pedido['cantidad'];//['cantidad'
+        $pedido->esp = $request->pedido['esp'];//['esp'
+        $pedido->gr = $request->pedido['gr'];//['gr'
+        $pedido->lados = $request->pedido['lados'];//['lados'
+        $pedido->diseno = $request->pedido['diseno'];//['diseno'
+        $pedido->descripcion = $request->pedido['descripcion'];//['descripcion'
+        $pedido->estado = 'Diseño';
+        $pedido->estadoPedido = 'Activo';
+        $pedido->fecha = date('Y-m-d');
+        $pedido->fechaEntrega = $request->pedido['fechaEntrega'];//['fechaEntrega'
+        $pedido->fechaEspecial = $request->pedido['fechaEspecial'];//['fechaEspecial'
+        $pedido->precioProducto = $request->pedido['precioProducto'];//['precioProducto'
+        $pedido->precioDiseno = $request->pedido['precioDiseno'];//['precioDiseno'
+
+        $pedido->especificaciones = $request->pedido['especificaciones'];//['especificaciones'
+        $pedido->terminacion = $request->pedido['terminacion'];//['terminacion'
+        $pedido->envio = $request->pedido['envio'];//['envio'
+        $pedido->precioEspecificaciones = $request->pedido['precioEspecificaciones'];//['precioEspecificaciones'
+        $pedido->precioEnvio = $request->pedido['precioEnvio'];//['precioEnvio'
+
+        $pedido->pago = $request->pedido['pago'];//['pago'
+        $pedido->metodoPago = $request->pedido['metodoPago'];//['metodoPago'
+        $pedido->comentarioPago = $request->pedido['comentarioPago'];//['comentarioPago'
+        $pedido->iva = $request->pedido['iva'];//['iva'
+        $pedido->seFacturo = $request->pedido['seFacturo'];//['seFacturo'
+        $pedido->facturaA = $request->pedido['facturaA'];//['facturaA'
+        $pedido->user_id = $request->user()->id;
+        $pedido->empresa_id = $empresa->id;
+        $pedido->sucursal_id = isset($request->pedido['sucursal']['id']) ? $request->pedido['sucursal']['id'] : null;//['sucursal']['id']
+        $pedido->facturacion_id = isset($request->pedido['facturacion']['id']) ? $request->pedido['facturacion']['id'] : null;//['facturacion']['id']
+        $pedido->direccion_id = isset($request->pedido['direccion']['id']) ? $request->pedido['direccion']['id'] : null;//['direccion']['id']
+        $pedido->persona_id = isset($request->pedido['person']['id']) ? $request->pedido['person']['id'] : null;//['person']['id']
+        $persona = Person::find(isset($request->pedido['person']['id']) ? $request->pedido['person']['id'] : null);//['person']['id']
+        $pedido->phone_id = isset($persona->phone[0]->id) ? $persona->phone[0]->id : null;
+        $pedido->email_id = isset($persona->email[0]->id) ? $persona->email[0]->id : null;
+        $pedido->save();
+        DB::commit();
+        return $empresa;
+    }
     public function update(UpdateEmpresaRequest $request, $id){
         $empresa = Empresa::findOrFail($id);
         $empresa->update($request->all());

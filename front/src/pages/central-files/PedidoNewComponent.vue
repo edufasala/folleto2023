@@ -436,19 +436,39 @@ export default {
         cancel: true,
         persistent: true
       }).onOk(() => {
-        this.loading = true
-        this.$axios.post('pedidos', this.pedido)
-          .then(response => {
-            this.loading = false
-            this.$alert.success('Pedido confirmado')
-            this.pedido = this.pedidoDato
-            this.$emit('empresaSearch', this.empresa)
-            this.$emit('closeDialog')
+        if (this.empresa.id === 0) {
+          this.loading = true
+          this.$axios.post('createEmpresaTotal', {
+            empresa: this.empresa,
+            pedido: this.pedido
           })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error(error.response.data.message)
-          })
+            .then(response => {
+              this.loading = false
+              this.$alert.success('Pedido confirmado')
+              this.pedido = this.pedidoDato
+              this.$emit('empresaSearch', this.empresa)
+              this.$emit('closeDialog')
+              this.$router.push('/central-files')
+            })
+            .catch(error => {
+              this.loading = false
+              this.$alert.error(error.response.data.message)
+            })
+        } else {
+          this.loading = true
+          this.$axios.post('pedidos', this.pedido)
+            .then(response => {
+              this.loading = false
+              this.$alert.success('Pedido confirmado')
+              this.pedido = this.pedidoDato
+              this.$emit('empresaSearch', this.empresa)
+              this.$emit('closeDialog')
+            })
+            .catch(error => {
+              this.loading = false
+              this.$alert.error(error.response.data.message)
+            })
+        }
       })
     }
   },

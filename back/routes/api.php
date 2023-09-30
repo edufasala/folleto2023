@@ -24,6 +24,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('empresas', \App\Http\Controllers\EmpresaController::class);
+    Route::post('createEmpresaTotal', [\App\Http\Controllers\EmpresaController::class, 'createEmpresaTotal']);
+
     Route::delete('eliminarEmpresasSinPedidos', [\App\Http\Controllers\EmpresaController::class, 'eliminarEmpresasSinPedidos']);
     Route::get('updateActive/{user}',[ \App\Http\Controllers\UserController::class,'updateActive']);
     Route::put('updatePassword/{user}',[ \App\Http\Controllers\UserController::class,'updatePassword']);

@@ -72,30 +72,85 @@
 <!--                </q-tab-panel>-->
 <!--              </q-tab-panels>-->
               <div class="text-center q-pb-xs">
-                <q-btn no-caps label="Crear Pedido" color="blue" class="text-bold" />
+                <q-btn no-caps label="Crear Pedido" color="blue" class="text-bold" @click="nuevoPedido"/>
               </div>
             </q-card>
           </div>
         </div>
       </div>
     </div>
+    <q-dialog v-model="pedidoDialogNew">
+      <PedidoNewComponent :empresa="empresa" :pedidoDato="pedidoDato"
+                          @closeDialog="closeDialog"
+      />
+    </q-dialog>
     <pre>{{empresa}}</pre>
   </q-page>
 </template>
 <script>
 import ContactoComponent from 'pages/central-files/create/CreateContactoComponent.vue'
+import PedidoNewComponent from 'pages/central-files/PedidoNewComponent.vue'
+import { date } from 'quasar'
 // import PedidosComponent from 'pages/central-files/PedidosComponent.vue'
 export default {
   name: 'IndexCentralFilesPage',
   components: {
+    PedidoNewComponent,
     ContactoComponent
     // PedidosComponent
   },
   data () {
     return {
+      pedidoDialogNew: false,
       loading: false,
+      pedidoDato: {
+        codigo: 0,
+        producto: 'Folleto',
+        medida: '10x15',
+        cantidad: '1',
+        esp: '',
+        gr: '150',
+        lados: '2 lados diferentes',
+        diseno: 'nuevo',
+        descripcion: '',
+        estado: 'Diseño',
+        fechaTexto: '',
+        estadoPedido: 'Activo',
+        fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        diasCompra: 5,
+        fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        precioProducto: 0,
+        precioDiseno: 0,
+        especificaciones: '',
+        terminacion: '',
+        envio: '',
+        precioEspecificaciones: 0,
+        precioEnvio: 0,
+        pago: 0,
+        metodoPago: 'Efectivo',
+        comentarioPago: '',
+        iva: 15,
+        seFacturo: 'No',
+        facturaA: 'Factura ninguna',
+        empresa_id: 0,
+        user_id: 3,
+        sucursal_id: 2,
+        facturacion_id: 2,
+        direccion_id: 1,
+        persona_id: 2,
+        phone_id: 2,
+        email_id: 2,
+        deleted_at: null,
+        precioTotal: 1594.13,
+        deuda: 1114.13
+        // sucursal: this.empresa.sucursals[0],
+        // person: this.empresa.person[0],
+        // direccion: this.empresa.direccion[0],
+        // facturacion: this.empresa.facturacion[0]
+      },
       empresa: {
-        id: 1,
+        id: 0,
         nombre: '',
         contacto: '',
         vendedor: '',
@@ -111,60 +166,7 @@ export default {
         person: [
         ],
         notes: [],
-        pedidos: [
-          {
-            id: 1,
-            codigo: 0,
-            producto: 'Tarjetas Personales',
-            medida: '9x5',
-            cantidad: '100',
-            esp: '0',
-            gr: '350gr',
-            lados: '',
-            diseno: '99',
-            descripcion: 'No se conoce',
-            estado: '',
-            estadoPedido: 'Terminados',
-            fecha: '2015-01-14',
-            diasCompra: 0,
-            fechaEntrega: '2023-09-27',
-            fechaEspecial: '2023-09-27',
-            fechaTexto: null,
-            precioProducto: 0,
-            precioDiseno: 0,
-            especificaciones: '',
-            terminacion: '',
-            envio: 'No',
-            precioEspecificaciones: 0,
-            precioEnvio: 0,
-            pago: 0,
-            metodoPago: 'Efectivo',
-            comentarioPago: '',
-            iva: 0,
-            seFacturo: 'Si',
-            facturaA: null,
-            empresa_id: 1,
-            user_id: 1,
-            sucursal_id: null,
-            facturacion_id: null,
-            direccion_id: null,
-            persona_id: null,
-            phone_id: null,
-            email_id: null,
-            deleted_at: null,
-            precioTotal: 0,
-            deuda: 0,
-            sena: 0,
-            sucursal: null,
-            person: null,
-            direccion: null,
-            facturacion: null,
-            phone: null,
-            email: null,
-            pagos: [],
-            status: []
-          }
-        ]
+        pedidos: []
       },
       empresas: [],
       pedidos: [],
@@ -190,6 +192,22 @@ export default {
     this.pedidos = this.empresa.pedidos
   },
   methods: {
+    closeDialog () {
+      this.pedidoDialogNew = false
+    },
+    nuevoPedido () {
+      if (this.empresa.person.length === 0) {
+        this.$alert.error('Debe agregar un contacto')
+        return
+      }
+      if (this.empresa.sucursals.length === 0) {
+        this.$alert.error('Debe agregar una sucursal')
+        return
+      }
+      this.pedidoDato.persona_id = this.empresa.person[0].id
+      this.pedidoDato.sucursal_id = this.empresa.sucursals[0].id
+      this.pedidoDialogNew = true
+    },
     newFacturacion (facturacion) {
       const id = this.facturacion.length + 1
       facturacion.id = id
