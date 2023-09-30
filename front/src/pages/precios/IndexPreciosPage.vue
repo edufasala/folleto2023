@@ -37,9 +37,9 @@
           <q-tab-panel name="diseno">
             <DisenoPage/>
           </q-tab-panel>
-<!--          <q-tab-panel name="terminacion">-->
-<!--            terminacion-->
-<!--          </q-tab-panel>-->
+          <q-tab-panel name="terminacion">
+            <TerminacionesPage/>
+          </q-tab-panel>
         </q-tab-panels>
       </q-card>
     </div>
@@ -50,17 +50,19 @@
 import SinPliegoPage from 'pages/precios/SinPliegoPage.vue'
 import ConPliegoPage from 'pages/precios/ConPliegoPage.vue'
 import DisenoPage from 'pages/precios/DisenoPage.vue'
+import TerminacionesPage from 'pages/precios/TerminacionesPage.vue'
 
 export default {
   name: 'IndexTesoreriaPage',
   components: {
+    TerminacionesPage,
     DisenoPage,
     ConPliegoPage,
     SinPliegoPage
   },
   data () {
     return {
-      tab: 'diseno',
+      tab: 'terminacion',
       loading: false
     }
   },

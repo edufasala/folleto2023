@@ -54,7 +54,6 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-    <pre>{{datos}}</pre>
   </div>
 </template>
 <script>
