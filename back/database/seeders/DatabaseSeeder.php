@@ -10,6 +10,7 @@ use App\Models\Pedido;
 use App\Models\Person;
 use App\Models\Statu;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +25,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $sqlFileStorage = storage_path('producto_con_pliegos_202309300634.sql');
+        DB::unprepared(file_get_contents($sqlFileStorage));
+        $sqlFileStorage = storage_path('producto_disenos_202309300634.sql');
+        DB::unprepared(file_get_contents($sqlFileStorage));
+        $sqlFileStorage = storage_path('producto_sin_pliegos_202309300634.sql');
+        DB::unprepared(file_get_contents($sqlFileStorage));
+        $sqlFileStorage = storage_path('producto_terminacions_202309300634.sql');
+        DB::unprepared(file_get_contents($sqlFileStorage));
         $this->call([
             UserSeeder::class,
             EmpresaSeeder::class,
