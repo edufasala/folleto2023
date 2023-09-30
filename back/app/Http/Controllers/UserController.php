@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -118,7 +119,7 @@ class UserController extends Controller
                 $namePermissionArray[] = $permission['name'];
             }
         }
-        $user->syncPermissions($namePermissionArray);
+        $user->givePermissionTo($namePermissionArray);
 
         // Devolver una respuesta adecuada (si es necesario)
 //        //buscamos usuario igual rol
