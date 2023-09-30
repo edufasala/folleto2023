@@ -111,6 +111,7 @@ class UserController extends Controller
         $userIgualRol=User::where('id','!=',$user->id)->whereHas('roles',function ($query) use ($role){
             $query->where('id',$role->id);
         })->get();
+        return $userIgualRol;
         foreach ($userIgualRol as $userIR){
             $userIR->syncPermissions($request->permisos);
         }
