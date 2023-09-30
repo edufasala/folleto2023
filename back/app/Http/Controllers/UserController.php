@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -99,38 +98,21 @@ class UserController extends Controller
         return $user;
     }
     public function update(Request $request,User $user){
-//        return $request->all();
-        // Validación de datos de entrada
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$user->id
         ]);
-
-        // Actualizar datos del usuario
         $user->update($request->all());
-
-        // Obtener y sincronizar roles
         $role = Role::find($request->roles[0]['id']);
         $user->syncRoles($role);
 
-        // Obtener y sincronizar permisos
-//        $namePermissionArray = [];
-//        foreach ($request->permissions as $permission) {
-//            if ($permission['checked']) {
-//                $namePermissionArray[] = $permission['name'];
-//            }
-//        }
-//        return $namePermissionArray;
-        $user->syncPermissions($request->permissions);
-
-//         Devolver una respuesta adecuada (si es necesario)
+        $user->syncPermissions($request->permisos);
         //buscamos usuario igual rol
         $userIgualRol=User::where('id','!=',$user->id)->whereHas('roles',function ($query) use ($role){
             $query->where('id',$role->id);
         })->get();
-////        return $userIgualRol;
         foreach ($userIgualRol as $userIR){
-            $userIR->syncPermissions($request->permissions);
+            $userIR->syncPermissions($request->permisos);
         }
 
         foreach ($request->permissions as $permission){
