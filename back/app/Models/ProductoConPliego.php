@@ -4,8 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductoConPliego extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'productoServicio',
+        'imprime',
+        'nombre',
+        'tipoMaterial',
+        'gr',
+        'tamano',
+        'fracciona',
+        'porLado',
+        'desde',
+        'hasta',
+        'precio',
+        'comentario',
+    ];
 }

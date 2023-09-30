@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('tamanoMaximo')->nullable();
             $table->string('tamanoMinimo')->nullable();
             $table->string('desde')->nullable();
-            $table->float('precio',11,2)->nullable();
+            $table->double('precio',11,2)->nullable();
             $table->integer('primeros1000')->nullable();
             $table->integer('siguientes1000')->nullable();
             $table->text('comentario')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

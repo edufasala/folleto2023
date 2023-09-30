@@ -6,61 +6,19 @@ use App\Models\ProductoSinPliego;
 use App\Http\Requests\StoreProductoSinPliegoRequest;
 use App\Http\Requests\UpdateProductoSinPliegoRequest;
 
-class ProductoSinPliegoController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class ProductoSinPliegoController extends Controller{
+    public function index(){ return ProductoSinPliego::all(); }
+    public function show(ProductoSinPliego $productoSinPliego){ return $productoSinPliego; }
+    public function store(StoreProductoSinPliegoRequest $request){
+        $productoSinPliego = ProductoSinPliego::create($request->all());
+        return response()->json($productoSinPliego, 201);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function update(UpdateProductoSinPliegoRequest $request, ProductoSinPliego $productoSinPliego){
+        $productoSinPliego->update($request->all());
+        return response()->json($productoSinPliego, 200);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreProductoSinPliegoRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProductoSinPliego $productoSinPliego)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProductoSinPliego $productoSinPliego)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProductoSinPliegoRequest $request, ProductoSinPliego $productoSinPliego)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProductoSinPliego $productoSinPliego)
-    {
-        //
+    public function destroy(ProductoSinPliego $productoSinPliego){
+        $productoSinPliego->delete();
+        return response()->json(null, 204);
     }
 }

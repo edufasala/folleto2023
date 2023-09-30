@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('hasta')->nullable();
             $table->double('precio',11,2)->nullable();
             $table->text('comentario')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('lado')->nullable();
             $table->double('precio',11,2)->nullable();
             $table->text('comentario')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
