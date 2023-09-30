@@ -98,12 +98,12 @@ class UserController extends Controller
         return $user;
     }
     public function update(Request $request,User $user){
-//        $this->validate($request, [
-//            'name' => 'required',
-//            'email' => 'required|unique:users,email,'.$user->id
-//        ]);
-//        $user->update($request->all());
-//        $role = Role::find($request->roles[0]['id']);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|unique:users,email,'.$user->id
+        ]);
+        $user->update($request->all());
+        $role = Role::find($request->roles[0]['id']);
 //        $user->syncRoles($role);
 //
 //        $user->syncPermissions($request->permisos);
