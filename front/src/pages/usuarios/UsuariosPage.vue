@@ -151,6 +151,9 @@
                 <q-icon name="add_circle_outline" class="cursor-pointer" color="green" @click="roleCreate" :loading="loading">
                   <q-tooltip>Agregar rol</q-tooltip>
                 </q-icon>
+                <q-icon name="edit" class="cursor-pointer" color="orange" @click="editarPermiso" :loading="loading">
+                  <q-tooltip>Editar rol</q-tooltip>
+                </q-icon>
               </template>
             </q-select>
             <div class="row">
@@ -249,6 +252,31 @@ export default {
         })
       }
     },
+    editarPermiso () {
+      if (this.user.roles[0].id === '') {
+        this.$alert.error('Debe seleccionar un rol')
+      } else {
+        this.$q.dialog({
+          title: 'Editar rol',
+          message: 'Ingrese el nombre del rol',
+          prompt: {
+            model: this.user.roles[0].name,
+            type: 'text'
+          },
+          cancel: true
+        }).onOk(data => {
+          this.loading = true
+          this.$axios.put(`roles/${this.user.roles[0].id}`, { name: data }).then(() => {
+            this.$alert.success('Rol actualizado')
+            this.rolesGet()
+          }).catch((err) => {
+            this.$alert.error(err.response.data.message)
+          }).finally(() => {
+            this.loading = false
+          })
+        })
+      }
+    },
     roleCreate () {
       this.$q.dialog({
         title: 'Nuevo rol',
@@ -326,9 +354,17 @@ export default {
       })
     },
     userUpdate (user) {
-      this.$axios.get(`updateActive/${user.id}`, user).then(() => {
-      }).catch((err) => {
-        this.$alert.error(err.response.data.message)
+      this.$q.dialog({
+        title: 'Cambiar estado',
+        message: '¿Está seguro de cambiar el estado de este usuario?',
+        cancel: true
+      }).onOk(() => {
+        this.$axios.get(`updateActive/${user.id}`, user).then(() => {
+        }).catch((err) => {
+          this.$alert.error(err.response.data.message)
+        })
+      }).onCancel(() => {
+        user.active = user.active === 'Si' ? 'No' : 'Si'
       })
     },
     userAdd () {
