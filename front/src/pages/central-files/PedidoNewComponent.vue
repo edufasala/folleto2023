@@ -101,12 +101,15 @@
                   <div class="col-6 col-md-1">
                     <q-input dense outlined v-model="pedido.espº" />
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">Termin:</div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    <q-checkbox v-model="checkTerminacion"/>
+                    Termin:
+                  </div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.terminacion" :options="terminaciones">
-                      <template v-slot:after>
-                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Terminacion')"/>
-                      </template>
+                    <q-select dense outlined v-model="pedido.terminacion" :options="terminaciones" v-if="checkTerminacion">
+<!--                      <template v-slot:after>-->
+<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Terminacion')"/>-->
+<!--                      </template>-->
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center text-red text-bold">F Entrega:</div>
@@ -115,8 +118,12 @@
                               @update:model-value="calculateFechaEntrega"/>
 <!--                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>-->
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
-                  <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.terminacion"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">
+<!--                    Otra:-->
+                  </div>
+                  <div class="col-6 col-md-4">
+<!--                    <q-input dense outlined v-model="pedido.terminacion" v-if="checkTerminacion"/>-->
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">F Especial:</div>
                   <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEspecial"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Descripcion:</div>
@@ -132,19 +139,19 @@
                   <div class="col-6 col-md-2 flex flex-center">Diseño:</div>
                   <div class="col-6 col-md-4">
                     <q-select dense outlined v-model="pedido.diseno" :options="disenos">
-                      <template v-slot:after>
-                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Diseno')"/>
-                      </template>
+<!--                      <template v-slot:after>-->
+<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Diseno')"/>-->
+<!--                      </template>-->
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Envio:</div>
                   <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.envio" :options="['Si', 'No']"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Lados:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.lado" :options="lados">
-                      <template v-slot:after>
-                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Lado')"/>
-                      </template>
+                    <q-select dense outlined v-model="pedido.lado" :options="lados" @update:modelValue="precioDiseno">
+<!--                      <template v-slot:after>-->
+<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Lado')"/>-->
+<!--                      </template>-->
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Direccion:</div>
@@ -325,6 +332,7 @@ export default {
   },
   data () {
     return {
+      checkTerminacion: false,
       tab: 'pedido',
       pedido: {},
       loading: false,
@@ -332,7 +340,7 @@ export default {
       grs: [],
       medidas: [],
       cantidades: [],
-      lados: [],
+      lados: ['1 Lado', '2 Lado'],
       disenos: [],
       terminaciones: []
     }
@@ -342,11 +350,20 @@ export default {
     // this.getTextGr()
     // this.getTextMedida()
     // this.getLados()
-    // this.getDisenos()
-    // this.getTerminaciones()
+    this.getDisenos()
+    this.getTerminaciones()
     this.pedido = this.pedidoDato
   },
   methods: {
+    precioDiseno (lado) {
+      this.$axios.get('precioDiseno/' + this.pedido.diseno + '/' + lado)
+        .then(response => {
+          this.pedido.precioDiseno = response.data
+        })
+        .catch(error => {
+          this.$alert.error(error.response.data.message)
+        })
+    },
     precioSearch (cantidad) {
       this.$axios.get('precio/' + this.pedido.producto + '/' + this.pedido.gr + '/' + this.pedido.medida + '/' + cantidad)
         .then(response => {
@@ -403,10 +420,13 @@ export default {
       this.lados = await this.$axios.get('textLado').then(response => response.data)
     },
     async getDisenos () {
-      this.disenos = await this.$axios.get('textDiseno').then(response => response.data)
+      // this.disenos = await this.$axios.get('textDiseno').then(response => response.data)
+      this.disenos = await this.$axios.get('disenoNombre').then(response => response.data)
+      // console.log(this.disenos)
     },
     async getTerminaciones () {
-      this.terminaciones = await this.$axios.get('textTerminacion').then(response => response.data)
+      // this.terminaciones = await this.$axios.get('textTerminacion').then(response => response.data)
+      this.terminaciones = await this.$axios.get('terminacionNombre').then(response => response.data)
     },
     async getTextProduct () {
       this.productos = await this.$axios.get('productos').then(response => response.data)
@@ -418,39 +438,39 @@ export default {
     async getTextMedida () {
       this.medidas = await this.$axios.get('textMedida').then(response => response.data)
     },
-    add (type) {
-      this.$q.dialog({
-        title: 'Agregar ' + type,
-        message: 'Ingrese el nombre del ' + type,
-        prompt: {
-          model: '',
-          type: 'text'
-        },
-        cancel: true,
-        persistent: true
-      }).onOk(data => {
-        this.$axios.post('text' + type, { name: data })
-          .then(response => {
-            this.$alert.success(type + ' agregado')
-            if (type === 'Producto') {
-              this.getTextProduct()
-            } else if (type === 'Gr') {
-              this.getTextGr()
-            } else if (type === 'Medida') {
-              this.getTextMedida()
-            } else if (type === 'Lado') {
-              this.getLados()
-            } else if (type === 'Diseno') {
-              this.getDisenos()
-            } else if (type === 'Terminacion') {
-              this.getTerminaciones()
-            }
-          })
-          .catch(error => {
-            this.$alert.error(error.response.data.message)
-          })
-      })
-    },
+    // add (type) {
+    //   this.$q.dialog({
+    //     title: 'Agregar ' + type,
+    //     message: 'Ingrese el nombre del ' + type,
+    //     prompt: {
+    //       model: '',
+    //       type: 'text'
+    //     },
+    //     cancel: true,
+    //     persistent: true
+    //   }).onOk(data => {
+    //     this.$axios.post('text' + type, { name: data })
+    //       .then(response => {
+    //         this.$alert.success(type + ' agregado')
+    //         if (type === 'Producto') {
+    //           this.getTextProduct()
+    //         } else if (type === 'Gr') {
+    //           this.getTextGr()
+    //         } else if (type === 'Medida') {
+    //           this.getTextMedida()
+    //         } else if (type === 'Lado') {
+    //           this.getLados()
+    //         } else if (type === 'Diseno') {
+    //           this.getDisenos()
+    //         } else if (type === 'Terminacion') {
+    //           this.getTerminaciones()
+    //         }
+    //       })
+    //       .catch(error => {
+    //         this.$alert.error(error.response.data.message)
+    //       })
+    //   })
+    // },
     anterior () {
       if (this.tab === 'status') {
         this.tab = 'pago'

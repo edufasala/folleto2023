@@ -7,6 +7,14 @@ use App\Http\Requests\StoreProductoTerminacionRequest;
 use App\Http\Requests\UpdateProductoTerminacionRequest;
 
 class ProductoTerminacionController extends Controller{
+    public function terminacionNombre(){
+        $productoTerminacion = ProductoTerminacion::select('nombre')->groupBy('nombre')->get();
+        $terminacionNombre = [];
+        foreach ($productoTerminacion as $terminacion) {
+            array_push($terminacionNombre, $terminacion->nombre);
+        }
+        return $terminacionNombre;
+    }
     public function index(){ return ProductoTerminacion::all(); }
     public function show(ProductoTerminacion $productoTerminacion){ return $productoTerminacion; }
     public function store(StoreProductoTerminacionRequest $request){

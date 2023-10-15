@@ -46,6 +46,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //precio
     Route::get('precio/{nombreProducto}/{gr}/{tamano}/{cantidad}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'precio']);
     Route::resource('textDiseno', \App\Http\Controllers\TextDisenoController::class);
+//    disenoNombre
+    Route::get('disenoNombre', [\App\Http\Controllers\TextDisenoController::class, 'disenoNombre']);
+//    precioDiseno
+    Route::get('precioDiseno/{disenoNombre}/{lado}', [\App\Http\Controllers\TextDisenoController::class, 'precioDiseno']);
     Route::resource('textGr', \App\Http\Controllers\TextGrController::class);
     Route::get('gr/{nombreProducto}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'gr']);
     Route::resource('textLado', \App\Http\Controllers\TextLadoController::class);
@@ -66,5 +70,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('busquedaPagos', [\App\Http\Controllers\PagoController::class, 'busquedaPagos']);
     Route::post('getNumeroPedido', [\App\Http\Controllers\PedidoController::class, 'getNumeroPedido']);
     Route::post('reportBetween', [\App\Http\Controllers\ReporteController::class, 'reportBetween']);
+//    terminacionNombre
+    Route::get('terminacionNombre', [\App\Http\Controllers\ProductoTerminacionController::class, 'terminacionNombre']);
 });
 //Route::get('migracion/{tabla}',[\App\Http\Controllers\MigracionController::class,'migracion']);

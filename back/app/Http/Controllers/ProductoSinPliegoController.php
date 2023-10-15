@@ -102,7 +102,7 @@ class ProductoSinPliegoController extends Controller{
             $producto = $conPliego->precio;
             array_push($productos,$producto);
         }
-        return $productos;
+        return $productos[0];
     }
     public function show(ProductoSinPliego $productoSinPliego){ return $productoSinPliego; }
     public function store(StoreProductoSinPliegoRequest $request){
