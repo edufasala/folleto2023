@@ -105,9 +105,9 @@ export default {
       loading: false,
       pedidoDato: {
         codigo: 0,
-        producto: 'Folleto',
-        medida: '10x15',
-        cantidad: '1',
+        producto: '',
+        medida: '',
+        cantidad: '',
         esp: '',
         gr: '150',
         lados: '2 lados diferentes',

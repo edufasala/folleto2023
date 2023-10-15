@@ -48,37 +48,43 @@
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Producto:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.producto" :options="productos">
-                      <template v-slot:after>
-                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Producto')"/>
-                      </template>
+                    <q-select dense outlined v-model="pedido.producto" :options="productos" @update:modelValue="grSearch">
+<!--                      <template v-slot:after>-->
+<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Producto')"/>-->
+<!--                      </template>-->
                     </q-select>
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-2 flex flex-center">
+<!--                    Otra:-->
+                  </div>
                   <div class="col-6 col-md-4">
 <!--                    <q-input dense outlined v-model="pedido.producto"/>-->
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Gr:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.gr" :options="grs">
-                      <template v-slot:after>
-                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Gr')"/>
-                      </template>
+                    <q-select dense outlined v-model="pedido.gr" :options="grs" @update:modelValue="tamanoSearch">
+<!--                      <template v-slot:after>-->
+<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Gr')"/>-->
+<!--                      </template>-->
                     </q-select>
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-2 flex flex-center">
+<!--                    Otra:-->
+                  </div>
                   <div class="col-6 col-md-4">
 <!--                    <q-input dense outlined v-model="pedido.gr"/>-->
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Medida:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.medida" :options="medidas">
-                      <template v-slot:after>
-                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Medida')"/>
-                      </template>
+                    <q-select dense outlined v-model="pedido.medida" :options="medidas" @update:modelValue="cantidadSearch">
+<!--                      <template v-slot:after>-->
+<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Medida')"/>-->
+<!--                      </template>-->
                     </q-select>
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">Otra:</div>
+                  <div class="col-6 col-md-2 flex flex-center">
+<!--                    Otra:-->
+                  </div>
                   <div class="col-6 col-md-4">
 <!--                    <q-input dense outlined v-model="pedido.medida"/>-->
                   </div>
@@ -86,7 +92,8 @@
                     Cantidad:
                   </div>
                   <div class="col-6 col-md-2">
-                    <q-input dense outlined v-model="pedido.cantidad" />
+<!--                    <q-input dense outlined v-model="pedido.cantidad" />-->
+                    <q-select dense outlined v-model="pedido.cantidad" :options="cantidades" @update:modelValue="precioSearch"/>
                   </div>
                   <div class="col-6 col-md-1 flex flex-center">
                     esp:
@@ -106,7 +113,7 @@
                   <div class="col-6 col-md-4">
                     <q-select dense outlined v-model="pedido.fechaTexto" :options="['Una semana', 'Un mes']"
                               @update:model-value="calculateFechaEntrega"/>
-                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>
+<!--                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>-->
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Otra:</div>
                   <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.terminacion"/></div>
@@ -324,7 +331,7 @@ export default {
       productos: [],
       grs: [],
       medidas: [],
-      cantidades: ['100', '200', '300', '400', '500', '600', '700', '800', '900', '1000'],
+      cantidades: [],
       lados: [],
       disenos: [],
       terminaciones: []
@@ -332,14 +339,53 @@ export default {
   },
   async mounted () {
     this.getTextProduct()
-    this.getTextGr()
-    this.getTextMedida()
-    this.getLados()
-    this.getDisenos()
-    this.getTerminaciones()
+    // this.getTextGr()
+    // this.getTextMedida()
+    // this.getLados()
+    // this.getDisenos()
+    // this.getTerminaciones()
     this.pedido = this.pedidoDato
   },
   methods: {
+    precioSearch (cantidad) {
+      this.$axios.get('precio/' + this.pedido.producto + '/' + this.pedido.gr + '/' + this.pedido.medida + '/' + cantidad)
+        .then(response => {
+          this.pedido.precioProducto = response.data
+        })
+        .catch(error => {
+          this.$alert.error(error.response.data.message)
+        })
+    },
+    cantidadSearch (medida) {
+      this.pedido.cantidad = ''
+      this.$axios.get('cantidad/' + this.pedido.producto + '/' + this.pedido.gr + '/' + medida)
+        .then(response => {
+          this.cantidades = response.data
+        })
+        .catch(error => {
+          this.$alert.error(error.response.data.message)
+        })
+    },
+    tamanoSearch (gr) {
+      this.pedido.medida = ''
+      this.$axios.get('tamano/' + this.pedido.producto + '/' + gr)
+        .then(response => {
+          this.medidas = response.data
+        })
+        .catch(error => {
+          this.$alert.error(error.response.data.message)
+        })
+    },
+    grSearch (producto) {
+      this.pedido.gr = ''
+      this.$axios.get('gr/' + producto)
+        .then(response => {
+          this.grs = response.data
+        })
+        .catch(error => {
+          this.$alert.error(error.response.data.message)
+        })
+    },
     calculateFechaEntrega () {
       if (this.pedido.fechaTexto === 'Una semana') {
         const fecha = new Date()
@@ -363,7 +409,8 @@ export default {
       this.terminaciones = await this.$axios.get('textTerminacion').then(response => response.data)
     },
     async getTextProduct () {
-      this.productos = await this.$axios.get('textProducto').then(response => response.data)
+      this.productos = await this.$axios.get('productos').then(response => response.data)
+      // this.pedido.producto = this.productos[0]
     },
     async getTextGr () {
       this.grs = await this.$axios.get('textGr').then(response => response.data)

@@ -42,11 +42,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('pagos', \App\Http\Controllers\PagoController::class);
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('textCantidad', \App\Http\Controllers\TextCantidadController::class);
+    Route::get('cantidad/{nombreProducto}/{gr}/{tamano}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'cantidad']);
+    //precio
+    Route::get('precio/{nombreProducto}/{gr}/{tamano}/{cantidad}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'precio']);
     Route::resource('textDiseno', \App\Http\Controllers\TextDisenoController::class);
     Route::resource('textGr', \App\Http\Controllers\TextGrController::class);
+    Route::get('gr/{nombreProducto}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'gr']);
     Route::resource('textLado', \App\Http\Controllers\TextLadoController::class);
     Route::resource('textMedida', \App\Http\Controllers\TextMedidaController::class);
+    Route::get('tamano/{nombreProducto}/{gr}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'tamano']);
     Route::resource('textProducto', \App\Http\Controllers\TextProductoController::class);
+    Route::get('productos', [\App\Http\Controllers\ProductoSinPliegoController::class, 'productos']);
     Route::resource('textTerminacion', \App\Http\Controllers\TextTerminacionController::class);
     Route::resource('conPliegos', \App\Http\Controllers\ProductoConPliegoController::class);
     Route::resource('sinPliegos', \App\Http\Controllers\ProductoSinPliegoController::class);
