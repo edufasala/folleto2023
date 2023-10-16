@@ -22,12 +22,12 @@
     </div>
     <div class="col-12">
 <!--      <pre>{{pedidos[0]}}</pre>-->
-      <q-markup-table>
+      <q-markup-table wrap-cells>
         <thead>
         <tr class="bg-black text-white">
           <th class="text-center">Estado</th>
           <th class="text-center">N° Pedido</th>
-          <th class="text-center">Sucursal</th>
+          <th class="">Sucursal</th>
           <th class="text-center">Producto</th>
           <th class="text-center">Tamaño</th>
           <th class="text-center">Cantidad</th>
@@ -121,7 +121,7 @@ export default {
         envio: '',
         precioEspecificaciones: 0,
         precioEnvio: 0,
-        pago: 0,
+        pago: '',
         metodoPago: 'Efectivo',
         comentarioPago: '',
         iva: 15,
@@ -182,7 +182,7 @@ export default {
         envio: '',
         precioEspecificaciones: 0,
         precioEnvio: 0,
-        pago: 0,
+        pago: '',
         metodoPago: 'Efectivo',
         comentarioPago: '',
         iva: 15,

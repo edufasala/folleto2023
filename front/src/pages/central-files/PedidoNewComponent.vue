@@ -144,8 +144,14 @@
 <!--                      </template>-->
                     </q-select>
                   </div>
-                  <div class="col-6 col-md-2 flex flex-center">Envio:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.envio" :options="['Si', 'No']"/></div>
+                  <div class="col-6 col-md-2 flex flex-center">
+                    <q-checkbox v-model="checkEnvio"/>
+                    Envio:
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <q-select dense outlined v-model="pedido.envio" :options="['Moto', 'Expreso', 'Interior', 'Mercado Envios']"
+                              v-if="checkEnvio"/>
+                  </div>
                   <div class="col-6 col-md-2 flex flex-center">Lados:</div>
                   <div class="col-6 col-md-4">
                     <q-select dense outlined v-model="pedido.lado" :options="lados" @update:modelValue="precioDiseno">
@@ -187,7 +193,7 @@
                   <div class="col-6 col-md-2 flex flex-center">Se Facturo:</div>
                   <div class="col-6 col-md-1">
 <!--                    <q-select dense outlined v-model="pedido.seFacturo" :options="['Si','No']" />-->
-                    <q-toggle v-model="pedido.seFacturo" color="primary" false-value="No" true-value="Si" :label="pedido.seFacturo" disable/>
+                    <q-toggle v-model="pedido.seFacturo" color="primary" false-value="No" true-value="Si" :label="pedido.seFacturo"/>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="row">
@@ -266,7 +272,7 @@
                       </tr>
                       <tr>
                         <td class="text-left">1</td>
-                        <td class="text-left">Especificaciones</td>
+                        <td class="text-left">Terminacion: {{pedido.terminacion}}</td>
                         <td class="text-left"></td>
                         <td class="text-left"></td>
                         <td class="text-left"></td>
@@ -333,6 +339,7 @@ export default {
   data () {
     return {
       checkTerminacion: false,
+      checkEnvio: false,
       tab: 'pedido',
       pedido: {},
       loading: false,

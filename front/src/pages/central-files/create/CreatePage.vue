@@ -127,7 +127,7 @@ export default {
         envio: '',
         precioEspecificaciones: 0,
         precioEnvio: 0,
-        pago: 0,
+        pago: '',
         metodoPago: 'Efectivo',
         comentarioPago: '',
         iva: 15,
