@@ -14,7 +14,13 @@
 <!--          </q-btn>-->
         </div>
         <div class="col-12">
-          <SearchEmpresaComponent @empresaFilter="empresaFilter" :loading="loading" @empresaSearch="empresaSearch" :empresas="empresas" v-if="url === '/central-files'"/>
+          <SearchEmpresaComponent
+            :last_page="last_page"
+            @empresaFilter="empresaFilter"
+            :loading="loading"
+            @empresaSearch="empresaSearch"
+            :empresas="empresas"
+            @empresaPage="empresaPage"/>
         </div>
       </div>
     </div>
@@ -202,6 +208,7 @@ import SearchEmpresaComponent from 'pages/central-files/SearchEmpresaComponent.v
 import ContactoComponent from 'pages/central-files/ContactoComponent.vue'
 import NotasComponent from 'pages/central-files/NotasComponent.vue'
 import PedidosComponent from 'pages/central-files/PedidosComponent.vue'
+import { date } from 'quasar'
 export default {
   name: 'IndexCentralFilesPage',
   components: {
@@ -212,6 +219,8 @@ export default {
   },
   data () {
     return {
+      page: 1,
+      last_page: 1,
       tab: 'contacto',
       loading: false,
       empresa: {},
@@ -268,13 +277,15 @@ export default {
     },
     empresaFilter (search, filter) {
       this.filter = filter
+      this.page = 1
       this.getEmpresas(search, filter)
     },
     getEmpresas (search, filter) {
       this.loading = true
-      this.$axios.get('empresas?search=' + search + '&filter=' + filter)
+      this.$axios.get('empresas?search=' + search + '&filter=' + filter + '&page=' + this.page)
         .then(response => {
           this.empresas = response.data.data
+          this.last_page = response.data.last_page
         }).catch(error => {
           this.$alert(error.response.data.message)
         }).finally(() => {
@@ -309,10 +320,16 @@ export default {
         })
       }
     },
+    empresaPage (search, filter, page) {
+      this.page = page
+      this.getEmpresas(search, filter)
+    },
     empresaSearch (empresa) {
       this.empresa = empresa
       this.loading = true
-      this.tab = 'contacto'
+      this.page = 1
+      // this.tab = 'contacto'
+
       this.$axios.get('empresas/' + empresa.id)
         .then(response => {
           this.empresa = response.data
@@ -323,6 +340,52 @@ export default {
           this.persons = response.data.person
           this.notes = response.data.notes
           this.pedidos = response.data.pedidos
+          this.$store.pedido = {
+            codigo: 0,
+            producto: '',
+            medida: '',
+            cantidad: '',
+            esp: '',
+            gr: '',
+            lados: '',
+            diseno: '',
+            descripcion: '',
+            estado: '',
+            fechaTexto: '',
+            estadoPedido: 'Activo',
+            fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+            diasCompra: 5,
+            fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+            fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+            precioProducto: 0,
+            precioDiseno: 0,
+            especificaciones: '',
+            terminacion: '',
+            envio: '',
+            precioEspecificaciones: 0,
+            precioEnvio: 0,
+            pago: '',
+            metodoPago: 'Efectivo',
+            comentarioPago: '',
+            iva: 15,
+            seFacturo: 'No',
+            facturaA: 'Factura ninguna',
+            empresa_id: this.empresa.id,
+            user_id: 3,
+            sucursal_id: 2,
+            facturacion_id: 2,
+            direccion_id: 1,
+            persona_id: 2,
+            phone_id: 2,
+            email_id: 2,
+            deleted_at: null,
+            precioTotal: 1594.13,
+            deuda: 1114.13,
+            sucursal: this.empresa.sucursals[0],
+            person: this.empresa.person[0],
+            direccion: this.empresa.direccion[0],
+            facturacion: this.empresa.facturacion[0]
+          }
         })
         .catch(error => {
           console.log(error)

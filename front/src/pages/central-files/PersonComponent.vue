@@ -125,7 +125,7 @@
                              :rules="[val => !!val || 'El nombre es requerido']"/>
                   </div>
                   <div class="col-12">
-                    <q-select dense outlined v-model="person.cargo" label="Cargo" :options="$cargos"
+                    <q-input dense outlined v-model="person.cargo" label="Cargo"
                               :rules="[val => !!val || 'El cargo es requerido']"/>
                   </div>
                   <div class="col-12">

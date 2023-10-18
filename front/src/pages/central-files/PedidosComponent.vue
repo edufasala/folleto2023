@@ -62,15 +62,16 @@
       <PedidoShowComponent :empresa="empresa" :pedido="pedidoDatoUpdate" @empresaSearch="$emit('empresaSearch', $event)"/>
     </q-dialog>
     <q-dialog v-model="pedidoDialogNew">
-      <PedidoNewComponent :empresa="empresa" :pedidoDato="pedidoDato"
+      <PedidoNewComponent :empresa="empresa" :pedidoDato="$store.pedido"
                           @empresaSearch="$emit('empresaSearch', $event)"
                           @closeDialog="closeDialog"
       />
     </q-dialog>
+<!--    <pre>{{$store.pedido}}</pre>-->
   </div>
 </template>
 <script>
-import { date } from 'quasar'
+// import { date } from 'quasar'
 import PedidoShowComponent from './PedidoShowComponent.vue'
 import PedidoNewComponent from './PedidoNewComponent.vue'
 
@@ -97,57 +98,58 @@ export default {
       pedidoDialogVer: false,
       pedidoDialogNew: false,
       pedidoOption: '',
-      pedidoDato: {
-        codigo: 0,
-        producto: '',
-        medida: '',
-        cantidad: '',
-        esp: '',
-        gr: '',
-        lados: '',
-        diseno: '',
-        descripcion: '',
-        estado: '',
-        fechaTexto: '',
-        estadoPedido: 'Activo',
-        fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        diasCompra: 5,
-        fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        precioProducto: 0,
-        precioDiseno: 0,
-        especificaciones: '',
-        terminacion: '',
-        envio: '',
-        precioEspecificaciones: 0,
-        precioEnvio: 0,
-        pago: '',
-        metodoPago: 'Efectivo',
-        comentarioPago: '',
-        iva: 15,
-        seFacturo: 'No',
-        facturaA: 'Factura ninguna',
-        empresa_id: this.empresa.id,
-        user_id: 3,
-        sucursal_id: 2,
-        facturacion_id: 2,
-        direccion_id: 1,
-        persona_id: 2,
-        phone_id: 2,
-        email_id: 2,
-        deleted_at: null,
-        precioTotal: 1594.13,
-        deuda: 1114.13,
-        sucursal: this.empresa.sucursals[0],
-        person: this.empresa.person[0],
-        direccion: this.empresa.direccion[0],
-        facturacion: this.empresa.facturacion[0]
-      },
+      // pedidoDato: {
+      //   codigo: 0,
+      //   producto: '',
+      //   medida: '',
+      //   cantidad: '',
+      //   esp: '',
+      //   gr: '',
+      //   lados: '',
+      //   diseno: '',
+      //   descripcion: '',
+      //   estado: '',
+      //   fechaTexto: '',
+      //   estadoPedido: 'Activo',
+      //   fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      //   diasCompra: 5,
+      //   fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      //   fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      //   precioProducto: 0,
+      //   precioDiseno: 0,
+      //   especificaciones: '',
+      //   terminacion: '',
+      //   envio: '',
+      //   precioEspecificaciones: 0,
+      //   precioEnvio: 0,
+      //   pago: '',
+      //   metodoPago: 'Efectivo',
+      //   comentarioPago: '',
+      //   iva: 15,
+      //   seFacturo: 'No',
+      //   facturaA: 'Factura ninguna',
+      //   empresa_id: this.empresa.id,
+      //   user_id: 3,
+      //   sucursal_id: 2,
+      //   facturacion_id: 2,
+      //   direccion_id: 1,
+      //   persona_id: 2,
+      //   phone_id: 2,
+      //   email_id: 2,
+      //   deleted_at: null,
+      //   precioTotal: 1594.13,
+      //   deuda: 1114.13,
+      //   sucursal: this.empresa.sucursals[0],
+      //   person: this.empresa.person[0],
+      //   direccion: this.empresa.direccion[0],
+      //   facturacion: this.empresa.facturacion[0]
+      // },
       pedidoDatoUpdate: {},
       pedidosDatos: this.pedidos
     }
   },
   mounted () {
+    // this.pedidoDato = this.$store.pedido
     // setTimeout(() => {
     //   this.pedidoClickUpdate(this.pedidos[0])
     // }, 2500)
@@ -158,52 +160,52 @@ export default {
   methods: {
     closeDialog () {
       this.pedidoDialogNew = false
-      this.pedidoDato = {
-        codigo: 0,
-        producto: '',
-        medida: '',
-        cantidad: '',
-        esp: '',
-        gr: '',
-        lados: '',
-        diseno: 'nuevo',
-        descripcion: '',
-        estado: 'Diseño',
-        fechaTexto: '',
-        estadoPedido: 'Activo',
-        fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        diasCompra: 5,
-        fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        precioProducto: 0,
-        precioDiseno: 0,
-        especificaciones: '',
-        terminacion: '',
-        envio: '',
-        precioEspecificaciones: 0,
-        precioEnvio: 0,
-        pago: '',
-        metodoPago: 'Efectivo',
-        comentarioPago: '',
-        iva: 15,
-        seFacturo: 'No',
-        facturaA: 'Factura ninguna',
-        empresa_id: this.empresa.id,
-        user_id: 3,
-        sucursal_id: 2,
-        facturacion_id: 2,
-        direccion_id: 1,
-        persona_id: 2,
-        phone_id: 2,
-        email_id: 2,
-        deleted_at: null,
-        precioTotal: 1594.13,
-        deuda: 1114.13,
-        sucursal: this.empresa.sucursals[0],
-        person: this.empresa.person[0],
-        direccion: this.empresa.direccion[0],
-        facturacion: this.empresa.facturacion[0]
-      }
+      // this.pedidoDato = {
+      //   codigo: 0,
+      //   producto: '',
+      //   medida: '',
+      //   cantidad: '',
+      //   esp: '',
+      //   gr: '',
+      //   lados: '',
+      //   diseno: 'nuevo',
+      //   descripcion: '',
+      //   estado: 'Diseño',
+      //   fechaTexto: '',
+      //   estadoPedido: 'Activo',
+      //   fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      //   diasCompra: 5,
+      //   fechaEntrega: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      //   fechaEspecial: date.formatDate(new Date(), 'YYYY-MM-DD'),
+      //   precioProducto: 0,
+      //   precioDiseno: 0,
+      //   especificaciones: '',
+      //   terminacion: '',
+      //   envio: '',
+      //   precioEspecificaciones: 0,
+      //   precioEnvio: 0,
+      //   pago: '',
+      //   metodoPago: 'Efectivo',
+      //   comentarioPago: '',
+      //   iva: 15,
+      //   seFacturo: 'No',
+      //   facturaA: 'Factura ninguna',
+      //   empresa_id: this.empresa.id,
+      //   user_id: 3,
+      //   sucursal_id: 2,
+      //   facturacion_id: 2,
+      //   direccion_id: 1,
+      //   persona_id: 2,
+      //   phone_id: 2,
+      //   email_id: 2,
+      //   deleted_at: null,
+      //   precioTotal: 1594.13,
+      //   deuda: 1114.13,
+      //   sucursal: this.empresa.sucursals[0],
+      //   person: this.empresa.person[0],
+      //   direccion: this.empresa.direccion[0],
+      //   facturacion: this.empresa.facturacion[0]
+      // }
     },
     pedidoClickUpdate (pedido) {
       this.pedidoDialogVer = true
@@ -235,7 +237,7 @@ export default {
       this.$axios.post('getNumeroPedido', { empresa_id: this.empresa.id })
         .then(response => {
           this.pedidoDialogNew = true
-          this.pedidoDato.codigo = response.data
+          this.$store.pedido.codigo = response.data
         }).catch(error => {
           this.$alert.error(error)
         }).finally(() => {

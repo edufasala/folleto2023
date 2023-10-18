@@ -4,6 +4,7 @@ export const useCounterStore = defineStore('counter', {
   state: () => ({
     counter: 0,
     user: {},
+    pedido: {},
     permisos: [],
     menus: [],
     isLoggedIn: !!localStorage.getItem('tokenFolleto'),

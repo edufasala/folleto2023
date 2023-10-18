@@ -1,11 +1,11 @@
 <template>
   <q-table dense :rows="empresas" :rows-per-page-options="[100]"
            :loading="loading" :separator="null" flat bordered class="bg-blue-1"
-           :columns="empresaColumn" hide-header hide-bottom>
+           :columns="empresaColumn" hide-header>
     <template v-slot:top>
       <q-input clearable rounded dense outlined bg-color="white" class="q-ma-xs"
                debounce="500"
-               v-model="search" placeholder="Search" :loading="loading" @update:model-value="$emit('empresaFilter', search, filtrarPor)">
+               v-model="search" placeholder="Search" :loading="loading" @update:model-value="$emit('empresaFilter', search, filtrarPor);page = 1">
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
@@ -59,6 +59,17 @@
         </template>
       </q-input>
     </template>
+    <template v-slot:bottom>
+      <div class="flex flex-center full-width">
+        <q-pagination
+          v-model="page"
+          :max="last_page"
+          :max-pages="7"
+          outline
+          size="10px"
+          @update:modelValue="$emit('empresaPage', search, filtrarPor, page)"/>
+      </div>
+    </template>
     <template v-slot:body-cell-nombre="props">
       <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">
         {{ props.row.nombre }}
@@ -84,10 +95,15 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    last_page: {
+      type: Number,
+      default: 1
     }
   },
   data () {
     return {
+      page: 1,
       search: '',
       filtrarPor: 'numero',
       // loading: false,

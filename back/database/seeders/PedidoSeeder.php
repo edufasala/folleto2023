@@ -24,7 +24,7 @@ class PedidoSeeder extends Seeder
             $contador++;
             error_log($contador);
             $insertPedido[] = [
-                'codigo' => 0,
+                'codigo' => 1,
                 'producto' => $pedidoAntiguo->product,
                 'medida' => $pedidoAntiguo->size,
                 'cantidad' => $pedidoAntiguo->quantity,
