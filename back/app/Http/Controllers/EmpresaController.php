@@ -18,7 +18,7 @@ class EmpresaController extends Controller{
         $search = $request->search;
         $filter = $request->filter;
         $search = $search=='null'?'':$search;
-        $paginate = 15;
+        $paginate = 20;
         if ($filter == 'numero') {
             $empresas= Empresa::where('nombre', 'like', '%'.$search.'%')
                 ->orWhere('id', 'like', '%'.$search.'%')

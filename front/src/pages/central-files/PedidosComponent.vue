@@ -38,7 +38,7 @@
         <tbody>
         <tr v-for="pedido in pedidos" :key="pedido.id" class="cursor-pointer"
             @click="pedidoClickUpdate(pedido)"
-            :class="`${pedido.estadoPedido=='Cancelado'? 'text-red' : ''}`"
+            :class="`${pedido.estadoPedido=='Cancelado'? 'text-red' : ''} ${pedido.estadoPedido=='Activo'? 'bg-blue-2' : ''}`"
         >
           <td class="text-center">
               {{pedido.estadoPedido}}

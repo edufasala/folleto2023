@@ -567,14 +567,15 @@ export default {
       const precio = parseFloat(this.pedido.precioProducto) + parseFloat(this.pedido.precioDiseno) + parseFloat(this.pedido.precioEnvio) + parseFloat(this.pedido.precioEspecificaciones)
       // const iva = precio * parseFloat(this.pedido.iva / 100)
       let iva = 0
+      const pago = this.pedido.pago === '' ? 0 : this.pedido.pago
       if (this.pedido.facturaA === 'Factura ninguna') {
         iva = 0
       } else if (this.pedido.facturaA === 'Factura pedido') {
         iva = Math.round(this.precioTotal * parseFloat(this.pedido.iva) / 100 * 100) / 100
       } else if (this.pedido.facturaA === 'Factura seña') {
-        iva = Math.round(this.pedido.pago * parseFloat(this.pedido.iva) / 100 * 100) / 100
+        iva = Math.round(pago * parseFloat(this.pedido.iva) / 100 * 100) / 100
       }
-      const deuda = parseFloat(precio) + parseFloat(iva) - parseFloat(this.pedido.pago)
+      const deuda = parseFloat(precio) + parseFloat(iva) - pago
       return Math.round(deuda * 100) / 100
     }
   }
