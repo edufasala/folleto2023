@@ -70,16 +70,30 @@
           @update:modelValue="$emit('empresaPage', search, filtrarPor, page)"/>
       </div>
     </template>
-    <template v-slot:body-cell-nombre="props">
-      <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">
-        {{ props.row.nombre }}
-      </q-td>
-    </template>
-    <template v-slot:body-cell-codigo="props">
-      <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">
-        <q-icon size="20px" name="account_circle" class="q-pa-none q-ma-none"/>
-        <span class="text-caption text-bold">{{ props.row.codigo }}</span>
-      </q-td>
+<!--    <template v-slot:body-cell-nombre="props">-->
+<!--      <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">-->
+<!--        {{ props.row.nombre }}-->
+<!--      </q-td>-->
+<!--    </template>-->
+<!--    <template v-slot:body-cell-codigo="props">-->
+<!--      <q-td @click="$emit('empresaSearch', props.row)" :props="props" class="cursor-pointer">-->
+<!--        <q-icon size="20px" name="account_circle" class="q-pa-none q-ma-none"/>-->
+<!--        <span class="text-caption text-bold">{{ props.row.codigo }}</span>-->
+<!--      </q-td>-->
+<!--    </template>-->
+    <template v-slot:body="props">
+      <q-tr :class="parseInt($store.selectEmpresa) === parseInt(props.pageIndex)?`bg-blue-8 text-white`:``" :props="props"
+            @click="$emit('empresaSearch', props.row);$store.selectEmpresa=props.pageIndex">
+        <q-td name="codigo" :props="props" class="cursor-pointer" key="codigo">
+<!--                    <span>{{$store.selectEmpresa}}-{{props.pageIndex}}</span>-->
+          <q-icon size="20px" name="account_circle" class="q-pa-none q-ma-none"/>
+          <span class="text-caption text-bold">{{ props.row.codigo }}</span>
+        </q-td>
+        <q-td name="nombre" :props="props" class="cursor-pointer" key="nombre">
+          {{ props.row.nombre }}
+          <span>{{props.pageIndex}}</span>
+        </q-td>
+      </q-tr>
     </template>
   </q-table>
 </template>
