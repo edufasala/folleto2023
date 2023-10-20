@@ -74,7 +74,7 @@
             </q-tabs>
             <q-separator />
             <q-tab-panels v-model="tab" animated class="bg-grey-2">
-              <q-tab-panel style="height: 300px" name="pedido">
+              <q-tab-panel style="height: 300px;width: 650px" name="pedido">
                 <div class="row">
                   <div class="col-4 col-md-2">Producto</div>
                   <div class="col-8 col-md-6 text-bold">{{ pedidoDato.producto }}</div>
@@ -94,7 +94,7 @@
                   <div class="col-8 col-md-10 border-round">{{ pedidoDato.descripcion }}</div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel style="height: 300px" name="taller">
+              <q-tab-panel style="height: 300px;width: 650px" name="taller">
                 <div class="row">
                   <div class="col-4 col-md-2">Terminacion</div>
                   <div class="col-8 col-md-6 text-bold">{{ pedidoDato.terminacion }}</div>
@@ -120,7 +120,7 @@
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel style="height: 300px" name="$">
+              <q-tab-panel style="height: 300px;width: 650px" name="$">
                 <div class="row">
                   <div class="col-12 col-md-3">
                     <q-card flat bordered>
@@ -241,7 +241,7 @@
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel style="height: 300px" name="status">
+              <q-tab-panel style="height: 300px;width: 650px" name="status">
                 <div class="row">
                   <div class="col-12 col-md-12">
                     <q-markup-table wrapCells separator="horizontal" dense>
@@ -273,19 +273,21 @@
         <div class="row q-mt-md">
           <div class="col-12 col-md-1"/>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Stand by" color="dark" class="w-100" />
+            <q-btn no-caps :loading="loading" label="Stand by" color="dark" class="w-100" v-close-popup />
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Cancelar" color="red" class="w-100" />
+            <q-btn no-caps :loading="loading" label="Cancelar" color="red" class="w-100" @click="cancelarClick" />
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Corregir" color="orange" class="w-100" />
+<!--            orange-->
+            <q-btn no-caps :loading="loading" label="Corregir" color="grey" class="w-100" :disable="true"/>
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Repetir" color="blue" class="w-100" />
+<!--            blue-->
+            <q-btn no-caps :loading="loading" label="Repetir" color="grey" class="w-100" :disable="true"/>
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps label="Cerrar" color="grey" class="w-100" v-close-popup />
+            <q-btn no-caps :loading="loading" label="Cerrar" color="grey" class="w-100" v-close-popup />
           </div>
           <div class="col-12 col-md-1"/>
         </div>
@@ -372,6 +374,20 @@ export default {
     this.pedidoDato = this.pedido
   },
   methods: {
+    cancelarClick () {
+      this.loading = true
+      this.$axios.put(`pedidos/${this.pedido.id}`, { estadoPedido: 'Cancelado' })
+        .then(response => {
+          this.$alert.success('Pedido cancelado')
+          this.pedidoDato = response.data
+          this.$emit('empresaSearch', this.empresa)
+          this.$emit('closeDialogShowPedido')
+        }).catch(error => {
+          this.$alert.error(error.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
+    },
     pagoDialogClick () {
       this.pagoDialog = true
     },

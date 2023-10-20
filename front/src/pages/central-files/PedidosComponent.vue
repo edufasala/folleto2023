@@ -59,7 +59,10 @@
       </q-markup-table>
     </div>
     <q-dialog v-model="pedidoDialogVer">
-      <PedidoShowComponent :empresa="empresa" :pedido="pedidoDatoUpdate" @empresaSearch="$emit('empresaSearch', $event)"/>
+      <PedidoShowComponent :empresa="empresa" :pedido="pedidoDatoUpdate"
+                           @empresaSearch="$emit('empresaSearch', $event)"
+                           @closeDialogShowPedido="pedidoDialogVer = false"
+      />
     </q-dialog>
     <q-dialog v-model="pedidoDialogNew">
       <PedidoNewComponent :empresa="empresa" :pedidoDato="$store.pedido"

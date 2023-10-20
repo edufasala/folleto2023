@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
+//numeracionDePedidos
+Route::get('/numeracionDePedidos',[\App\Http\Controllers\QueryController::class,'numeracionDePedidos']);
 //Route::post('upload/{id}/{option}', [\App\Http\Controllers\UploadController::class, 'upload']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/me', [\App\Http\Controllers\UserController::class, 'me']);

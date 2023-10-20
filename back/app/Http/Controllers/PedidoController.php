@@ -70,7 +70,11 @@ class PedidoController extends Controller{
         $pedido->save();
     }
     public function show(Pedido $pedido){}
-    public function update(UpdatePedidoRequest $request, Pedido $pedido){}
+    public function update(UpdatePedidoRequest $request, $id){
+        $pedido= Pedido::find($id);
+        $pedido->update($request->all());
+        $pedido->save();
+    }
     public function destroy(Pedido $pedido){}
     public function getNumeroPedido(Request $request){
         $pedidosCount = Pedido::where('empresa_id', $request->empresa_id)->count();

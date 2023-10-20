@@ -88,7 +88,7 @@
                     </q-card-section>
                     <q-card-section class="q-pa-xs text-center bg-grey-1">
                       <div class="text-h5 text-bold text-red-7">
-                        $ 2000
+                        $ 0
                       </div>
                     </q-card-section>
                   </q-card>
@@ -134,11 +134,11 @@
                                    :persons="persons"
                                    @empresaSearch="empresaSearch"/>
               </q-tab-panel>
-              <q-tab-panel name="notas">
-                <NotasComponent :empresa="empresa" :notes="notes" @empresaSearch="empresaSearch"/>
-              </q-tab-panel>
               <q-tab-panel name="pedido">
                 <PedidosComponent :empresa="empresa" :pedidos="pedidos" @empresaSearch="empresaSearch"/>
+              </q-tab-panel>
+              <q-tab-panel name="notas">
+                <NotasComponent :empresa="empresa" :notes="notes" @empresaSearch="empresaSearch"/>
               </q-tab-panel>
             </q-tab-panels>
           </q-card>

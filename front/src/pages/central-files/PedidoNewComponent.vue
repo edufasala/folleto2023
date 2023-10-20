@@ -4,7 +4,7 @@
       <div class="text-h5 text-bold"> Pedido Nuevo </div>
       <q-space />
       <div class="text-right text-red text-h6">
-        # {{pedido.codigo}} <span class="text-grey">{{empresa.nombre}}</span>
+        NumPedido # {{pedido.codigo}} <span class="text-grey">{{empresa.nombre}}</span>
       </div>
       <q-btn flat dense icon="cancel" v-close-popup />
     </q-card-section>
