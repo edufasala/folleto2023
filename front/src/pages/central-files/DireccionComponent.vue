@@ -65,6 +65,7 @@
                 <q-btn size="10px" flat dense icon="add_circle_outline"
                        @click="addPhone(d.id)"
                        :loading="loading"
+                       label="Agregar Telefono"
                        no-caps color="blue">
                   <q-tooltip>
                     Agregar Telefono

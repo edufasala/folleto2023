@@ -67,6 +67,7 @@
                     <q-btn size="10px" flat dense icon="add_circle_outline"
                            @click="addPhone(perosn.id)"
                            :loading="loading"
+                           label="Agregar Telefono"
                            no-caps color="blue">
                       <q-tooltip>
                         Agregar Telefono
@@ -99,6 +100,7 @@
                   </template>
                   <template v-else>
                     <q-btn size="10px" flat dense icon="add_circle_outline" no-caps
+                           label="Agregar Email"
                            color="blue" :loading="loading" @click="addEmail(perosn.id)">
                       <q-tooltip>
                         Agregar Email
@@ -129,7 +131,13 @@
                               :rules="[val => !!val || 'El cargo es requerido']"/>
                   </div>
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.dni" label="DNI"/>
+                    <q-input dense outlined v-model="person.dni" label="DNI" hint=""/>
+                  </div>
+                  <div class="col-12">
+                    <q-input dense outlined v-model="person.phone" label="Telefono" hint=""/>
+                  </div>
+                  <div class="col-12">
+                    <q-input dense outlined v-model="person.email" label="email" hint=""/>
                   </div>
                 </div>
                 <q-card-actions align="right">
@@ -211,7 +219,9 @@ export default {
           nombre: this.person.nombre,
           cargo: this.person.cargo,
           dni: this.person.dni,
-          empresa_id: this.empresa.id
+          empresa_id: this.empresa.id,
+          phone: this.person.phone,
+          email: this.person.email
         }).then(response => {
           this.$emit('empresaSearch', this.empresa)
           this.personDialog = false

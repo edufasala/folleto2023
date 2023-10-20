@@ -14,20 +14,6 @@
             <div class="col-12 row items-center">
               Nombre: <b>{{d.direccion}}</b>
               <q-space />
-<!--              <q-btn size="10px" flat dense icon="o_edit" no-caps-->
-<!--                     color="orange" :loading="loading"-->
-<!--                     @click="direccionDato = d; direccionDialog = true; direccionOption = 'edit'">-->
-<!--                <q-tooltip>-->
-<!--                  Editar-->
-<!--                </q-tooltip>-->
-<!--              </q-btn>-->
-<!--              <q-btn size="10px" flat dense icon="cancel" no-caps-->
-<!--                     color="grey" :loading="loading"-->
-<!--                     @click="deleteDirecion(d.id)">-->
-<!--                <q-tooltip>-->
-<!--                  Eliminar-->
-<!--                </q-tooltip>-->
-<!--              </q-btn>-->
             </div>
             <div class="col-12">
               C. Postal: <b>{{d.codigoPostal}}</b>
@@ -40,36 +26,9 @@
                 <div v-for="phone in d.phone_direccions" :key="phone.id" class="row">
                   Telefono: <b>{{phone.phone}}</b>
                   <q-space />
-<!--                  <q-btn size="10px" flat dense icon="cancel"-->
-<!--                         @click="deletePhone(phone.id)"-->
-<!--                         :loading="loading"-->
-<!--                         no-caps color="grey">-->
-<!--                    <q-tooltip>-->
-<!--                      Eliminar Telefono-->
-<!--                    </q-tooltip>-->
-<!--                  </q-btn>-->
-<!--                  <q-btn size="10px" flat dense icon="add_circle_outline"-->
-<!--                         @click="addPhone(d.id)"-->
-<!--                         :loading="loading"-->
-<!--                         v-if="phone.id == d.phone_direccions[d.phone_direccions.length - 1].id"-->
-<!--                         no-caps color="blue">-->
-<!--                    <q-tooltip>-->
-<!--                      Agregar Telefono-->
-<!--                    </q-tooltip>-->
-<!--                  </q-btn>-->
-<!--                  <q-btn v-else size="10px" flat dense icon=""/>-->
                 </div>
               </template>
               <template v-else>
-<!--                <span class="text-overline">Agregar Telefono</span>-->
-<!--                <q-btn size="10px" flat dense icon="add_circle_outline"-->
-<!--                       @click="addPhone(d.id)"-->
-<!--                       :loading="loading"-->
-<!--                       no-caps color="blue">-->
-<!--                  <q-tooltip>-->
-<!--                    Agregar Telefono-->
-<!--                  </q-tooltip>-->
-<!--                </q-btn>-->
               </template>
             </div>
           </div>
@@ -155,36 +114,6 @@ export default {
     direccionSubmit () {
       this.$emit('newDireccion', this.direccionDato)
       this.direccionDialog = false
-      // this.loading = true
-      // if (this.direccionOption === 'create') {
-      //   this.$axios.post('direccion', {
-      //     direccion: this.direccionDato.direccion,
-      //     codigoPostal: this.direccionDato.codigoPostal,
-      //     localidad: this.direccionDato.localidad,
-      //     empresa_id: this.empresa.id
-      //   }).then(response => {
-      //     this.$emit('empresaSearch', this.empresa)
-      //     this.direccionDialog = false
-      //   }).catch(error => {
-      //     this.$alert.error(error)
-      //   }).finally(() => {
-      //     this.loading = false
-      //   })
-      // } else {
-      //   this.$axios.put('direccion/' + this.direccionDato.id, {
-      //     direccion: this.direccionDato.direccion,
-      //     codigoPostal: this.direccionDato.codigoPostal,
-      //     localidad: this.direccionDato.localidad,
-      //     empresa_id: this.empresa.id
-      //   }).then(response => {
-      //     this.$emit('empresaSearch', this.empresa)
-      //     this.direccionDialog = false
-      //   }).catch(error => {
-      //     this.$alert.error(error)
-      //   }).finally(() => {
-      //     this.loading = false
-      //   })
-      // }
     },
     direccionDialogClick () {
       this.direccionDialog = true
