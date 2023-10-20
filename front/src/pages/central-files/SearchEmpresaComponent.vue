@@ -91,7 +91,7 @@
         </q-td>
         <q-td name="nombre" :props="props" class="cursor-pointer" key="nombre">
           {{ props.row.nombre }}
-          <span>{{props.pageIndex}}</span>
+<!--          <span>{{props.pageIndex}}</span>-->
         </q-td>
       </q-tr>
     </template>
