@@ -84,7 +84,7 @@
                           @closeDialog="closeDialog"
       />
     </q-dialog>
-    <pre>{{empresa}}</pre>
+<!--    <pre>{{empresa}}</pre>-->
   </q-page>
 </template>
 <script>

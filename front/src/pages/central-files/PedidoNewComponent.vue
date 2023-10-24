@@ -4,7 +4,7 @@
       <div class="text-h5 text-bold"> Pedido Nuevo </div>
       <q-space />
       <div class="text-right text-red text-h6">
-        NumPedido # {{pedido.codigo}} <span class="text-grey">{{empresa.nombre}}</span>
+        # {{empresa.id}} <span class="text-grey">{{empresa.nombre}}</span>
       </div>
       <q-btn flat dense icon="cancel" v-close-popup />
     </q-card-section>
@@ -161,11 +161,11 @@
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Direccion:</div>
-                  <div class="col-6 col-md-4"><q-select dense outlined v-model="pedido.direccion" :options="empresa.direccion" option-value="id" option-label="direccion"/></div>
+                  <div class="col-6 col-md-4"><q-select  v-if="checkEnvio" dense outlined v-model="pedido.direccion" :options="empresa.direccion" option-value="id" option-label="direccion"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Especificaciones:</div>
                   <div class="col-6 col-md-4"><q-input type="textarea" dense outlined v-model="pedido.especificaciones"/></div>
                   <div class="col-6">
-                    <div class="row">
+                    <div class="row"  v-if="checkEnvio">
                       <div class="col-6 col-md-4 flex flex-center">Localidad:</div>
                       <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.direccion.localidad" readonly v-if="pedido.direccion"/></div>
                       <div class="col-6 col-md-4 flex flex-center">CodigoPostal:</div>
