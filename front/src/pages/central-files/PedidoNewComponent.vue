@@ -48,11 +48,16 @@
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Producto:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.producto" :options="productos" @update:modelValue="grSearch">
-<!--                      <template v-slot:after>-->
-<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Producto')"/>-->
-<!--                      </template>-->
+                    <q-select v-if="!editProduct" dense outlined v-model="pedido.producto" :options="productos" @update:modelValue="grSearch">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
                     </q-select>
+                    <q-input dense outlined v-model="pedido.producto" v-else>
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
+                    </q-input>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
 <!--                    Otra:-->
@@ -62,11 +67,16 @@
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Gr:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.gr" :options="grs" @update:modelValue="tamanoSearch">
-<!--                      <template v-slot:after>-->
-<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Gr')"/>-->
-<!--                      </template>-->
+                    <q-select v-if="!editProduct" dense outlined v-model="pedido.gr" :options="grs" @update:modelValue="tamanoSearch">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
                     </q-select>
+                    <q-input dense outlined v-model="pedido.gr" v-else>
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
+                    </q-input>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
 <!--                    Otra:-->
@@ -76,11 +86,16 @@
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Medida:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.medida" :options="medidas" @update:modelValue="cantidadSearch">
-<!--                      <template v-slot:after>-->
-<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Medida')"/>-->
-<!--                      </template>-->
+                    <q-select dense outlined v-model="pedido.medida" :options="medidas" @update:modelValue="cantidadSearch" v-if="!editProduct">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
                     </q-select>
+                    <q-input dense outlined v-model="pedido.medida" v-else>
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
+                    </q-input>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
 <!--                    Otra:-->
@@ -93,7 +108,16 @@
                   </div>
                   <div class="col-6 col-md-2">
 <!--                    <q-input dense outlined v-model="pedido.cantidad" />-->
-                    <q-select dense outlined v-model="pedido.cantidad" :options="cantidades" @update:modelValue="precioSearch"/>
+                    <q-select dense outlined v-model="pedido.cantidad" :options="cantidades" @update:modelValue="precioSearch" v-if="!editProduct">
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
+                    </q-select>
+                    <q-input dense outlined v-model="pedido.cantidad" v-else>
+                      <template v-slot:after>
+                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                      </template>
+                    </q-input>
                   </div>
                   <div class="col-6 col-md-1 flex flex-center">
                     esp:
@@ -114,8 +138,7 @@
                   </div>
                   <div class="col-6 col-md-2 flex flex-center text-red text-bold">F Entrega:</div>
                   <div class="col-6 col-md-4">
-                    <q-select dense outlined v-model="pedido.fechaTexto" :options="['Una semana', 'Un mes']"
-                              @update:model-value="calculateFechaEntrega"/>
+                    <q-select dense outlined v-model="pedido.fechaTexto" :options="['Una semana', 'Fecha Especial']" @update:model-value="calculateFechaEntrega"/>
 <!--                    <q-input type="date" dense outlined v-model="pedido.fechaEntrega"/>-->
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
@@ -125,7 +148,7 @@
 <!--                    <q-input dense outlined v-model="pedido.terminacion" v-if="checkTerminacion"/>-->
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">F Especial:</div>
-                  <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEspecial"/></div>
+                  <div class="col-6 col-md-4"><q-input type="date" dense outlined v-model="pedido.fechaEspecial" v-if="pedido.fechaTexto === 'Fecha Especial'"/></div>
                   <div class="col-6 col-md-2 flex flex-center">Descripcion:</div>
                   <div class="col-6 col-md-4"><q-input dense outlined v-model="pedido.descripcion"/></div>
                   <div class="col-6 col-md-2 flex flex-center text-green text-bold">Precio</div>
@@ -338,6 +361,7 @@ export default {
   },
   data () {
     return {
+      editProduct: false,
       checkTerminacion: false,
       checkEnvio: false,
       tab: 'pedido',
