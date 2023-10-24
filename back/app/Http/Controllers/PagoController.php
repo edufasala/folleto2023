@@ -25,6 +25,7 @@ class PagoController extends Controller{
         $pago->user_id = $request->user()->id;
         $pago->pedido_id = $request->pedido_id;
         $pago->facturacion_id = $pedido->facturacion_id;
+        $pago->empresa_id = $pedido->empresa_id;
         $pago->save();
         return Pago::whereId($pago->id)->with('user')->first();
     }

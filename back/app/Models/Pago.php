@@ -21,6 +21,7 @@ class Pago extends Model implements Auditable
         'comentario',
         'user_id',
         'pedido_id',
+        'empresa_id',
     ];
     protected $appends = ['dni','nombre'];
     public function getDniAttribute()
