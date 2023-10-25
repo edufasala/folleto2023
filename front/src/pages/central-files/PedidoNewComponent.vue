@@ -55,7 +55,7 @@
                     </q-select>
                     <q-input dense outlined v-model="pedido.producto" v-else>
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -74,7 +74,7 @@
                     </q-select>
                     <q-input dense outlined v-model="pedido.gr" v-else>
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -93,7 +93,7 @@
                     </q-select>
                     <q-input dense outlined v-model="pedido.medida" v-else>
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -113,9 +113,9 @@
                         <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-select>
-                    <q-input dense outlined v-model="pedido.cantidad" v-else>
+                    <q-input dense outlined v-model="pedido.cantidad" v-else @update:modelValue="precioSearch" debounce="500">
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -123,7 +123,7 @@
                     esp:
                   </div>
                   <div class="col-6 col-md-1">
-                    <q-input dense outlined v-model="pedido.espº" />
+                    <q-input dense outlined v-model="pedido.esp" />
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
                     <q-checkbox v-model="checkTerminacion"/>
@@ -396,6 +396,16 @@ export default {
         })
     },
     precioSearch (cantidad) {
+      let cantidadEspaciado = 0
+      if (cantidad % 1000 === 0) {
+        cantidadEspaciado = parseInt(cantidad)
+      } else {
+        cantidadEspaciado = parseInt(cantidad) + 1000
+      }
+      // console.log(cantidadEspaciado)
+      const divisionEspaciado = cantidadEspaciado / 1000
+      // console.log(divisionEspaciado)
+      this.pedido.esp = parseInt(divisionEspaciado)
       this.$axios.get('precio/' + this.pedido.producto + '/' + this.pedido.gr + '/' + this.pedido.medida + '/' + cantidad)
         .then(response => {
           this.pedido.precioProducto = response.data

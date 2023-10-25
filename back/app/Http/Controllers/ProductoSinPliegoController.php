@@ -87,22 +87,19 @@ class ProductoSinPliegoController extends Controller{
             ->where('tamano',$tamano)
             ->where('fracciona',$fracciona)
             ->groupBy('precio')->get();
+        if (count($productoSinPliegoGr)>0){
+            return $productoSinPliegoGr[0]['precio'];
+        }
         $productoConPliegoGr = ProductoConPliego::select('precio')
             ->where('nombre',$nombreProducto)
             ->where('gr',$gr)
             ->where('tamano',$tamano)
             ->where('fracciona',$fracciona)
             ->groupBy('precio')->get();
-        $productos=[];
-        foreach ($productoSinPliegoGr as $sinPliego){
-            $producto = $sinPliego->precio;
-            array_push($productos,$producto);
+        if (count($productoConPliegoGr)>0){
+            return $productoConPliegoGr[0]['precio'];
         }
-        foreach ($productoConPliegoGr as $conPliego){
-            $producto = $conPliego->precio;
-            array_push($productos,$producto);
-        }
-        return $productos[0];
+        return 0;
     }
     public function show(ProductoSinPliego $productoSinPliego){ return $productoSinPliego; }
     public function store(StoreProductoSinPliegoRequest $request){
