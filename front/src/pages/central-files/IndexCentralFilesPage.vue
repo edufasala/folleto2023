@@ -88,20 +88,20 @@
                     </q-card-section>
                     <q-card-section class="q-pa-xs text-center bg-grey-1">
                       <div class="text-h5 text-bold text-red-7">
-                        $ 0
+                        $ {{aFavor}}
                       </div>
                     </q-card-section>
                   </q-card>
                 </div>
                 <div class="col-6">
                   <div class="row">
-                    <div class="col text-center q-pa-xs bg-red-8"></div>
-                    <div class="col text-center q-pa-xs bg-red-5"></div>
-                    <div class="col text-center q-pa-xs bg-yellow"></div>
-                    <div class="col text-center q-pa-xs bg-green-4"></div>
-                    <div class="col text-center q-pa-xs bg-green"></div>
+                    <div class="col cursor-pointer q-pa-xs bg-red-8" @click="credibilidadEmpresa(20)"></div>
+                    <div class="col cursor-pointer q-pa-xs bg-red-5" @click="credibilidadEmpresa(40)"></div>
+                    <div class="col cursor-pointer q-pa-xs bg-yellow" @click="credibilidadEmpresa(60)"></div>
+                    <div class="col cursor-pointer q-pa-xs bg-green-4" @click="credibilidadEmpresa(80)"></div>
+                    <div class="col cursor-pointer q-pa-xs bg-green" @click="credibilidadEmpresa(100)"></div>
                   </div>
-                  <div class="text-center text-bold text-caption">Credibilidad 50</div>
+                  <div class="text-center text-bold text-caption">Credibilidad {{empresa.credibilidad}}%</div>
                   <div class="text-center">
                     <q-btn dense label="Pago" no-caps color="blue" />
                     <q-btn dense icon="close" no-caps color="grey" />
@@ -248,6 +248,20 @@ export default {
     // this.empresaSearch({ id: 1 })
   },
   methods: {
+    credibilidadEmpresa (credibilidad) {
+      this.loading = true
+      this.empresa.credibilidad = credibilidad
+      this.$axios.post('empresaCredibilidad', {
+        empresa_id: this.empresa.id,
+        credibilidad: credibilidad
+      }).then(response => {
+        // this.empresaSearch(this.empresa)
+      }).catch(error => {
+        this.$alert(error.response.data.message)
+      }).finally(() => {
+        this.loading = false
+      })
+    },
     eliminarEmpresasSinPedidos () {
       this.$q.dialog({
         title: 'Eliminar Empresas',
@@ -396,6 +410,13 @@ export default {
     }
   },
   computed: {
+    aFavor () {
+      const sumDeudadPedido = parseFloat(this.empresa.sumDeudaPedido || 0)
+      // console.log(this.empresa)
+      const sumPagoEmpresa = parseFloat(this.empresa.sumPagoEmpresa || 0)
+      // console.log(sumPagoEmpresa)
+      return sumPagoEmpresa - sumDeudadPedido
+    },
     url () {
       const path = this.$route.path
       // console.log(path)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empresa;
 use App\Http\Requests\StoreEmpresaRequest;
 use App\Http\Requests\UpdateEmpresaRequest;
+use App\Models\Pago;
 use App\Models\Pedido;
 use App\Models\Person;
 use Carbon\Carbon;
@@ -79,7 +80,22 @@ class EmpresaController extends Controller{
             ->first();
         list($promedioDiasCompra, $proximoPedido) = $this->searchDiasProximoCompra($empresa);
         $empresa->proximoPedido = $proximoPedido;
+        $sumDeudaPedido = Pedido::where('empresa_id', $empresa->id)
+            ->where('estadoPedido', '!=', 'Terminado')
+            ->sum(DB::raw('precioProducto + precioDiseno + precioEspecificaciones + precioEnvio'));
+        $sumPagoEmpresa = Pago::where('empresa_id', $empresa->id)
+            ->sum('monto');
         $empresa->promedioDiasCompra = round($promedioDiasCompra, 2);
+        $empresa->sumDeudaPedido = $sumDeudaPedido;
+        $empresa->sumPagoEmpresa = $sumPagoEmpresa;
+        return $empresa;
+    }
+    public function empresaCredibilidad(Request $request){
+        $empresa_id = $request->empresa_id;
+        $credibilidad = $request->credibilidad;
+        $empresa = Empresa::find($empresa_id);
+        $empresa->credibilidad = $credibilidad;
+        $empresa->save();
         return $empresa;
     }
     public function store(StoreEmpresaRequest $request){
