@@ -567,7 +567,7 @@ export default {
           this.$axios.post('pedidos', this.pedido)
             .then(response => {
               this.loading = false
-              this.$alert.success('Pedido confirmado')
+              this.$alert.success('Pedido confirmado #' + response.data.id)
               this.pedido = this.pedidoDato
               this.$emit('empresaSearch', this.empresa)
               this.$emit('closeDialog')

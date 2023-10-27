@@ -68,6 +68,7 @@ class PedidoController extends Controller{
         $pedido->phone_id = isset($persona->phone[0]->id) ? $persona->phone[0]->id : null;
         $pedido->email_id = isset($persona->email[0]->id) ? $persona->email[0]->id : null;
         $pedido->save();
+        return $pedido;
     }
     public function show(Pedido $pedido){}
     public function update(UpdatePedidoRequest $request, $id){

@@ -5,62 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Statu;
 use App\Http\Requests\StoreStatuRequest;
 use App\Http\Requests\UpdateStatuRequest;
+use Illuminate\Http\Request;
 
-class StatuController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class StatuController extends Controller{
+    public function index(Request $request){
+        $pedido_id = $request->input('pedido_id');
+        return Statu::where('pedido_id', $pedido_id)->get();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreStatuRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Statu $statu)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Statu $statu)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateStatuRequest $request, Statu $statu)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Statu $statu)
-    {
-        //
+    public function store(Request $request){
+        $statu = new Statu();
+        $statu->fecha = date('Y-m-d');
+        $statu->hora = date('H:i:s');
+        $statu->realizado = $request->input('realizado');
+        $statu->nota = $request->input('nota');
+        $statu->pedido_id = $request->input('pedido_id');
+        $statu->user_id = $request->user()->id;
+        $statu->save();
+        return Statu::with('user')->find($statu->id);
     }
 }

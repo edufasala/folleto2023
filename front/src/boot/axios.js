@@ -23,7 +23,7 @@ export default boot(({ app, router }) => {
   app.config.globalProperties.$reporte = Reportes
   app.config.globalProperties.$roles = ['Administrador', 'Diseñador', 'Entregador', 'Vendedor', 'Gerente de ventas']
   app.config.globalProperties.$cargos = ['Administrador', 'Empleado', 'Dueño', 'Cliente', 'Marketing']
-  app.config.globalProperties.$metodoPago = ['EFECTIVO', 'TRANSFERENCIA', 'TARJETA', 'CHEQUE', 'OTRO']
+  app.config.globalProperties.$metodoPago = ['EFECTIVO', 'TRANSFERENCIA', 'DEPOSITO', 'MERCADO PAGO']
   app.config.globalProperties.$can = (permiso) => {
     if (useCounterStore().permisos.includes(permiso)) {
       return true

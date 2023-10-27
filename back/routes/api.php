@@ -60,6 +60,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('tamano/{nombreProducto}/{gr}', [\App\Http\Controllers\ProductoSinPliegoController::class, 'tamano']);
     Route::resource('textProducto', \App\Http\Controllers\TextProductoController::class);
     Route::get('productos', [\App\Http\Controllers\ProductoSinPliegoController::class, 'productos']);
+    Route::resource('status', \App\Http\Controllers\StatuController::class);
     Route::resource('textTerminacion', \App\Http\Controllers\TextTerminacionController::class);
     Route::resource('conPliegos', \App\Http\Controllers\ProductoConPliegoController::class);
     Route::resource('sinPliegos', \App\Http\Controllers\ProductoSinPliegoController::class);

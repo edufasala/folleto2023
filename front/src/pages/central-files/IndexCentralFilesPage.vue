@@ -28,7 +28,7 @@
       <div class="row" v-if="empresa.id">
         <div class="col-12 col-md-8">
           <q-item>
-            <q-item-section top avatar>
+            <q-item-section top avatar class="q-pl-lg">
               <q-btn dense flat icon="menu" color="grey" no-caps
                      :loading="loading" @click="ocultar = !ocultar" style="position: absolute; left: 0;">
                 <q-tooltip>

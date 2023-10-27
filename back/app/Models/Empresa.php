@@ -28,7 +28,8 @@ class Empresa extends Model implements Auditable
         WHEN estadoPedido = 'Cancelado' THEN 5
         WHEN estadoPedido = 'Terminado' THEN 6
         ELSE 7
-    END
+    END,
+    fecha ASC
 ");
     }
     public function getCodigoAttribute()

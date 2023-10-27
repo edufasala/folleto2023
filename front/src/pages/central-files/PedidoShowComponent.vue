@@ -244,6 +244,9 @@
               <q-tab-panel style="height: 300px;width: 650px" name="status">
                 <div class="row">
                   <div class="col-12 col-md-12">
+                    <div class="text-right">
+                      <q-btn dense flat icon="add_circle_outline" color="green" size="10px" @click="statusClick"  label="Agregar Status" no-caps />
+                    </div>
                     <q-markup-table wrapCells separator="horizontal" dense>
                       <thead>
                       <tr class="bg-black text-white">
@@ -339,6 +342,41 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="statusDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-subtitle1">Agregar Status</div>
+          <q-space />
+          <q-btn flat dense icon="cancel" v-close-popup />
+        </q-card-section>
+        <q-card-section>
+          <q-form>
+            <q-select
+              filled
+              v-model="statu.realizado"
+              label="Realizo"
+              color="primary"
+              :options="['Venta','Entrega','Facturacion','Pago','Envio','Entregado','Cancelado','Pedido']"
+              :rules="[val => !!val || 'Campo requerido']"
+            />
+            <q-input
+              filled
+              type="textarea"
+              v-model="statu.nota"
+              label="Nota"
+              color="primary"
+            />
+            <q-btn
+              color="primary"
+              label="Agregar"
+              class="full-width"
+              :loading="loading"
+              @click="statusSubmit"
+            />
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 <script>
@@ -361,6 +399,12 @@ export default {
       tab: 'pedido',
       pedidoDato: {},
       loading: false,
+      statu: {
+        realizado: 'Pedido',
+        nota: '',
+        pedido_id: this.pedido.id
+      },
+      statusDialog: false,
       pago: {
         tipo: 'PAGO',
         monto: '0',
@@ -374,6 +418,14 @@ export default {
     this.pedidoDato = this.pedido
   },
   methods: {
+    statusClick () {
+      this.statu = {
+        realizado: 'Pedido',
+        nota: '',
+        pedido_id: this.pedido.id
+      }
+      this.statusDialog = true
+    },
     cancelarClick () {
       this.loading = true
       this.$axios.put(`pedidos/${this.pedido.id}`, { estadoPedido: 'Cancelado' })
@@ -390,6 +442,24 @@ export default {
     },
     pagoDialogClick () {
       this.pagoDialog = true
+    },
+    statusSubmit () {
+      this.loading = true
+      this.$axios.post('status', this.statu)
+        .then(response => {
+          this.$alert.success('Status agregado')
+          this.pedidoDato.status.push(response.data)
+          this.statu = {
+            realizado: 'Pedido',
+            nota: '',
+            pedido_id: this.pedido.id
+          }
+          this.statusDialog = false
+        }).catch(error => {
+          this.$alert.error(error.response.data.message)
+        }).finally(() => {
+          this.loading = false
+        })
     },
     pagoSubmit () {
       this.loading = true

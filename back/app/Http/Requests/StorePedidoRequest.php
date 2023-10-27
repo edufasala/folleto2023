@@ -26,7 +26,7 @@ class StorePedidoRequest extends FormRequest
             'producto' => 'nullable|string',
             'medida' => 'nullable|string',
             'cantidad' => 'nullable|string',
-            'esp' => 'nullable|string',
+            'esp' => 'nullable',
             'gr' => 'nullable|string',
             'lados' => 'nullable|string',
             'diseno' => 'nullable|string',
