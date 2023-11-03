@@ -66,7 +66,7 @@
                   <q-item-section side top>
                     <q-item-label>
                       Vendedor: <b>{{empresa.vendedor}}</b><br>
-                      Contacto: <b>{{empresa.contacto}}</b><br>
+                      Como nos encontro: <b>{{empresa.contacto}}</b><br>
                       Inicio: <b v-if="empresa.created_at">
                       {{$filters.shortDate(empresa.created_at)}}
                     </b>
@@ -161,7 +161,7 @@
                        :rules="[val => !!val || 'El nombre es requerido']"/>
             </div>
             <div class="col-12">
-              <q-input dense outlined v-model="empresa.contacto" label="Contacto"
+              <q-input dense outlined v-model="empresa.contacto" label="Como nos encontró" type="text"
                         :rules="[val => !!val || 'El contacto es requerido']"/>
             </div>
             <div class="col-12">
@@ -315,8 +315,8 @@ export default {
       this.loading = true
       if (this.empresaOption === 'create') {
         this.$axios.post('empresas', this.empresa).then(response => {
-          this.getEmpresas()
-          this.empresaSearch({ id: response.data.id })
+          // this.getEmpresas('', this.filter)
+          // this.empresaSearch({ id: response.data.id })
           this.empresaDialog = false
         }).catch(error => {
           this.$alert.error(error)
@@ -325,7 +325,7 @@ export default {
         })
       } else {
         this.$axios.put('empresas/' + this.empresa.id, this.empresa).then(response => {
-          this.getEmpresas()
+          this.getEmpresas('', this.filter)
           this.empresaDialog = false
         }).catch(error => {
           this.$alert.error(error)
