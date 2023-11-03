@@ -95,11 +95,21 @@
                 </div>
                 <div class="col-6">
                   <div class="row">
-                    <div class="col cursor-pointer q-pa-xs bg-red-8" @click="credibilidadEmpresa(20)"></div>
-                    <div class="col cursor-pointer q-pa-xs bg-red-5" @click="credibilidadEmpresa(40)"></div>
-                    <div class="col cursor-pointer q-pa-xs bg-yellow" @click="credibilidadEmpresa(60)"></div>
-                    <div class="col cursor-pointer q-pa-xs bg-green-4" @click="credibilidadEmpresa(80)"></div>
-                    <div class="col cursor-pointer q-pa-xs bg-green" @click="credibilidadEmpresa(100)"></div>
+                    <div class="col cursor-pointer q-pa-none q-ma-none bg-red-8 text-center" @click="credibilidadEmpresa(20)">
+                      <span class="text-bold">20</span>
+                    </div>
+                    <div class="col cursor-pointer q-pa-none q-ma-none bg-red-5 text-center" @click="credibilidadEmpresa(40)">
+                      <span class="text-bold">40</span>
+                    </div>
+                    <div class="col cursor-pointer q-pa-none q-ma-none bg-yellow text-center" @click="credibilidadEmpresa(60)">
+                      <span class="text-bold">60</span>
+                    </div>
+                    <div class="col cursor-pointer q-pa-none q-ma-none bg-green-4 text-center" @click="credibilidadEmpresa(80)">
+                      <span class="text-bold">80</span>
+                    </div>
+                    <div class="col cursor-pointer q-pa-none q-ma-none bg-green text-center" @click="credibilidadEmpresa(100)">
+                      <span class="text-bold">100</span>
+                    </div>
                   </div>
                   <div class="text-center text-bold text-caption">Credibilidad {{empresa.credibilidad}}%</div>
                   <div class="text-center">

@@ -478,6 +478,7 @@ export default {
             pedido_id: this.pedido.id
           }
           this.pagoDialog = false
+          this.$emit('empresaSearch', this.empresa)
         }).catch(error => {
           this.$alert.error(error.response.data.message)
         }).finally(() => {
