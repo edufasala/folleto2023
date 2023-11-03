@@ -30,7 +30,7 @@
 <!--              </q-btn>-->
             </div>
             <div class="col-12">
-              Condicional: <b>{{d.condicional}}</b>
+              Condicion: <b>{{d.condicional}}</b>
             </div>
             <div class="col-12">
               Razon Social: <b>{{d.razonSocial}}</b>
@@ -58,7 +58,7 @@
                          :rules="[val => !!val || 'El CUIT/CUIL es requerido']"/>
               </div>
               <div class="col-12">
-                <q-input dense outlined v-model="facturacionDato.condicional" label="Condicional"
+                <q-input dense outlined v-model="facturacionDato.condicional" label="Condicion"
                          :rules="[val => !!val || 'La condicional es requerida']"/>
               </div>
               <div class="col-12">

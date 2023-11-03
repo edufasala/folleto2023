@@ -20,6 +20,7 @@ class Pedido extends Model implements Auditable
         'lados',
         'diseno',
         'descripcion',
+        'descripcionEnvio', // 'descripcionEnvio
         'estado',
         'estadoPedido',
         'diasCompra',

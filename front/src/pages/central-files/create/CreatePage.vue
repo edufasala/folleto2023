@@ -26,7 +26,7 @@
                          :input-style="{ fontSize: '12px' }" />
               </div>
               <div class="col-4 flex flex-center">
-                Contacto:
+                Como nos encontro:
               </div>
               <div class="col-8">
                 <q-input dense
@@ -109,11 +109,11 @@ export default {
         medida: '',
         cantidad: '',
         esp: '',
-        gr: '150',
-        lados: '2 lados diferentes',
-        diseno: 'nuevo',
+        gr: '',
+        lados: '',
+        diseno: '',
         descripcion: '',
-        estado: 'Diseño',
+        estado: '',
         fechaTexto: '',
         estadoPedido: 'Activo',
         fecha: date.formatDate(new Date(), 'YYYY-MM-DD'),

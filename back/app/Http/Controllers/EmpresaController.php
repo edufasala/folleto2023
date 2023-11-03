@@ -120,22 +120,64 @@ class EmpresaController extends Controller{
         error_log(json_encode($request->empresa['person']));
         DB::beginTransaction();
         $empresa = Empresa::create($request->empresa);
-        $persona = Person::create([
-            'nombre' => $request->empresa['person'][0]['nombre'],//['nombre'
-            'cargo' => $request->empresa['person'][0]['cargo'],//['cargo'
-            'dni' => $request->empresa['person'][0]['dni'],//['dni'
-            'empresa_id' => $empresa->id,
-        ]);
-        $phone = $persona->phone()->create([
-            'phone' => $request->empresa['person'][0]['phone'][0]['phone'],//['phone'
-        ]);
-        $email = $persona->email()->create([
-            'email' => $request->empresa['person'][0]['email'][0]['email'],//['email'
-        ]);
-        $sucursal = $empresa->sucursals()->create([
-            'nombre' => $request->empresa['sucursals'][0]['nombre'],//['nombre'
-            'comentario' => $request->empresa['sucursals'][0]['comentario'],//['comentario'
-        ]);
+        foreach ($request->empresa['person'] as $person) {
+            $persona = Person::create([
+                'nombre' => $person['nombre'],//['nombre'
+                'cargo' => $person['cargo'],//['cargo'
+                'dni' => $person['dni'],//['dni'
+                'empresa_id' => $empresa->id,
+            ]);
+            $phone = $persona->phone()->create([
+                'phone' => $person['phone'][0]['phone'],//['phone'
+            ]);
+            $email = $persona->email()->create([
+                'email' => $person['email'][0]['email'],//['email'
+            ]);
+        }
+//        $persona = Person::create([
+//            'nombre' => $request->empresa['person'][0]['nombre'],//['nombre'
+//            'cargo' => $request->empresa['person'][0]['cargo'],//['cargo'
+//            'dni' => $request->empresa['person'][0]['dni'],//['dni'
+//            'empresa_id' => $empresa->id,
+//        ]);
+//        $phone = $persona->phone()->create([
+//            'phone' => $request->empresa['person'][0]['phone'][0]['phone'],//['phone'
+//        ]);
+//        $email = $persona->email()->create([
+//            'email' => $request->empresa['person'][0]['email'][0]['email'],//['email'
+//        ]);
+
+
+//        $sucursal = $empresa->sucursals()->create([
+//            'nombre' => $request->empresa['sucursals'][0]['nombre'],//['nombre'
+//            'comentario' => $request->empresa['sucursals'][0]['comentario'],//['comentario'
+//        ]);
+        foreach ($request->empresa['sucursals'] as $sucursal) {
+            $sucursal = $empresa->sucursals()->create([
+                'nombre' => $sucursal['nombre'],//['nombre'
+                'comentario' => $sucursal['comentario'],//['comentario'
+            ]);
+        }
+
+        foreach ($request->empresa['direccion'] as $direccion) {
+            $direccion = $empresa->direccion()->create([
+                'direccion' => $direccion['direccion'],//['direccion'
+                'codigoPostal' => $direccion['codigoPostal'],//['codigoPostal'
+                'localidad' => $direccion['localidad'],//['localidad'
+            ]);
+//            $phoneDireccion = $direccion->phoneDireccions()->create([
+//                'phone' => $direccion['phoneDireccions'][0]['phone'],//['phone'
+//            ]);
+        }
+//        facturacion
+        foreach ($request->empresa['facturacion'] as $facturacion) {
+            $facturacion = $empresa->facturacion()->create([
+                'cuit' => $facturacion['cuit'],//['cuit'
+                'condicional' => $facturacion['condicional'],//['condicional'
+                'razonSocial' => $facturacion['razonSocial'],//['razonSocial'
+                'comentario' => $facturacion['comentario'],//['comentario'
+            ]);
+        }
         $pedido = new Pedido();
         $pedido->codigo = 1;
         $pedido->producto = $request->pedido['producto'];//['producto'
@@ -177,7 +219,31 @@ class EmpresaController extends Controller{
         $pedido->email_id = isset($persona->email[0]->id) ? $persona->email[0]->id : null;
         $pedido->save();
         DB::commit();
-        return $empresa;
+
+        $empresa= Empresa::where('id', $empresa->id)
+            ->with([
+                'direccion.phoneDireccions',
+                'facturacion',
+                'sucursals',
+                'person.phone',
+                'person.email',
+                'notes.user',
+                'pedidos.user',
+                'pedidos.sucursal',
+                'pedidos.person',
+                'pedidos.direccion',
+                'pedidos.facturacion',
+                'pedidos.phone',
+                'pedidos.email',
+                'pedidos.pagos.user',
+                'pedidos.status.user',
+            ])
+            ->first();
+
+        return response()->json([
+            'empresa' => $empresa,
+            'pedido' => $pedido,
+        ], 200);
     }
     public function update(UpdateEmpresaRequest $request, $id){
         $empresa = Empresa::findOrFail($id);

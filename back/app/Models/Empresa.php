@@ -30,7 +30,7 @@ class Empresa extends Model implements Auditable
         WHEN estadoPedido = 'Terminado' THEN 6
         ELSE 7
     END,
-    fecha ASC
+    id desc
 ");
     }
     public function getCodigoAttribute()

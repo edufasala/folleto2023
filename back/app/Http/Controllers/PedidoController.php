@@ -38,6 +38,7 @@ class PedidoController extends Controller{
         $pedido->lados = $request->lados;
         $pedido->diseno = $request->diseno;
         $pedido->descripcion = $request->descripcion;
+        $pedido->descripcionEnvio = $request->descripcionEnvio;
         $pedido->estado = 'Diseño';
         $pedido->estadoPedido = 'Activo';
         $pedido->fecha = date('Y-m-d');

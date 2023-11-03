@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-pa-xs" style="max-width: 950px">
     <q-card-section class="q-py-xs row items-center">
-      <div class="text-h5 text-bold"> Pedido # {{pedidoDato.codigo}}</div>
+      <div class="text-h5 text-bold"> Pedido # {{pedidoDato.id}}</div>
       <q-space />
       <div class="text-right formatFecha">
         <div>Fecha de Pedido <span class="text-bold">{{$filters.datedMy(pedido.fecha)}}</span></div>
@@ -115,7 +115,7 @@
                       <div class="col-4">CP:</div>
                       <div class="col-8 text-bold" v-if="pedidoDato.direccion">{{ pedidoDato.direccion.codigoPostal }}</div>
                       <div class="col-4">Descripcion:</div>
-                      <div class="col-8 text-bold">{{ pedidoDato.descripcion }}</div>
+                      <div class="col-8 text-bold">{{ pedidoDato.descripcionEnvio }}</div>
                     </div>
                   </div>
                 </div>
@@ -147,12 +147,12 @@
                           <q-space />
                           <div class="text-bold">$ {{ pedidoDato.precioEnvio }}</div>
                         </div>
-                        <div class="row items-center q-px-xs">
-                          IVA <span class="text-red">({{pedidoDato.iva}})</span>
-                          <q-space />
-<!--                          <div class="text-bold">$ {{ $filters.iva(pedidoDato.precioTotal, pedidoDato.iva) }}</div>-->
-                          <div class="text-bold">$ {{ precioIva }}</div>
-                        </div>
+<!--                        <div class="row items-center q-px-xs">-->
+<!--                          IVA <span class="text-red">({{pedidoDato.iva}})</span>-->
+<!--                          <q-space />-->
+<!--&lt;!&ndash;                          <div class="text-bold">$ {{ $filters.iva(pedidoDato.precioTotal, pedidoDato.iva) }}</div>&ndash;&gt;-->
+<!--                          <div class="text-bold">$ {{ precioIva }}</div>-->
+<!--                        </div>-->
                         <div class="row items-center q-px-xs bg-black text-white">
                           TOTAL
                           <q-space />
@@ -279,7 +279,8 @@
             <q-btn no-caps :loading="loading" label="Stand by" color="dark" class="w-100" v-close-popup />
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
-            <q-btn no-caps :loading="loading" label="Cancelar" color="red" class="w-100" @click="cancelarClick" />
+            <q-btn no-caps :loading="loading" label="Cancelar" color="red" class="w-100" @click="cancelarClick"
+              v-if="pedidoDato.estadoPedido !== 'Terminados' && pedidoDato.estadoPedido !== 'Cancelado'"/>
           </div>
           <div class="col-4 col-md-2 text-center q-pa-xs">
 <!--            orange-->

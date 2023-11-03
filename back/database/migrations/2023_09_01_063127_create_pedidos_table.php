@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('lados')->nullable();
             $table->string('diseno')->nullable();
             $table->string('descripcion')->nullable();
+            $table->string('descripcionEnvio')->nullable();
             $table->string('estado')->nullable()
                 ->comment('En donde se ecuentra el pedido (Diseño, Impresion, Taller, Terminacion, Entregas)');
             $table->string('estadoPedido')->nullable()

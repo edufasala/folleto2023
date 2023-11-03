@@ -50,12 +50,14 @@
                   <div class="col-6 col-md-4">
                     <q-select v-if="!editProduct" dense outlined v-model="pedido.producto" :options="productos" @update:modelValue="grSearch">
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="o_edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-select>
                     <q-input dense outlined v-model="pedido.producto" v-else>
                       <template v-slot:after>
-                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -69,12 +71,14 @@
                   <div class="col-6 col-md-4">
                     <q-select v-if="!editProduct" dense outlined v-model="pedido.gr" :options="grs" @update:modelValue="tamanoSearch">
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="o_edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-select>
                     <q-input dense outlined v-model="pedido.gr" v-else>
                       <template v-slot:after>
-                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -88,12 +92,14 @@
                   <div class="col-6 col-md-4">
                     <q-select dense outlined v-model="pedido.medida" :options="medidas" @update:modelValue="cantidadSearch" v-if="!editProduct">
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="o_edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-select>
                     <q-input dense outlined v-model="pedido.medida" v-else>
                       <template v-slot:after>
-                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -110,12 +116,14 @@
 <!--                    <q-input dense outlined v-model="pedido.cantidad" />-->
                     <q-select dense outlined v-model="pedido.cantidad" :options="cantidades" @update:modelValue="precioSearch" v-if="!editProduct">
                       <template v-slot:after>
-                        <q-btn flat dense icon="o_edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="o_edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-select>
                     <q-input dense outlined v-model="pedido.cantidad" v-else @update:modelValue="precioSearch" debounce="500">
                       <template v-slot:after>
-                        <q-btn flat dense icon="edit" color="orange" rounded @click="editProduct = !editProduct"/>
+                        <q-btn flat dense icon="edit" :color="!editProduct ? 'orange' : 'green'"
+                               rounded @click="editProduct = !editProduct"/>
                       </template>
                     </q-input>
                   </div>
@@ -194,7 +202,7 @@
                       <div class="col-6 col-md-4 flex flex-center">CodigoPostal:</div>
                       <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.direccion.codigoPostal" readonly v-if="pedido.direccion"/></div>
                       <div class="col-6 col-md-4 flex flex-center">Descripcion:</div>
-                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.descripcion"/></div>
+                      <div class="col-6 col-md-8"><q-input dense outlined v-model="pedido.descripcionEnvio"/></div>
                     </div>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center text-green text-bold">Precio Diseño:</div>
@@ -205,7 +213,7 @@
               </q-tab-panel>
               <q-tab-panel style="height: 350px" name="pago">
                 <div class="row">
-                  <div class="col-6 col-md-2 flex flex-center">Pago:</div>
+                  <div class="col-6 col-md-2 flex flex-center">Seña:</div>
                   <div class="col-6 col-md-3"><q-input dense outlined v-model="pedido.pago" /></div>
                   <div class="col-6 col-md-1 flex flex-center">Iva:</div>
                   <div class="col-6 col-md-3">
@@ -301,14 +309,14 @@
                         <td class="text-left"></td>
                         <td class="text-right">${{pedido.precioEspecificaciones}}</td>
                       </tr>
-                      <tr>
-                        <td class="text-left">1</td>
-                        <td class="text-left">Iva {{pedido.iva}}%</td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-right">${{precioIva}}</td>
-                      </tr>
+<!--                      <tr>-->
+<!--                        <td class="text-left">1</td>-->
+<!--                        <td class="text-left">Iva {{pedido.iva}}%</td>-->
+<!--                        <td class="text-left"></td>-->
+<!--                        <td class="text-left"></td>-->
+<!--                        <td class="text-left"></td>-->
+<!--                        <td class="text-right">${{precioIva}}</td>-->
+<!--                      </tr>-->
                       <tr>
                         <td colspan="5" class="text-right text-bold">Total</td>
                         <td class="text-right bg-black text-white text-bold">${{precioTotal + precioIva}}</td>
@@ -371,7 +379,7 @@ export default {
       grs: [],
       medidas: [],
       cantidades: [],
-      lados: ['1 Lado', '2 Lado'],
+      lados: ['1 Lado', '2 Lado', 'Lados diferentes'],
       disenos: [],
       terminaciones: []
     }
@@ -552,9 +560,16 @@ export default {
           })
             .then(response => {
               this.loading = false
-              this.$alert.success('Pedido confirmado')
+              this.$q.notify({
+                message: 'Pedido confirmado #' + response.data.pedido.id,
+                color: 'green',
+                closeBtn: 'x',
+                icon: 'check_circle',
+                position: 'top',
+                timeout: 200000
+              })
               this.pedido = this.pedidoDato
-              this.$emit('empresaSearch', this.empresa)
+              this.$emit('empresaSearch', response.data.empresa)
               this.$emit('closeDialog')
               this.$router.push('/central-files')
             })
@@ -567,7 +582,15 @@ export default {
           this.$axios.post('pedidos', this.pedido)
             .then(response => {
               this.loading = false
-              this.$alert.success('Pedido confirmado #' + response.data.id)
+              // this.$alert.success('Pedido confirmado #' + response.data.id)
+              this.$q.notify({
+                message: 'Pedido confirmado #' + response.data.id,
+                color: 'green',
+                closeBtn: 'x',
+                icon: 'check_circle',
+                position: 'top',
+                timeout: 200000
+              })
               this.pedido = this.pedidoDato
               this.$emit('empresaSearch', this.empresa)
               this.$emit('closeDialog')
