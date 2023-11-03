@@ -405,7 +405,7 @@ export default {
           console.log(error)
         }).finally(() => {
           this.loading = false
-          this.ocultar = false
+          // this.ocultar = false
         })
     }
   },
