@@ -1,7 +1,16 @@
 <template>
       <div class="row">
         <div class="col-12 row items-center q-pa-none">
-          <div class="text-bold">PERSONAS</div>
+          <div class="text-bold">
+            PERSONAS
+            <q-icon :name="empresa.confiable == 'SI' ? 'lock_open' : 'lock'"
+                    size="18px" :color="empresa.confiable == 'SI' ? 'green' : 'red'" @click="changeConfiabilidad(empresa)">
+              <q-tooltip>
+                {{empresa.confiable}}
+              </q-tooltip>
+            </q-icon>
+<!--            <pre>{{empresa.confiable}}</pre>-->
+          </div>
           <q-space />
           <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="personDialogClick">
             <q-tooltip>Crear</q-tooltip>
@@ -244,6 +253,18 @@ export default {
           this.loading = false
         })
       }
+    },
+    changeConfiabilidad (empresa) {
+      this.loading = true
+      this.$axios.put('empresas/' + empresa.id, {
+        confiable: empresa.confiable === 'SI' ? 'NO' : 'SI'
+      }).then(response => {
+        this.$emit('empresaSearch', this.empresa)
+      }).catch(error => {
+        this.$alert.error(error)
+      }).finally(() => {
+        this.loading = false
+      })
     },
     personDialogClick () {
       this.personDialog = true

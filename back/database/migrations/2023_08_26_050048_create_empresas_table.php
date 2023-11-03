@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('contacto')->nullable();
             $table->string('vendedor')->nullable();
+            $table->string('confiable')->nullable()->default('SI');
             $table->integer('credibilidad')->nullable();
             $table->softDeletes();
             $table->timestamps();

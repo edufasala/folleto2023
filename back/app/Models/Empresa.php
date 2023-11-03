@@ -15,6 +15,7 @@ class Empresa extends Model implements Auditable
         'contacto',
         'vendedor',
         'credibilidad',
+        'confiable',
     ];
     protected $appends = ['codigo'];
     public function pedidos()

@@ -36,7 +36,9 @@
                 </q-tooltip>
               </q-btn>
                 <q-avatar size="100px" color="grey-3">
-                  <q-icon name="account_circle" size="90px" />
+                  <q-icon :name="empresa.confiable === 'SI' ? 'account_circle' : 'warning'"
+                          :color="empresa.confiable === 'SI' ? 'grey-8' : 'orange-6'"
+                          size="90px" />
                 </q-avatar>
             </q-item-section>
             <q-item-section>
