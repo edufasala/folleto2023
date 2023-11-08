@@ -265,7 +265,7 @@ export default {
       this.empresa.credibilidad = credibilidad
       this.$axios.post('empresaCredibilidad', {
         empresa_id: this.empresa.id,
-        credibilidad: credibilidad
+        credibilidad
       }).then(response => {
         // this.empresaSearch(this.empresa)
       }).catch(error => {

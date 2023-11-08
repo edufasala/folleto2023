@@ -19,7 +19,7 @@
                 <q-btn flat round icon="refresh" @click="usersGet" :loading="loading">
                   <q-tooltip>Actualizar</q-tooltip>
                 </q-btn>
-                <q-input outlined dense v-model="userFilterActive" debounce="500" placeholder="Buscar" class="bg-white" clearable>
+                <q-input outlined dense v-model="userFilterActive" debounce="500" placeholder="Buscar" class="bg-white" clearable name="search" id="search">
                   <template v-slot:append>
                     <q-icon name="search" class="cursor-pointer">
                       <q-tooltip>Buscar</q-tooltip>
@@ -226,6 +226,10 @@ export default {
       })
     },
     userSubmit () {
+      if (this.user.roles[0].id === '') {
+        this.$alert.error('Debe seleccionar un rol')
+        return
+      }
       this.loading = true
       if (this.userOption === 'add') {
         this.$axios.post('users',
@@ -327,7 +331,12 @@ export default {
         message: 'Ingrese la nueva contraseña',
         prompt: {
           model: '',
-          type: 'password'
+          type: 'text',
+          attrs: {
+            maxlength: 20
+          },
+          outlined: true,
+          noParentEvent: true
         },
         cancel: true
       }).onOk(data => {

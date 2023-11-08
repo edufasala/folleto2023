@@ -184,12 +184,12 @@
                 <q-item-label class="text-uppercase text-bold">Tesoreria</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable to="/facturas" class="color-menu left-pink" active-class="text-white" v-if="$can('Facturas')">
-              <q-item-section avatar><q-icon name="o_receipt" /></q-item-section>
-              <q-item-section>
-                <q-item-label class="text-uppercase text-bold">Facturas</q-item-label>
-              </q-item-section>
-            </q-item>
+<!--            <q-item clickable to="/facturas" class="color-menu left-pink" active-class="text-white" v-if="$can('Facturas')">-->
+<!--              <q-item-section avatar><q-icon name="o_receipt" /></q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label class="text-uppercase text-bold">Facturas</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
             <q-item clickable to="/diseno" class="color-menu left-green" active-class="text-white" v-if="$can('Diseño')">
               <q-item-section avatar><q-icon name="o_palette" /></q-item-section>
               <q-item-section>

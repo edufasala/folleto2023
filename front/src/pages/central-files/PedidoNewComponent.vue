@@ -379,7 +379,7 @@ export default {
       grs: [],
       medidas: [],
       cantidades: [],
-      lados: ['1 Lado', '2 Lado', 'Lados diferentes'],
+      lados: ['1 Lado', '2 Lado', '2 lados distintos'],
       disenos: [],
       terminaciones: []
     }
