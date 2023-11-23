@@ -11,7 +11,7 @@
       <q-card>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="activos">
-            <q-table dense :rows="userActive" :rows-per-page-options="[0]"
+            <q-table dense :rows="userActive"
                      :loading="loading" :wrap-cells="true" flat bordered
                      :columns="usersColumn" :filter="userFilterActive">
               <template v-slot:top-right>
@@ -69,7 +69,7 @@
             </q-table>
           </q-tab-panel>
           <q-tab-panel name="inactivos" class="">
-            <q-table dense :rows="userInactive" :rows-per-page-options="[0]"
+            <q-table dense :rows="userInactive"
                      :loading="loading" :wrap-cells="true" flat bordered
                      :columns="usersColumn" :filter="userFilterInactive">
               <template v-slot:top-right>
@@ -138,7 +138,8 @@
         <q-card-section class="q-py-none">
           <q-form @submit="userSubmit(user)">
             <q-input dense outlined v-model="user.name" label="Nombre" :loading="loading" required/>
-            <q-input dense outlined v-model="user.email" label="Correo" :loading="loading" required/>
+            <q-input dense outlined v-model="user.email" label="Correo" :loading="loading" required name="correo" id="correo"
+                      :rules="[val => /.+@.+\..+/.test(val) || 'Correo inválido']"/>
             <q-input dense outlined v-model="user.password" label="Contraseña"
                      :loading="loading" require v-if="userOption=='add'" type="password"/>
             <q-input dense outlined v-model="user.password_confirmation" label="Confirmar contraseña"

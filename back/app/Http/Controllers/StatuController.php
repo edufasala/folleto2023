@@ -13,12 +13,13 @@ class StatuController extends Controller{
         return Statu::where('pedido_id', $pedido_id)->get();
     }
     public function store(Request $request){
+        error_log("asa".json_encode($request->all()));
         $statu = new Statu();
         $statu->fecha = date('Y-m-d');
         $statu->hora = date('H:i:s');
-        $statu->realizado = $request->input('realizado');
-        $statu->nota = $request->input('nota');
-        $statu->pedido_id = $request->input('pedido_id');
+        $statu->realizado = $request->realizado;
+        $statu->nota = $request->nota;
+        $statu->pedido_id = $request->pedido_id;
         $statu->user_id = $request->user()->id;
         $statu->save();
         return Statu::with('user')->find($statu->id);

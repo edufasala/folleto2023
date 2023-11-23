@@ -90,7 +90,7 @@
                     </q-card-section>
                     <q-card-section class="q-pa-xs text-center bg-grey-1">
                       <div class="text-h5 text-bold text-red-7">
-                        $ {{aFavor}}
+                        $ {{(aFavor).toFixed(2)}}
                       </div>
                     </q-card-section>
                   </q-card>

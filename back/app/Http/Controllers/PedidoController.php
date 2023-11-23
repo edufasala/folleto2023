@@ -7,6 +7,7 @@ use App\Http\Requests\StorePedidoRequest;
 use App\Http\Requests\UpdatePedidoRequest;
 use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller{
     public function revisionPedidos(){
@@ -28,6 +29,7 @@ class PedidoController extends Controller{
     public function index(){}
     public function store(StorePedidoRequest $request){
 //        error_log("asa".json_encode($request->person));
+        DB::beginTransaction();
         $pedido = new Pedido();
         $pedido->codigo = $request->codigo;
         $pedido->producto = $request->producto;
@@ -69,6 +71,12 @@ class PedidoController extends Controller{
         $pedido->phone_id = isset($persona->phone[0]->id) ? $persona->phone[0]->id : null;
         $pedido->email_id = isset($persona->email[0]->id) ? $persona->email[0]->id : null;
         $pedido->save();
+        $statusController = new StatuController();
+        $request->merge(['realizado' => 'Pedido creado']);
+        $request->merge(['nota' => 'Pedido creado']);
+        $request->merge(['pedido_id' => $pedido->id]);
+        $statusController->store($request);
+        DB::commit();
         return $pedido;
     }
     public function show(Pedido $pedido){}
