@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\error;
 
 class EmpresaController extends Controller{
+
     public function index(Request $request){
-//        $this->eliminarEmpresasSinPedidos();
         $search = $request->search;
         $filter = $request->filter;
         $search = $search=='null'?'':$search;
@@ -51,6 +51,7 @@ class EmpresaController extends Controller{
             return $empresas;
         }
     }
+
     public function eliminarEmpresasSinPedidos(){
         Empresa::whereNotExists(function ($query) {
             $query->select(DB::raw(1))
@@ -58,6 +59,7 @@ class EmpresaController extends Controller{
                 ->whereRaw('pedidos.empresa_id = empresas.id');
         })->delete();
     }
+
     public function show(Empresa $empresa){
         $empresa= Empresa::where('id', $empresa->id)
             ->with([
@@ -116,6 +118,7 @@ class EmpresaController extends Controller{
         DB::commit();
         return $empresa;
     }
+
     public function createEmpresaTotal(Request $request){
         error_log(json_encode($request->empresa['person']));
         DB::beginTransaction();
@@ -134,24 +137,7 @@ class EmpresaController extends Controller{
                 'email' => $person['email'][0]['email'],//['email'
             ]);
         }
-//        $persona = Person::create([
-//            'nombre' => $request->empresa['person'][0]['nombre'],//['nombre'
-//            'cargo' => $request->empresa['person'][0]['cargo'],//['cargo'
-//            'dni' => $request->empresa['person'][0]['dni'],//['dni'
-//            'empresa_id' => $empresa->id,
-//        ]);
-//        $phone = $persona->phone()->create([
-//            'phone' => $request->empresa['person'][0]['phone'][0]['phone'],//['phone'
-//        ]);
-//        $email = $persona->email()->create([
-//            'email' => $request->empresa['person'][0]['email'][0]['email'],//['email'
-//        ]);
 
-
-//        $sucursal = $empresa->sucursals()->create([
-//            'nombre' => $request->empresa['sucursals'][0]['nombre'],//['nombre'
-//            'comentario' => $request->empresa['sucursals'][0]['comentario'],//['comentario'
-//        ]);
         foreach ($request->empresa['sucursals'] as $sucursal) {
             $sucursal = $empresa->sucursals()->create([
                 'nombre' => $sucursal['nombre'],//['nombre'
@@ -165,11 +151,9 @@ class EmpresaController extends Controller{
                 'codigoPostal' => $direccion['codigoPostal'],//['codigoPostal'
                 'localidad' => $direccion['localidad'],//['localidad'
             ]);
-//            $phoneDireccion = $direccion->phoneDireccions()->create([
-//                'phone' => $direccion['phoneDireccions'][0]['phone'],//['phone'
-//            ]);
+
         }
-//        facturacion
+
         foreach ($request->empresa['facturacion'] as $facturacion) {
             $facturacion = $empresa->facturacion()->create([
                 'cuit' => $facturacion['cuit'],//['cuit'
@@ -218,6 +202,25 @@ class EmpresaController extends Controller{
         $pedido->phone_id = isset($persona->phone[0]->id) ? $persona->phone[0]->id : null;
         $pedido->email_id = isset($persona->email[0]->id) ? $persona->email[0]->id : null;
         $pedido->save();
+
+    // guardamos registro de senias comom pago realizado
+        if ( $pedido->pago > 0) {
+            $pago = new Pago();
+            $pago->fecha = date('Y-m-d');
+            $pago->hora = date('H:i:s');
+            $pago->monto = $pedido->pago;
+            $pago->facturado = 'NO';
+            $pago->tipo = 'PAGO';
+            $pago->metodoPago = $pedido->metodoPago;
+            $pago->comentario = $pedido->comentarioPago;
+            $pago->user_id = $pedido->user_id;
+            $pago->pedido_id = $pedido->id;
+            $pago->facturacion_id = null;
+            $pago->empresa_id = $pedido->empresa_id;
+            $pago->estado = 'Aceptado';
+            $pago->save();
+        }
+
         DB::commit();
 
         $empresa= Empresa::where('id', $empresa->id)
@@ -245,6 +248,7 @@ class EmpresaController extends Controller{
             'pedido' => $pedido,
         ], 200);
     }
+
     public function update(UpdateEmpresaRequest $request, $id){
         $empresa = Empresa::findOrFail($id);
         $empresa->update($request->all());

@@ -289,7 +289,7 @@
                         <td class="text-left"></td>
                         <td class="text-right">${{pedido.precioDiseno}}</td>
                       </tr>
-                      <tr>
+                      <tr v-if="checkEnvio">
                         <td class="text-left">1</td>
                         <td class="text-left">Envio {{pedido.envio}}</td>
                         <td class="text-left">
@@ -301,7 +301,7 @@
                         <td class="text-left"></td>
                         <td class="text-right">${{pedido.precioEnvio}}</td>
                       </tr>
-                      <tr>
+                      <tr v-if="checkTerminacion">
                         <td class="text-left">1</td>
                         <td class="text-left">Terminacion: {{pedido.terminacion}}</td>
                         <td class="text-left"></td>

@@ -107,11 +107,13 @@ class Pedido extends Model implements Auditable
         return $total+$iva;
     }
     public function getDeudaAttribute(){
-        $monto = $this->precioTotal - $this->pago - Pago::where('pedido_id',$this->id)->get()->sum('monto');
+        // $monto = $this->precioTotal - $this->pago - Pago::where('pedido_id',$this->id)->get()->sum('monto');
+        $monto = $this->precioTotal - Pago::where('pedido_id',$this->id)->get()->sum('monto');
         return round( $monto,2);
     }
     public function getSenaAttribute(){
-        $pagos = Pago::where('pedido_id',$this->id)->get()->sum('monto');
-        return round( $this->pago+$pagos,2);
-    }
+        // $pagos = Pago::where('pedido_id',$this->id)->get()->sum('monto');
+        // return round( $this->pago+$pagos,2);
+        return round( $this->pago,2);
+    }  
 }
