@@ -46,7 +46,7 @@ class EmpresaController extends Controller{
         }
         if ($filter == 'sucursal') {
             $empresas = Empresa::whereHas('sucursals', function ($query) use ($search) {
-                $query->where('nombre', 'like', '%'.$search.'%');
+                $query->where('sucursals.nombre', 'like', '%'.$search.'%');
             })->paginate($paginate);
             return $empresas;
         }

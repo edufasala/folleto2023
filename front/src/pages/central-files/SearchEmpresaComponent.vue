@@ -10,6 +10,7 @@
           <q-icon name="search" />
         </template>
         <template v-slot:after>
+
           <q-btn flat round dense icon="more_vert">
             <q-menu>
               <q-list dense bordered>
@@ -128,21 +129,10 @@ export default {
       ]
     }
   },
-  mounted () {
-    // this.getEmpresas()
-  },
   methods: {
-    // getEmpresas () {
-    //   this.loading = true
-    //   this.$axios.get('empresas')
-    //     .then(response => {
-    //       this.empresas = response.data
-    //     }).catch(error => {
-    //       this.$alert(error.response.data.message)
-    //     }).finally(() => {
-    //       this.loading = false
-    //     })
-    // }
+    handleClear () {
+      this.$emit('empresaFilter', '', 'numero')
+    }
   }
 }
 </script>

@@ -11,5 +11,10 @@
     "javascriptreact",
     "typescript",
     "vue"
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#1F2D4E",
+    "titleBar.activeBackground": "#2C3F6D",
+    "titleBar.activeForeground": "#FBFCFD"
+  }
 }
