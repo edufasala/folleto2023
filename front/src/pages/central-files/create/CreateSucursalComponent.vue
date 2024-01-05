@@ -29,6 +29,7 @@
                     {{ sucursal.comentario }}
                   </td>
                   <td class="text-right">
+                    <q-btn dense flat icon="cancel" @click="deleteSucursalNuevo(sucursal)"/>
 <!--                    <q-btn-group flat dense>-->
 <!--                      <q-btn :loading="loading" dense size="10px" flat icon="o_edit" color="orange" @click="sucursalEdit(sucursal)">-->
 <!--                        <q-tooltip>Editar Sucursal</q-tooltip>-->
@@ -43,32 +44,36 @@
               </q-markup-table>
             </div>
         <q-dialog v-model="sucursalDialog">
-          <q-card class="q-pa-xs" style="max-width: 400px">
-            <q-card-section class="q-py-none row items-center">
+          <q-card class="q-pa-xs" style="width: 35vw !important">
+            <q-card-section class="row">
               <div class="text-h6">{{sucursalOption == 'create' ? 'Crear' : 'Editar'}} Sucursal</div>
               <q-space />
               <q-btn flat dense icon="cancel" v-close-popup />
             </q-card-section>
-            <q-card-section class="q-py-none">
-              <q-form @submit="sucursalSubmit">
+            <q-separator />
+            <q-form @submit="sucursalSubmit">
+              <q-card-section class="q-pt-sm">
                 <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="sucursal.nombre" label="Nombre"
+                    <q-input dense outlined v-model="sucursal.nombre" label="Nombre *"
                              :rules="[val => !!val || 'El nombre es requerido']"/>
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="sucursal.comentario" label="Comentario"
+                    <q-input dense outlined v-model="sucursal.comentario" label="Comentario *" autogrow
                               :rules="[val => !!val || 'El comentario es requerido']"/>
                   </div>
                 </div>
-                <q-card-actions align="right">
-                  <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-                  <q-btn dense no-caps :loading="loading" type="submit"
-                         :label="sucursalOption == 'create' ? 'Crear' : 'Editar'"
-                         :color="sucursalOption == 'create' ? 'blue' : 'orange'" />
-                </q-card-actions>
-              </q-form>
-            </q-card-section>
+              </q-card-section>
+              <q-separator />
+              <q-card-actions align="right">
+                <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
+                <q-btn dense no-caps :loading="loading" type="submit"
+                :label="sucursalOption == 'create' ? 'Crear' : 'Editar'"
+                :color="sucursalOption == 'create' ? 'blue' : 'orange'" />
+              </q-card-actions>
+            </q-form>
           </q-card>
         </q-dialog>
       </div>
@@ -128,6 +133,9 @@ export default {
             this.loading = false
           })
       })
+    },
+    deleteSucursalNuevo (sucursal) {
+      this.$emit('deleteSucursalNuevo', sucursal.id)
     },
     sucursalSubmit () {
       this.$emit('newSucursal', this.sucursal)

@@ -111,45 +111,56 @@
           </q-card>
         </div>
         <q-dialog v-model="personDialog">
-          <q-card class="q-pa-xs" style="max-width: 400px">
-            <q-card-section class="q-py-none row items-center">
+          <q-card class="q-pa-xs" style="width: 35vw !important">
+            <q-card-section class="row">
               <div class="text-h6">{{personOption == 'create' ? 'Crear' : 'Editar'}} Persona</div>
               <q-space />
               <q-btn flat dense icon="cancel" v-close-popup />
             </q-card-section>
-            <q-card-section class="q-py-none">
-              <q-form @submit="personSubmit">
+            <q-separator />
+            <q-form @submit="personSubmit">
+              <q-card-section class="q-pt-sm">
                 <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.nombre" label="Nombre"
+                    <q-input dense outlined v-model="person.nombre" label="Nombres *"
                              :rules="[val => !!val || 'El nombre es requerido']"/>
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.cargo" label="Cargo"
+                    <q-input dense outlined v-model="person.cargo" label="Cargo *"
                               :rules="[val => !!val || 'El cargo es requerido']"/>
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.dni" label="DNI" hint=""/>
+                    <q-input dense outlined v-model="person.dni" label="DNI *" hint="" mask="#############"
+                    :rules="[val => !!val || 'El DNI es requerido']"/>
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.phone" label="Telefono"
-                              :rules="[val => !!val || 'El telefono es requerido']"
+                    <q-input dense outlined v-model="person.phone" label="Teléfono *" mask="#############"
+                              :rules="[val => !!val || 'El teléfono es requerido']"
                     />
                   </div>
+                </div>
+                <div class="row">
                   <div class="col-12">
-                    <q-input dense outlined v-model="person.email" label="Email"
+                    <q-input dense outlined v-model="person.email" label="Email *"
                               :rules="[val => !!val || 'El email es requerido']"
                     />
                   </div>
                 </div>
-                <q-card-actions align="right">
-                  <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-                  <q-btn dense no-caps :loading="loading" type="submit"
-                         :label="personOption == 'create' ? 'Crear' : 'Editar'"
-                         :color="personOption == 'create' ? 'blue' : 'orange'" />
-                </q-card-actions>
-              </q-form>
-            </q-card-section>
+              </q-card-section>
+              <q-separator />
+              <q-card-actions align="right">
+                <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
+                <q-btn dense no-caps :loading="loading" type="submit"
+                :label="personOption == 'create' ? 'Crear' : 'Editar'"
+                :color="personOption == 'create' ? 'blue' : 'orange'" />
+              </q-card-actions>
+            </q-form>
           </q-card>
         </q-dialog>
       </div>

@@ -36,37 +36,47 @@
       </q-card>
     </div>
     <q-dialog v-model="direccionDialog">
-      <q-card class="q-pa-xs" style="max-width: 400px">
-        <q-card-section class="q-py-none row items-center">
-          <div class="text-h6">{{direccionOption === 'create' ? 'Crear' : 'Editar'}} Direcion</div>
+      <q-card class="q-pa-xs" style="width: 35vw !important">
+        <q-card-section class="row">
+          <div class="text-h6">
+            {{direccionOption === 'create' ? 'Crear' : 'Editar'}} Direcci&oacute;n
+          </div>
           <q-space />
           <q-btn flat dense icon="cancel" v-close-popup />
         </q-card-section>
-        <q-card-section class="q-py-none">
-          <q-form @submit="direccionSubmit">
+        <q-separator />
+        <q-form @submit="direccionSubmit">
+          <q-card-section class="q-pt-sm">
             <div class="row">
               <div class="col-12">
-                <q-input dense outlined v-model="direccionDato.direccion" label="Direccion"
-                         :rules="[val => !!val || 'La direccion es requerida']"/>
+                <q-input dense outlined v-model="direccionDato.direccion" label="Dirección *"
+                         :rules="[val => !!val || 'La dirección es requerida']"/>
               </div>
+            </div>
+            <div class="row">
               <div class="col-12">
-                <q-input dense outlined v-model="direccionDato.codigoPostal" label="Codigo Postal"/>
+                <q-input dense outlined v-model="direccionDato.codigoPostal" label="Código Postal"/>
               </div>
+            </div>
+            <div class="row q-pt-md">
               <div class="col-12">
                 <q-input dense outlined v-model="direccionDato.localidad" label="Localidad"/>
               </div>
+            </div>
+            <div class="row q-pt-md">
               <div class="col-12">
-                <q-input dense outlined v-model="direccionDato.phone" label="Telefono"/>
+                <q-input dense outlined v-model="direccionDato.phone" label="Teléfono" mask="##########"/>
               </div>
             </div>
-            <q-card-actions align="right">
-              <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-              <q-btn dense no-caps :loading="loading" type="submit"
-                     :label="direccionOption === 'create' ? 'Crear' : 'Editar'"
-                     :color="direccionOption === 'create' ? 'blue' : 'orange'" />
-            </q-card-actions>
-          </q-form>
-        </q-card-section>
+          </q-card-section>
+          <q-separator />
+          <q-card-actions align="right">
+            <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
+            <q-btn dense no-caps :loading="loading" type="submit"
+            :label="direccionOption === 'create' ? 'Crear' : 'Editar'"
+            :color="direccionOption === 'create' ? 'blue' : 'orange'" />
+          </q-card-actions>
+        </q-form>
       </q-card>
     </q-dialog>
   </div>

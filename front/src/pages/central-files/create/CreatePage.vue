@@ -13,32 +13,39 @@
             </q-avatar>
           </q-item-section>
 
-          <q-item-section>
+          <q-item-section class="nuevo-cliente">
             <div class="row">
-              <div class="col-4 flex flex-center">
+              <div class="col-5 flex flex-start">
                 Empresa:
               </div>
-              <div class="col-8">
+              <div class="col-7">
                 <q-input dense
                          class="super-small"
                          outlined
                          v-model="empresa.nombre"
                          :input-style="{ fontSize: '12px' }" />
               </div>
-              <div class="col-4 flex flex-center">
-                Como nos encontro:
+            </div>
+            <div class="row q-pt-xs">
+              <div class="col-5 flex flex-start">
+                <div class="text-justify">¿C&oacute;mo nos encontr&oacute;?:</div>
               </div>
-              <div class="col-8">
-                <q-input dense
+              <div class="col-7">
+                <q-select dense outlined v-model="empresa.contacto" :options="['Google', 'Instagram', 'Facebook', 'Mercado Libre', 'Recomendado', 'Otros']"/>
+
+                <!-- <q-input dense
                          class="super-small"
                          outlined
                          v-model="empresa.contacto"
-                         :input-style="{ fontSize: '12px' }" />
+                         :input-style="{ fontSize: '12px' }" /> -->
               </div>
-              <div class="col-4 flex flex-center">
+            </div>
+
+            <div class="row q-pt-xs">
+              <div class="col-5 flex flex-start">
                 Vendedor:
               </div>
-              <div class="col-8">
+              <div class="col-7">
                 <q-input dense
                          class="super-small"
                          outlined
@@ -63,6 +70,7 @@
                                      :persons="persons"
                                      @newPerson="newPerson"
                                      @newSucursal="newSucursal"
+                                     @deleteSucursalNuevo="deleteSucursalNuevo"
                                      @newDireccion="newDireccion"
                                       @newFacturacion="newFacturacion"
                   />
@@ -204,6 +212,7 @@ export default {
         this.$alert.error('Debe agregar una sucursal')
         return
       }
+
       this.pedidoDato.persona_id = this.empresa.person[0].id
       this.pedidoDato.sucursal_id = this.empresa.sucursals[0].id
       this.pedidoDialogNew = true
@@ -233,6 +242,11 @@ export default {
       sucursal.empresa_id = this.empresa.id
       this.sucursals.push(sucursal)
       // this.empresas.sucursals = this.sucursals
+    },
+    deleteSucursalNuevo (id) {
+      debugger
+      const indiceAEliminar = this.sucursals.findIndex(elemento => elemento.id === id)
+      this.sucursals.splice(indiceAEliminar, 1)
     },
     newPerson (person) {
       const id = this.persons.length + 1
@@ -286,23 +300,5 @@ export default {
 }
 </script>
 <style lang="scss">
-.super-small.q-field--dense {
-  .q-field__control-container,
-  .q-field__native {
-    //padding-top: 10px !important;
-  }
 
-  .q-field__control {
-    height: 25px !important;
-    min-height: 25px !important;
-  }
-
-  .q-field__marginal {
-    height: 25px !important;
-  }
-
-  .q-field__label {
-    top: 6px !important;
-  }
-}
 </style>

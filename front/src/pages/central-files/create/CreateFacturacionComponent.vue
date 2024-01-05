@@ -1,7 +1,7 @@
 <template>
   <div class="row q-pl-xs">
     <div class="col-12 row items-center">
-      <div class="text-bold">FACTURACION</div>
+      <div class="text-bold">FACTURACI&Oacute;N</div>
       <q-space />
       <q-btn :loading="loading" round dense flat icon="add_circle_outline" color="blue" @click="facturacionDialogClick">
         <q-tooltip>Crear Facturacion</q-tooltip>
@@ -44,40 +44,48 @@
       </q-card>
     </div>
     <q-dialog v-model="facturacionDialog">
-      <q-card class="q-pa-xs" style="max-width: 400px">
-        <q-card-section class="q-py-none row items-center">
-          <div class="text-h6">{{facturacionOption === 'create' ? 'Crear' : 'Editar'}} Facturacion</div>
+      <q-card class="q-pa-xs" style="width: 35vw !important">
+        <q-card-section class="row">
+          <div class="text-h6">{{facturacionOption === 'create' ? 'Crear' : 'Editar'}} Facturaci&oacute;n</div>
           <q-space />
           <q-btn flat dense icon="cancel" v-close-popup />
         </q-card-section>
-        <q-card-section class="q-py-none">
-          <q-form @submit="facturacionSubmit">
+        <q-separator />
+        <q-form @submit="facturacionSubmit">
+          <q-card-section class="q-pt-sm">
             <div class="row">
               <div class="col-12">
-                <q-input dense outlined v-model="facturacionDato.cuit" label="CUIT/CUIL"
+                <q-input dense outlined v-model="facturacionDato.cuit" label="CUIT/CUIL *"
                          :rules="[val => !!val || 'El CUIT/CUIL es requerido']"/>
               </div>
+            </div>
+            <div class="row">
               <div class="col-12">
-                <q-input dense outlined v-model="facturacionDato.condicional" label="Condicion"
-                         :rules="[val => !!val || 'La condicional es requerida']"/>
+                <q-input dense outlined v-model="facturacionDato.condicional" label="Condición Fiscal *"
+                         :rules="[val => !!val || 'La condición fiscal es requerida']"/>
               </div>
+            </div>
+            <div class="row">
               <div class="col-12">
-                <q-input dense outlined v-model="facturacionDato.razonSocial" label="Razon Social"
-                         :rules="[val => !!val || 'La razon social es requerida']"/>
+                <q-input dense outlined v-model="facturacionDato.razonSocial" label="Razón Social *"
+                         :rules="[val => !!val || 'La razón social es requerida']"/>
               </div>
+            </div>
+            <div class="row">
               <div class="col-12">
-                <q-input dense outlined v-model="facturacionDato.comentario" label="Comentario"
+                <q-input dense outlined v-model="facturacionDato.comentario" label="Comentario *"
                           :rules="[val => !!val || 'El comentario es requerido']"/>
               </div>
             </div>
-            <q-card-actions align="right">
-              <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
-              <q-btn dense no-caps :loading="loading" type="submit"
-                     :label="facturacionOption === 'create' ? 'Crear' : 'Editar'"
-                     :color="facturacionOption === 'create' ? 'blue' : 'orange'" />
-            </q-card-actions>
-          </q-form>
-        </q-card-section>
+          </q-card-section>
+          <q-separator />
+          <q-card-actions align="right">
+            <q-btn dense no-caps label="Cancelar" v-close-popup color="red" :loading="loading"/>
+            <q-btn dense no-caps :loading="loading" type="submit"
+            :label="facturacionOption === 'create' ? 'Crear' : 'Editar'"
+            :color="facturacionOption === 'create' ? 'blue' : 'orange'" />
+          </q-card-actions>
+        </q-form>
       </q-card>
     </q-dialog>
   </div>

@@ -15,6 +15,7 @@
         :empresa="empresa"
         :sucursals="sucursals"
         @newSucursal="newSucursal"
+        @deleteSucursalNuevo="deleteSucursalNuevo"
         />
     </div>
     <div class="col-12 col-md-4 q-px-xs">
@@ -97,6 +98,9 @@ export default {
     },
     newSucursal (sucursal) {
       this.$emit('newSucursal', sucursal)
+    },
+    deleteSucursalNuevo (sucursal) {
+      this.$emit('deleteSucursalNuevo', sucursal)
     },
     newPerson (person) {
       this.$emit('newPerson', person)

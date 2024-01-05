@@ -14,7 +14,7 @@
           <div class="col-12 col-md-6 q-pa-xs">
             <q-select dense outlined v-model="pedido.person" :options="empresa.person" option-value="id" option-label="nombre">
               <template v-slot:before>
-                <span class="text-subtitle1">Quien lo pide</span>
+                <span class="text-subtitle1">¿Qui&eacute;n lo pide?</span>
               </template>
             </q-select>
           </div>
@@ -36,10 +36,10 @@
                   <span class="text-bold">Diseño y Entrega</span>
               </q-tab>
               <q-tab name="pago" no-caps class="bg-dark text-white">
-                  <span class="text-bold">Pago y Facturacion</span>
+                  <span class="text-bold">Pago y Facturaci&oacute;n</span>
               </q-tab>
               <q-tab name="status" no-caps class="bg-dark text-white">
-                  <span class="text-bold">Confimacion</span>
+                  <span class="text-bold">Confimaci&oacute;n</span>
               </q-tab>
             </q-tabs>
             <q-separator />
@@ -62,10 +62,10 @@
                     </q-input>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
-<!--                    Otra:-->
+
                   </div>
                   <div class="col-6 col-md-4">
-<!--                    <q-input dense outlined v-model="pedido.producto"/>-->
+
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Gr:</div>
                   <div class="col-6 col-md-4">
@@ -170,9 +170,6 @@
                   <div class="col-6 col-md-2 flex flex-center">Diseño:</div>
                   <div class="col-6 col-md-4">
                     <q-select dense outlined v-model="pedido.diseno" :options="disenos">
-<!--                      <template v-slot:after>-->
-<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Diseno')"/>-->
-<!--                      </template>-->
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">
@@ -186,9 +183,6 @@
                   <div class="col-6 col-md-2 flex flex-center">Lados:</div>
                   <div class="col-6 col-md-4">
                     <q-select dense outlined v-model="pedido.lado" :options="lados" @update:modelValue="precioDiseno">
-<!--                      <template v-slot:after>-->
-<!--                        <q-btn flat dense icon="add_circle_outline" color="green" @click="add('Lado')"/>-->
-<!--                      </template>-->
                     </q-select>
                   </div>
                   <div class="col-6 col-md-2 flex flex-center">Direccion:</div>
@@ -215,13 +209,12 @@
                 <div class="row">
                   <div class="col-6 col-md-2 flex flex-center">Seña:</div>
                   <div class="col-6 col-md-3"><q-input dense outlined v-model="pedido.pago" /></div>
-                  <div class="col-6 col-md-1 flex flex-center">Iva:</div>
-                  <div class="col-6 col-md-3">
-<!--                    <q-input dense outlined v-model="pedido.iva" />-->
+                  <!-- <div class="col-6 col-md-1 flex flex-center">Iva:</div> -->
+                  <!-- <div class="col-6 col-md-3">
                     <q-select dense outlined v-model="pedido.facturaA" :options="['Factura ninguna', 'Factura pedido', 'Factura seña']"
                               :hint="`Iva: ${pedido.iva}%`"/>
-                  </div>
-                  <div class="col-6 col-md-2 flex flex-center">Se Facturo:</div>
+                  </div> -->
+                  <div class="col-6 col-md-2 flex flex-center">¿Se Factur&oacute; la Seña?:</div>
                   <div class="col-6 col-md-1">
 <!--                    <q-select dense outlined v-model="pedido.seFacturo" :options="['Si','No']" />-->
                     <q-toggle v-model="pedido.seFacturo" color="primary" false-value="No" true-value="Si" :label="pedido.seFacturo"/>
@@ -229,7 +222,7 @@
                   <div class="col-12 col-md-6">
                     <div class="row">
                       <div class="col-6 col-md-4 flex flex-center">Metodo de $:</div>
-                      <div class="col-6 col-md-8"><q-select dense outlined v-model="pedido.metodoPago" :options="['Efectivo', 'Tarjeta', 'Transferencia']"/></div>
+                      <div class="col-6 col-md-8"><q-select dense outlined v-model="pedido.metodoPago" :options="['Efectivo', 'Transferencia', 'Depósito', 'Mercado Pago' , 'Otro']"/></div>
                       <div class="col-6 col-md-4 flex flex-center">CUIT/DNI:</div>
                       <div class="col-6 col-md-8"><q-select dense outlined v-model="pedido.facturacion" :options="empresa.facturacion" option-value="id" option-label="cuit"/></div>
                       <div class="col-6 col-md-4 flex flex-center">Condicional:</div>
@@ -379,7 +372,7 @@ export default {
       grs: [],
       medidas: [],
       cantidades: [],
-      lados: ['1 Lado', '2 Lado', '2 lados distintos'],
+      lados: ['1 Lado solo', '2 Lados iguales', '2 lados diferentes'],
       disenos: [],
       terminaciones: []
     }
